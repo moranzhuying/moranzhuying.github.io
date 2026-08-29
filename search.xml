@@ -67,6 +67,31 @@
       </tags>
   </entry>
   <entry>
+    <title>2026-08-29 笔记</title>
+    <url>//5.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>测试</title>
+    <url>//1.html</url>
+    <content><![CDATA[<p>你看得到后面的内容吗?</p>
+<span id="more"></span>
+
+<p>测试内容</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>代数学</category>
+        <category>表示论</category>
+        <category>分析学</category>
+        <category>实值函数的极限</category>
+      </categories>
+      <tags>
+        <tag>抽象代数</tag>
+        <tag>表示论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《数学原本》第一卷读后</title>
     <url>//4.html</url>
     <content><![CDATA[<p>这是用来测试「书评」页面的测试文章。</p>
@@ -109,27 +134,9 @@
   <entry>
     <title>功能测试二：交换图/图片/链接/表格</title>
     <url>/posts/test2.html</url>
-    <content><![CDATA[<h2 id="一、tikz-交换图"><a href="#一、tikz-交换图" class="headerlink" title="一、tikz 交换图"></a>一、tikz 交换图</h2><h3 id="1-1-正文中的交换图"><a href="#1-1-正文中的交换图" class="headerlink" title="1.1 正文中的交换图"></a>1.1 正文中的交换图</h3><p>$$
-
-\require{AMScd}
-\begin{CD}
-A @>\varphi>> B \\
-@V\psi VV @VV\chi V\\
-C @>>\eta> D
-\end{CD}
-
-$$</p>
+    <content><![CDATA[<h2 id="一、tikz-交换图"><a href="#一、tikz-交换图" class="headerlink" title="一、tikz 交换图"></a>一、tikz 交换图</h2><h3 id="1-1-正文中的交换图"><a href="#1-1-正文中的交换图" class="headerlink" title="1.1 正文中的交换图"></a>1.1 正文中的交换图</h3><p><img src="/images/comm-diag-square.svg" alt="方形交换图" loading="lazy"></p>
 <h3 id="1-2-定理环境内的交换图"><a href="#1-2-定理环境内的交换图" class="headerlink" title="1.2 定理环境内的交换图"></a>1.2 定理环境内的交换图</h3><div class="math-env env-theorem" id="env-theorem-1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">五引理中的交换图</span></div><div class="env-body"><p>若下图可交换且行正合：</p>
-<p>$$
-
-\require{AMScd}
-\begin{CD}
-0 @>>> A @>\alpha>> B @>\beta>> C @>>> 0 \\
-@. @VfVV @VgVV @VhVV @. \\
-0 @>>> A' @>>\alpha'> B' @>>\beta'> C' @>>> 0
-\end{CD}
-
-$$</p>
+<p><img src="/images/comm-diag-five.svg" alt="五引理交换图" loading="lazy"></p>
 <p>则当 $f$ 与 $h$ 都是同构时，$g$ 也是同构。</p>
 </div></div>
 
@@ -259,26 +266,6 @@ $$</p>
       <tags>
         <tag>测试标签1</tag>
         <tag>测试标签2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测试</title>
-    <url>//1.html</url>
-    <content><![CDATA[<p>你看得到后面的内容吗?</p>
-<span id="more"></span>
-
-<p>测试内容</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>代数学</category>
-        <category>表示论</category>
-        <category>分析学</category>
-        <category>实值函数的极限</category>
-      </categories>
-      <tags>
-        <tag>抽象代数</tag>
-        <tag>表示论</tag>
       </tags>
   </entry>
 </search>
