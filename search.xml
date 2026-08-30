@@ -1,84 +1,558 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>2026-08-29 笔记</title>
-    <url>/posts/2026-08-29-notes.html</url>
-    <content><![CDATA[<p>这是短的摘要。</p>
+    <title>数学笔记写作的原则</title>
+    <url>/posts/principles-of-writing-mathematical-notes.html</url>
+    <content><![CDATA[<p>本文简要讨论数学写作的原则。</p>
 <span id="more"></span>
 
-<p>这是正文</p>
-]]></content>
-      <tags>
-        <tag>李代数</tag>
-        <tag>李群</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>公式与排版测试</title>
-    <url>/posts/math-format-test.html</url>
-    <content><![CDATA[<p>本文测试 LaTeX 模板移植的符号宏、公式排版、表格与交换图：数集记号 $\R, \Z, \Q$、算子 $\Hom, \id, \GL$ 以及大算子 $\bigstar$ 等。摘要只展示这句话，正文需点开查看。</p>
-<span id="more"></span>
-
-<h2 id="一、符号宏"><a href="#一、符号宏" class="headerlink" title="一、符号宏"></a>一、符号宏</h2><p>数集：$\N \subset \Z \subset \Q \subset \R \subset \C$，以及 $\F_q$ 与 $\K$。</p>
-<p>算子：$\Hom_R(M, N)$、$\id_M$、$\Aut(G)$、$\GL_n(k)$、$\rank A &#x3D; \tr A$、$\im \varphi$、$\coker f$。</p>
-<p>大算子：$\bigstar_{i \in I} A_i$、$\bigoplus_{i&#x3D;1}^{n} A_i$。</p>
-<h2 id="二、表格"><a href="#二、表格" class="headerlink" title="二、表格"></a>二、表格</h2><table>
+<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p><strong>各模块不应按照“内容出现的位置”简单分工，而应按照读者在不同阅读阶段提出的问题分工。</strong></p>
+<ul>
+<li>章首导引面向尚未阅读正文的读者，负责建立阅读预期；</li>
+<li>节首导引面向即将进入局部论证的读者，负责提出本节问题；</li>
+<li>正文负责发展数学内容；</li>
+<li>节末小结面向刚读完本节的读者，负责解释局部成果的位置；</li>
+<li>习题负责训练、检验和补充；</li>
+<li>章末小结面向复习者，负责提供最小知识索引。</li>
+</ul>
+<p>下面的表格总结了不同模块面向的读者群体、自身的核心问题与主要组织方式。</p>
+<table>
 <thead>
 <tr>
-<th>概念</th>
-<th>记号</th>
-<th>说明</th>
+<th align="center">模块</th>
+<th align="center">面向的阅读阶段</th>
+<th align="center">核心问题</th>
+<th align="center">主要组织方式</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>主理想</td>
-<td>$(a)$</td>
-<td>由单个元素生成的理想</td>
+<td align="center">章首导引</td>
+<td align="center">阅读之前</td>
+<td align="center">为什么读、读什么、怎样读</td>
+<td align="center">动机与路线</td>
 </tr>
 <tr>
-<td>素理想</td>
-<td>$\mathfrak{p}$</td>
-<td>$ab \in \mathfrak{p} \Rightarrow a \in \mathfrak{p}$ 或 $b \in \mathfrak{p}$</td>
+<td align="center">节首导引</td>
+<td align="center">进入本节之前</td>
+<td align="center">为什么现在需要这一节</td>
+<td align="center">局部问题</td>
 </tr>
 <tr>
-<td>极大理想</td>
-<td>$\mathfrak{m}$</td>
-<td>非真且不被其他真理想包含</td>
+<td align="center">正文</td>
+<td align="center">阅读过程中</td>
+<td align="center">概念和结论如何建立</td>
+<td align="center">数学论证</td>
+</tr>
+<tr>
+<td align="center">节末小结</td>
+<td align="center">读完本节之后</td>
+<td align="center">本节完成了什么</td>
+<td align="center">局部结构</td>
+</tr>
+<tr>
+<td align="center">习题</td>
+<td align="center">初步理解之后</td>
+<td align="center">能否操作、证明和推广</td>
+<td align="center">能力训练</td>
+</tr>
+<tr>
+<td align="center">章末小结</td>
+<td align="center">复习或回查时</td>
+<td align="center">本章必须记住什么</td>
+<td align="center">知识索引</td>
 </tr>
 </tbody></table>
-<h2 id="三、交换图（本地-SVG）"><a href="#三、交换图（本地-SVG）" class="headerlink" title="三、交换图（本地 SVG）"></a>三、交换图（本地 SVG）</h2><p>下方是五引理式的交换图（SVG 示例，<code>currentColor</code> 适配明暗模式）：</p>
-<p><img src="/images/comm-diag-five.svg" alt="五引理交换图" loading="lazy"></p>
+<hr>
+<h1 id="一、总原则"><a href="#一、总原则" class="headerlink" title="一、总原则"></a>一、总原则</h1><p>最需要防止的问题是：</p>
+<p>$$
+
+\text{章首导引}
+\approx
+\text{正文目录}
+\approx
+\text{节末小结}
+\approx
+\text{章末小结}.
+
+$$</p>
+<p>如果四者都在重复“本章先讲了什么、再讲了什么”，那么它们只是篇幅不同的内容摘要，并没有真正的功能区别。</p>
+<p>同一个定义或定理可以在不同模块中重复出现，但每次出现时承担的功能必须不同：</p>
+<ul>
+<li>在导引中，它是一个<strong>路标</strong>；</li>
+<li>在正文中，它是一个需要准确陈述和发展的<strong>数学内容</strong>；</li>
+<li>在节末小结中，它是论证链上的一个<strong>结构节点</strong>；</li>
+<li>在章末小结中，它是供复习和回查的<strong>索引项</strong>。</li>
+</ul>
+<hr>
+<h1 id="二、章首导引"><a href="#二、章首导引" class="headerlink" title="二、章首导引"></a>二、章首导引</h1><h2 id="1-章首导引的中心"><a href="#1-章首导引的中心" class="headerlink" title="1. 章首导引的中心"></a>1. 章首导引的中心</h2><p>章首导引不宜逐节复述正文。它首先应当说明下面几个让读者关心的问题：</p>
+<ol>
+<li>本章研究什么对象或问题；</li>
+<li>为什么已有工具不足；</li>
+<li>本章准备引入什么新观点；</li>
+<li>本章最终希望解决什么问题。</li>
+</ol>
+<p>换言之，导引的核心结构应当是</p>
+<p>$$
+
+\text{既有背景}
+\longrightarrow
+\text{待解决的问题}
+\longrightarrow
+\text{本章的基本思想}
+\longrightarrow
+\text{预期成果}.
+
+$$</p>
+<p>“本章共有八节，第一节介绍……，第二节讨论……”这样的内容可以有，但不应成为导引的主体。它更接近目录注释，而不是数学导引。</p>
+<hr>
+<h2 id="2-历史视角"><a href="#2-历史视角" class="headerlink" title="2. 历史视角"></a>2. 历史视角</h2><p>历史材料很适合用于回答下面的问题：</p>
+<ul>
+<li>某个问题最初从哪里产生；</li>
+<li>为什么某种概念值得被独立抽象出来；</li>
+<li>该理论在较大的数学框架中处于什么位置；</li>
+<li>不同历史阶段如何改变了对该概念的理解。</li>
+</ul>
+<p>但是，它不应发展成独立的学科史，写作时也不宜用未经核实的名言代替数学说明。较合适的顺序是</p>
+<p>$$
+
+\text{熟悉的具体问题}
+\longrightarrow
+\text{历史上的抽象过程}
+\longrightarrow
+\text{现代的结构性表述}.
+
+$$</p>
+<p><strong>历史视角和现代视角不是互相排斥的</strong>：历史视角解释概念<strong>为什么出现</strong>；现代视角说明概念<strong>最终被组织成什么结构</strong>。二者可以穿插，但不应混为一谈。</p>
+<h3 id="历史材料的适当形式"><a href="#历史材料的适当形式" class="headerlink" title="历史材料的适当形式"></a>历史材料的适当形式</h3><p>历史部分通常只需要建立背景，不必提前承担正文的证明或分类任务。下面列举几类可以考虑的历史材料：</p>
+<ul>
+<li>一至两段正文；</li>
+<li>一个简短的『历史注记』；</li>
+<li>一条经过核实的文献说明；</li>
+<li>一个“具体问题—抽象概念”的演变过程。</li>
+</ul>
+<hr>
+<h2 id="3-本章主线"><a href="#3-本章主线" class="headerlink" title="3. 本章主线"></a>3. 本章主线</h2><p>章首导引可以展示全章的主要转折，但不宜逐节展开所有定义和定理。</p>
+<p>例如可以采用抽象形式：</p>
+<p>$$
+
+\text{原始问题}
+\longrightarrow
+\text{基本对象}
+\longrightarrow
+\text{核心构造}
+\longrightarrow
+\text{主要定理}
+\longrightarrow
+\text{统一观点}.
+
+$$</p>
+<p>这条主线回答的是“本章为什么要按照大致这样的顺序发展”，而不是“每一小节分别包含哪些条目”——后者应当交给目录、节首导引和章末索引。</p>
+<hr>
+<h2 id="4-螺旋上升的叙事"><a href="#4-螺旋上升的叙事" class="headerlink" title="4. 螺旋上升的叙事"></a>4. 螺旋上升的叙事</h2><p>“已有工具不足—引入新工具—新工具暴露新的问题—再次扩展理论”是一种有效的数学叙事方式。更准确地说，其中的“矛盾”未必是真正的逻辑矛盾，通常是如下几类<strong>障碍</strong>：</p>
+<ul>
+<li>既有定义的适用范围不足；</li>
+<li>某个自然构造不总是存在；</li>
+<li>某种表述不具有不变性；</li>
+<li>结论依赖过强的条件；</li>
+<li>局部结果无法统一；</li>
+<li>某个存在性结论没有唯一性或函子性。</li>
+</ul>
+<p>因此，正式写作时最好少用笼统的“出现矛盾”，改为明确说明现有方法能够处理什么，却不能处理什么。</p>
+<p>这种螺旋式叙述应只保留少数关键转折。每一个小节都在章首展开一次“问题—解决”的完整叙事，导引就会过长。较好的分配方式是：章首导引保留三至五个全章层面的主要转折，每节开头说明本节特有的局部困难和处理方法。</p>
+<hr>
+<h2 id="5-与后续章节的联系"><a href="#5-与后续章节的联系" class="headerlink" title="5. 与后续章节的联系"></a>5. 与后续章节的联系</h2><p>章首可以说明本章内容以后将在哪些方向被使用，但不宜详细预告后续各章。</p>
+<p>可以区分两个层次：</p>
+<h3 id="章首：说明用途和位置"><a href="#章首：说明用途和位置" class="headerlink" title="章首：说明用途和位置"></a>章首：说明用途和位置</h3><p>回答：本章是哪些后续内容的基础；哪些概念以后会被推广；哪些假设以后可能被削弱；本章在整体笔记中承担什么功能。</p>
+<h3 id="章末：说明具体对应关系"><a href="#章末：说明具体对应关系" class="headerlink" title="章末：说明具体对应关系"></a>章末：说明具体对应关系</h3><p>读者学完本章以后，才适合说明：本章的哪条定理将被推广、哪项习题已经出现了后续理论的雏形、哪个概念会在其他语境中重新出现。</p>
+<p>因此，章首只需给出“接口预告”，章末或后续章节的导引再给出具体连接。这样既保留整体感，又不会占据太多篇幅。</p>
+<hr>
+<h2 id="6-各小节的学习要求"><a href="#6-各小节的学习要求" class="headerlink" title="6. 各小节的学习要求"></a>6. 各小节的学习要求</h2><p>“本章介绍什么”与“本章需要掌握什么”不是同一问题。导引最好说明读者完成本章后应具备哪些能力，但不宜只写“理解”“熟悉”“掌握”。这些词过于笼统，应尽量细化为可观察的数学活动。</p>
+<h3 id="识别"><a href="#识别" class="headerlink" title="识别"></a>识别</h3><p>辨认某个对象是否满足定义；区分相近概念；判断某项条件在何处使用。</p>
+<h3 id="计算与构造"><a href="#计算与构造" class="headerlink" title="计算与构造"></a>计算与构造</h3><p>计算具体例子；构造标准对象；执行正文中的典型算法；处理简单的含参数情形。</p>
+<h3 id="基本证明"><a href="#基本证明" class="headerlink" title="基本证明"></a>基本证明</h3><p>直接使用定义证明简单结论；验证构造的良定义性；证明唯一性；检查态射或结构保持条件。</p>
+<h3 id="结构理解"><a href="#结构理解" class="headerlink" title="结构理解"></a>结构理解</h3><p>解释某个定理解决了什么问题；说明不同表述之间的关系；判断一个结论在整套理论中的位置。</p>
+<h3 id="反例与推广"><a href="#反例与推广" class="headerlink" title="反例与推广"></a>反例与推广</h3><p>判断条件能否删去；构造简单反例；将证明技术迁移到邻近问题；识别更一般结论所需的新假设。</p>
+<blockquote>
+<p>无论是习题还是正文，我们推荐的学习梯度都是一致的：</p>
+</blockquote>
+<p>$$
+
+> \text{识别与计算}
+> \longrightarrow
+> \text{基本证明}
+> \longrightarrow
+> \text{结构理解}
+> \longrightarrow
+> \text{反例与推广}.
+> 
+$$</p>
+<blockquote>
+<p>这只是学习顺序，不是知识价值的等级。此外，读者不必强求一开始就独立完成反例构造，积累大量的正面例子、熟悉定理&#x2F;例子的边界情况是有必要的。</p>
+</blockquote>
+<hr>
+<h2 id="7-本章阅读提示"><a href="#7-本章阅读提示" class="headerlink" title="7. 本章阅读提示"></a>7. 本章阅读提示</h2><p>阅读提示可以说明的内容是：哪些内容构成第一次阅读的主线；哪些证明可以暂时略读；哪些部分适合在完成习题后重读；哪些内容偏向应用、推广或补充；不同背景的读者可以采取什么阅读顺序。</p>
+<p>但是，具体到每一小节，分别制定阅读策略就不是必要的，否则导引会变成操作手册。给出两至三条阅读路线是闭较好的做法，例如基础路线、理论路线、应用或计算路线。</p>
+<hr>
+<h1 id="三、节首导引"><a href="#三、节首导引" class="headerlink" title="三、节首导引"></a>三、节首导引</h1><p>每一节开头可以有一段很短的导引，回答下面的问题：</p>
+<ol>
+<li>上一节留下了什么问题；</li>
+<li>本节为什么现在出现；</li>
+<li>本节准备引入什么工具；</li>
+<li>本节的结果以后用于哪里。</li>
+</ol>
+<p>一个稳定的模板是：</p>
+<blockquote>
+<p>前面的内容已经解决了……，但尚不能处理……。本节将引入……，并证明……。其中，……是后续讨论所需的关键工具。</p>
+</blockquote>
+<p>节首导引的长度应当与本节复杂程度相适应。</p>
+<ul>
+<li>对于单纯承接上一节的技术性小节，一段即可；</li>
+<li>引入新对象或改变研究视角的小节，可以稍长；</li>
+<li>至于旁支、选读或应用性小节，你应明确说明它与主线的关系。</li>
+</ul>
+<p>这样可以把详细的分节动机从章首移到最合适的位置。</p>
+<hr>
+<h1 id="四、正文"><a href="#四、正文" class="headerlink" title="四、正文"></a>四、正文</h1><p>正文应当集中处理下面的内容：定义；例子；命题、引理、定理和推论；证明；构造；算法；反例；必要的注记、警示和约定。</p>
+<p>正文不必在每个结果之后都进行宏观总结，否则会频繁打断论证。较长的解释可以留到节末小结。</p>
+<hr>
+<h2 id="1-正文中的例子"><a href="#1-正文中的例子" class="headerlink" title="1. 正文中的例子"></a>1. 正文中的例子</h2><p>例子不只是为了让页面看起来“不太抽象”，详细来说可以分成下面几类：</p>
+<ul>
+<li><strong>定义例</strong>：帮助识别新概念；</li>
+<li><strong>计算例</strong>：展示具体操作；</li>
+<li><strong>反例</strong>：说明条件接近失效时会发生什么，阻止错误推广；</li>
+<li><strong>模型例</strong>：展示抽象结构在熟悉对象中的实现，随着理论发展反复重新解释同一对象。</li>
+</ul>
+<p>正文首先需要足够的定义例和计算例。反例构造和复杂推广可以稍后安排，不必在概念刚出现时一次性完成。</p>
+<hr>
+<h2 id="2-正文中的特殊栏目"><a href="#2-正文中的特殊栏目" class="headerlink" title="2. 正文中的特殊栏目"></a>2. 正文中的特殊栏目</h2><h3 id="『警示』"><a href="#『警示』" class="headerlink" title="『警示』"></a>『警示』</h3><p>用于阻止错误理解。包括：删除条件后的反例；相近概念的区别；不可逆的推理；容易误用的记号；存在性与可计算性的区别。</p>
+<h3 id="『注记』"><a href="#『注记』" class="headerlink" title="『注记』"></a>『注记』</h3><p>用于扩展主线内容。包括：定理&#x2F;定义的更一般版本；证明技术的推广；定理&#x2F;定义的另一种等价表述；与其他理论的联系；数学名词的历史或术语说明。</p>
+<h3 id="『约定』"><a href="#『约定』" class="headerlink" title="『约定』"></a>『约定』</h3><p>用于规定此后如何理解某种说法或记号。包括：默认假设；术语滥用；精确到同构的等同；标准符号。</p>
+<p>上述三者不应混用。一言以蔽之：</p>
+<p>$$
+
+\begin{array}{c|c}
+\text{栏目} & \text{主要作用} \\ \hline
+\text{警示} & \text{防止误解} \\
+\text{注记} & \text{扩展理解} \\
+\text{约定} & \text{规定用法}
+\end{array}
+
+$$</p>
+<hr>
+<h2 id="3-符号说明"><a href="#3-符号说明" class="headerlink" title="3. 符号说明"></a>3. 符号说明</h2><p>符号约定的层级如下：</p>
+<p>$$
+
+\text{全书约定}
+\supset
+\text{章级约定}
+\supset
+\text{节级约定}
+\supset
+\text{局部约定}.
+
+$$</p>
+<p>基本原则：</p>
+<ol>
+<li>高层约定自动延续到低层；</li>
+<li>低层约定可以补充高层约定；</li>
+<li>低层约定若暂时改变高层约定，必须显式说明；</li>
+<li>局部约定在作用域结束后自动失效；</li>
+<li>不应静默改变一个高频符号的含义。</li>
+</ol>
+<p>如果在一节的中途改变了默认对象，要指出“从本节的这一部分开始，除非另有说明，……”。如果这种新约定只持续到本节结束，也可以明确说明其作用域。将符号约定视为“局部作用域”有利于保持复杂章节中的一致性。</p>
+<hr>
+<h1 id="五、节末小结"><a href="#五、节末小结" class="headerlink" title="五、节末小结"></a>五、节末小结</h1><p>节末小结应该回答下面的问题：本节从什么问题出发；引入了哪些关键概念；各项结果在论证中处于什么位置；本节训练了哪些证明技术；进入习题前应当具备什么能力。</p>
+<hr>
+<h2 id="1-本节写作脉络"><a href="#1-本节写作脉络" class="headerlink" title="1. 本节写作脉络"></a>1. 本节写作脉络</h2><p>一图足矣：</p>
+<p>$$
+
+\text{问题}
+\longrightarrow
+\text{定义}
+\longrightarrow
+\text{技术引理}
+\longrightarrow
+\text{核心定理}
+\longrightarrow
+\text{推论或应用}.
+
+$$</p>
+<p>重点不是重述内容，而是解释为什么按照这一顺序组织。</p>
+<hr>
+<h2 id="2-定位本节的位置"><a href="#2-定位本节的位置" class="headerlink" title="2. 定位本节的位置"></a>2. 定位本节的位置</h2><p>按照功能给结果分类：</p>
+<ul>
+<li><strong>基础定义</strong>：建立本节语言；</li>
+<li><strong>准备引理</strong>：处理核心证明中的局部困难；</li>
+<li><strong>桥梁结果</strong>：连接两个表述或两类对象；</li>
+<li><strong>核心定理</strong>：完成本节主要任务；</li>
+<li><strong>直接推论</strong>：由核心结果顺势得到；</li>
+<li><strong>边界结果</strong>：说明理论的适用范围；</li>
+<li><strong>构造性结果</strong>：给出实际对象或算法。</li>
+</ul>
+<p>这种分类不要求成为正式标签，但应在小结中有所体现，这样可以区分<strong>必须记住的结构节点</strong>和<strong>可以现场重新推出的结果</strong>。</p>
+<hr>
+<h2 id="3-说明定理的数学含义"><a href="#3-说明定理的数学含义" class="headerlink" title="3. 说明定理的数学含义"></a>3. 说明定理的数学含义</h2><p>习题之前的小结主要说明定理的作用：</p>
+<ul>
+<li>它把什么问题转化成了什么问题；</li>
+<li>它统一了哪些此前分散的现象；</li>
+<li>它提供了什么计算或证明工具；</li>
+<li>它为后续哪个结果准备了条件。</li>
+</ul>
+<p>这里不必提前逐题说明“这条定理怎样做第几题”。定理的数学意义与具体习题中的应用实例应分成两个阶段：</p>
+<ul>
+<li>第一阶段：习题之前</li>
+</ul>
+<p>理解定理在理论中的作用。</p>
+<ul>
+<li>第二阶段：习题之后</li>
+</ul>
+<p>通过具体题目认识定理的使用方式、边界和变体。这样可以避免读者把定理仅仅理解成“解题公式”。</p>
+<hr>
+<h2 id="4-回收证明技术"><a href="#4-回收证明技术" class="headerlink" title="4. 回收证明技术"></a>4. 回收证明技术</h2><p>节末小结很适合回收本节出现的证明技术。例如：</p>
+<ul>
+<li>直接展开定义；</li>
+<li>双向包含；</li>
+<li>证明良定义性；</li>
+<li>唯一性论证；</li>
+<li>反证法；</li>
+<li>逆否命题；</li>
+<li>循环证明等价条件；</li>
+<li>归纳法；</li>
+<li>极小性或极大性论证；</li>
+<li>追图；</li>
+<li>使用泛性质；</li>
+<li>选择恰当的不变量。</li>
+</ul>
+<p>这里不需要重写证明，只需说明本节的证明主要训练了哪些可迁移的动作。</p>
+<hr>
+<h2 id="5-节末小结的基本结构"><a href="#5-节末小结的基本结构" class="headerlink" title="5. 节末小结的基本结构"></a>5. 节末小结的基本结构</h2><p>下面是一个参考用的模板。请注意，不是每一节都必须把六项写成独立标题。内容较短时，可以合并成两三段。</p>
+<ol>
+<li><strong>本节的主线任务</strong>；</li>
+<li><strong>各节的核心术语与记号</strong>；</li>
+<li><strong>结果的位置</strong>；</li>
+<li><strong>定理的数学作用</strong>；</li>
+<li><strong>证明技术</strong>；</li>
+<li><strong>习题前检查</strong>。</li>
+</ol>
+<hr>
+<h1 id="六、习题"><a href="#六、习题" class="headerlink" title="六、习题"></a>六、习题</h1><p>习题可以分为：</p>
+<ul>
+<li>识别题；</li>
+<li>计算题；</li>
+<li>构造题；</li>
+<li>基本证明题；</li>
+<li>补充引理；</li>
+<li>条件辨析题；</li>
+<li>反例题；</li>
+<li>推广题；</li>
+<li>综合题。</li>
+</ul>
+<p>习题承担的功能包括：</p>
+<p>$$
+
+\text{熟悉定义}
+\longrightarrow
+\text{训练操作}
+\longrightarrow
+\text{使用定理}
+\longrightarrow
+\text{辨析条件}
+\longrightarrow
+\text{推广结构}.
+
+$$</p>
+<p>不必要求读者在接触新概念后立即独立构造复杂反例。更自然的顺序是：</p>
+<ol>
+<li>观察多个正例；</li>
+<li>计算边界情形；</li>
+<li>识别错误命题；</li>
+<li>在提示下寻找反例；</li>
+<li>最后独立构造反例。</li>
+</ol>
+<hr>
+<h1 id="七、章末小结"><a href="#七、章末小结" class="headerlink" title="七、章末小结"></a>七、章末小结</h1><p>章末小结最容易与章首导引重复。解决办法不是删去章末小结，而是改变它的组织原则：</p>
+<ul>
+<li>章首导引按照<strong>问题和阅读路线</strong>组织；</li>
+<li>章末小结按照<strong>知识结构和回查需求</strong>组织。</li>
+</ul>
+<p>因此，章末小结不必再次完整叙述本章是怎样一步步展开的，也不必承担下一章的导引任务。</p>
+<hr>
+<h2 id="1-最小复习清单"><a href="#1-最小复习清单" class="headerlink" title="1. 最小复习清单"></a>1. 最小复习清单</h2><p>章末小结应帮助读者在较长时间以后迅速恢复对本章的印象。</p>
+<p>清单可以包括：</p>
+<ul>
+<li>核心对象；</li>
+<li>关键定义；</li>
+<li>重要记号；</li>
+<li>主要定理；</li>
+<li>重要等价条件；</li>
+<li>标准构造；</li>
+<li>典型反例；</li>
+<li>主要证明技术。</li>
+</ul>
+<p>不必为每个术语重新写完整定义，但可以附上一句识别提示。其目标是：</p>
+<blockquote>
+<p>读者看到名称后至少能够回忆大意；若不能，就能立即知道应回正文何处查找。</p>
+</blockquote>
+<hr>
+<h2 id="2-最小依赖关系"><a href="#2-最小依赖关系" class="headerlink" title="2. 最小依赖关系"></a>2. 最小依赖关系</h2><p>如下简短的定理依赖链是必要的：</p>
+<p>$$
+
+\text{定义 A}
+\longrightarrow
+\text{引理 B}
+\longrightarrow
+\text{定理 C}
+\longrightarrow
+\text{推论 D}.
+
+$$</p>
+<p>这与章首导引有着明显的区别：前者是<strong>叙事性的</strong>，说明“为什么这样发展”；后者是<strong>工具性的</strong>，说明“回查某个结果需要哪些前置内容”。</p>
+<hr>
+<h2 id="3-回收习题"><a href="#3-回收习题" class="headerlink" title="3. 回收习题"></a>3. 回收习题</h2><p>章末小结区别于章首导引的一个重要来源，是它能够利用习题所得的经验。可以按功能归纳：</p>
+<ul>
+<li>哪些习题提供了正文定理的标准实例；</li>
+<li>哪些习题补充了正文省略的引理；</li>
+<li>哪些习题说明条件不可删去；</li>
+<li>哪些习题给出了反例；</li>
+<li>哪些习题推广了正文结论；</li>
+<li>哪些习题展示了算法或计算模型。</li>
+</ul>
+<p>不必逐题评论，也不应把章末小结写成答案摘要。只需回收那些真正改变本章知识结构的题目。</p>
+<hr>
+<h2 id="4-回查索引"><a href="#4-回查索引" class="headerlink" title="4. 回查索引"></a>4. 回查索引</h2><p>章末小结设置了索引，用于方便复习时快速查询重要的内容：</p>
+<ul>
+<li>想复习某个定义，应回看哪里；</li>
+<li>想复习某种证明技术，应回看哪条定理；</li>
+<li>想看标准例子或反例，应回看哪个例题或习题；</li>
+<li>想了解某种推广，应回看哪条注记。</li>
+</ul>
+<p>这使章末小结从“总结性散文”转变为真正可用的复习工具。</p>
+<hr>
+<h2 id="5-章节的边界"><a href="#5-章节的边界" class="headerlink" title="5. 章节的边界"></a>5. 章节的边界</h2><p>新一章的导引可以从自己的核心问题出发，而不必依附上一章的结尾。因此，需要引入新工具的必要性，不需要放在章末小结里，不过可以保留一句化作为本章的<strong>边界</strong>：”本章解决了……，但尚未讨论……”，这主要是用于说明当前理论的范围，而不是详细预告下一章。</p>
+<hr>
+<h1 id="八、证明与证明概要"><a href="#八、证明与证明概要" class="headerlink" title="八、证明与证明概要"></a>八、证明与证明概要</h1><p>结合先前关于证明的讨论，可以把证明内容分配到三个位置。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><ul>
+<li>准确的证明；</li>
+<li>证明策略；</li>
+<li>必要的技术细节；</li>
+<li>构造或算法；</li>
+<li>关键引理。</li>
+</ul>
+<h2 id="节末小结"><a href="#节末小结" class="headerlink" title="节末小结"></a>节末小结</h2><ul>
+<li>证明骨架；</li>
+<li>可迁移的证明技术；</li>
+<li>为什么选择该证明方法；</li>
+<li>哪个步骤最关键。</li>
+</ul>
+<h2 id="章末小结"><a href="#章末小结" class="headerlink" title="章末小结"></a>章末小结</h2><ul>
+<li>本章训练的证明方法；</li>
+<li>典型证明所在位置；</li>
+<li>哪些技术以后会反复使用。</li>
+</ul>
+<p>这样既避免正文被过多元叙述打断，也避免小结只保存结论而丢失证明经验。</p>
+<p>注意，对于算法性证明而言，</p>
+<p>$$
+
+\text{存在性证明}
+\neq
+\text{构造性证明}
+\neq
+\text{可执行算法}.
+
+$$</p>
+<p>附加伪代码之前，应说明输入、输出、可执行步骤和终止依据。若只有构造思想而没有有效性条件，宜称为“构造过程”或“证明概要”，不宜直接称为算法。</p>
+<hr>
+<h1 id="九、章节模板"><a href="#九、章节模板" class="headerlink" title="九、章节模板"></a>九、章节模板</h1><h2 id="章首导引"><a href="#章首导引" class="headerlink" title="章首导引"></a>章首导引</h2><ol>
+<li>具体或历史起点；</li>
+<li>本章核心问题；</li>
+<li>现有工具的不足；</li>
+<li>本章主线和核心思想；</li>
+<li>前置知识；</li>
+<li>全章有效的符号约定；</li>
+<li>学习要求；</li>
+<li>阅读路线；</li>
+<li>本章在整体笔记中的位置；</li>
+<li>对后续发展的简短预告。</li>
+</ol>
+<h2 id="每节开头"><a href="#每节开头" class="headerlink" title="每节开头"></a>每节开头</h2><ol>
+<li>上一部分留下的问题；</li>
+<li>本节引入的对象或方法；</li>
+<li>本节的主要目标；</li>
+<li>必要的局部符号约定。</li>
+</ol>
+<h2 id="正文-1"><a href="#正文-1" class="headerlink" title="正文"></a>正文</h2><ol>
+<li>定义和例子；</li>
+<li>引理、定理、推论；</li>
+<li>证明和构造；</li>
+<li>警示、注记、约定；</li>
+<li>必要的算法和伪代码；</li>
+<li>反例与边界情形。</li>
+</ol>
+<h2 id="节末小结-1"><a href="#节末小结-1" class="headerlink" title="节末小结"></a>节末小结</h2><ol>
+<li>本节主线；</li>
+<li>核心术语与记号；</li>
+<li>各项结果在本节中的位置；</li>
+<li>核心定理的数学作用；</li>
+<li>证明技术；</li>
+<li>习题前检查。</li>
+</ol>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><p>按照学习梯度安排：</p>
+<p>$$
+
+\text{识别}
+\to
+\text{计算}
+\to
+\text{基本证明}
+\to
+\text{综合应用}
+\to
+\text{反例与推广}.
+
+$$</p>
+<h2 id="章末小结-1"><a href="#章末小结-1" class="headerlink" title="章末小结"></a>章末小结</h2><ol>
+<li>最小复习清单；</li>
+<li>核心定义和定理索引；</li>
+<li>最小依赖关系；</li>
+<li>证明技术清单；</li>
+<li>习题回收；</li>
+<li>常见混淆点；</li>
+<li>正文回查索引；</li>
+<li>可选的本章边界说明。</li>
+</ol>
+<hr>
+<h1 id="十、总结"><a href="#十、总结" class="headerlink" title="十、总结"></a>十、总结</h1><p>整套方案最核心的经验可以压缩成六句话：</p>
+<ol>
+<li><strong>章首导引按问题和阅读路线组织，不按目录逐节复述。</strong></li>
+<li><strong>详细的局部动机放在各节开头，章首只保留全章层面的关键转折。</strong></li>
+<li><strong>正文负责建立数学内容，节末小结负责解释这些内容在局部论证中的位置。</strong></li>
+<li><strong>习题前理解定理的数学作用，习题后回收定理的实例、反例和推广。</strong></li>
+<li><strong>章末小结按复习和回查需求组织，不再完整重述写作脉络。</strong></li>
+<li><strong>下一章的必要性原则上由下一章导引说明，而不是由上一章小结提前承担。</strong></li>
+</ol>
+<p>整体结构如下：</p>
+<p><img src="https://img.yukina-math.top/2026/image-20260828205140402.png" alt="image-20260828205140402" loading="lazy"></p>
+<p>最重要的是下面这个闭环：</p>
+<p>$$
+
+\boxed{
+\text{导引(导航)}
+\quad\rightarrow\quad
+\text{正文(发展)}
+\quad\rightarrow\quad
+\text{小结(定位)}
+\quad\rightarrow\quad
+\text{习题(检验,补充)}
+\quad\longrightarrow\quad
+\text{章末小结(索引)}
+}
+
+$$</p>
 ]]></content>
       <tags>
-        <tag>测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数学环境测试</title>
-    <url>/posts/math-env-test.html</url>
-    <content><![CDATA[<p>本文测试数学环境体系：包括定义、定理、引理、证明等环境的渲染，以及环境的小标题、编号与跨文章引用功能。摘要部分展示在首页，正文需点击「阅读全文」查看。</p>
-<span id="more"></span>
-
-<div class="math-env env-definition" id="dirset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">上定向集</span></div><div class="env-body"><p>若偏序集 $I$ 满足：对任意 $i, j \in I$，存在 $k \in I$ 使得 $i \le k$ 且 $j \le k$，则称 $I$ 为上定向集。</p>
-</div></div>
-
-<div class="math-env env-theorem" id="thm1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">第一同构定理</span></div><div class="env-body"><p>若 $\varphi: G \to H$ 是群同态，则 $G&#x2F;\ker\varphi \cong \operatorname{Im}\varphi$。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>由 <a class="env-ref" href="#dirset">定义 1</a> 的记号，定义映射 $\bar\varphi: G&#x2F;\ker\varphi \to H$，$\bar\varphi(g\ker\varphi) &#x3D; \varphi(g)$。易验证其良定义且为单射，满射显然，故为同构。</p>
-</div></div>
-
-<div class="math-env env-corollary" id="env-corollary-1"><div class="env-head"><span class="env-name">推论</span><span class="env-num">1</span></div><div class="env-body"><p>若 $\varphi: G \to H$ 是满同态，则 $H \cong G&#x2F;\ker\varphi$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span></div><div class="env-body"><p>由 <a class="env-ref" href="#thm1">定理 1</a> 可得：有限群的同态像必为有限群。</p>
-</div></div>
-
-<div class="math-env env-lemma" id="pidnoeth"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span><span class="env-title">主理想整环是诺特环</span></div><div class="env-body"><p>若 $R$ 是主理想整环，则 $R$ 的每个理想都是有限生成的。</p>
-</div></div>
-]]></content>
-      <tags>
-        <tag>测试</tag>
+        <tag>数学杂谈</tag>
+        <tag>笔记</tag>
+        <tag>教学</tag>
       </tags>
   </entry>
 </search>
