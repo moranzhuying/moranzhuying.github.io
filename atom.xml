@@ -10,137 +10,57 @@
   <rights>All rights reserved 2026, 逐影</rights>
   <subtitle>数学笔记与随想</subtitle>
   <title>Yukina's Blog</title>
-  <updated>2026-08-29T15:42:57.716Z</updated>
+  <updated>2026-08-30T00:04:24.515Z</updated>
   <entry>
     <author>
       <name>逐影</name>
     </author>
-    <id>https://www.yukina-math.top/5.html</id>
-    <link href="https://www.yukina-math.top/5.html"/>
-    <published>2026-08-29T15:42:57.000Z</published>
-    <title>2026-08-29 笔记</title>
-    <updated>2026-08-29T15:42:57.716Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>逐影</name>
-    </author>
+    <category term="测试" scheme="https://www.yukina-math.top/tags/test/"/>
     <content>
-      <![CDATA[<h2 id="一、tikz-交换图"><a href="#一、tikz-交换图" class="headerlink" title="一、tikz 交换图"></a>一、tikz 交换图</h2><h3 id="1-1-正文中的交换图"><a href="#1-1-正文中的交换图" class="headerlink" title="1.1 正文中的交换图"></a>1.1 正文中的交换图</h3><p><img src="/images/comm-diag-square.svg" alt="方形交换图" loading="lazy"></p><h3 id="1-2-定理环境内的交换图"><a href="#1-2-定理环境内的交换图" class="headerlink" title="1.2 定理环境内的交换图"></a>1.2 定理环境内的交换图</h3><div class="math-env env-theorem" id="env-theorem-1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">五引理中的交换图</span></div><div class="env-body"><p>若下图可交换且行正合：</p><p><img src="/images/comm-diag-five.svg" alt="五引理交换图" loading="lazy"></p><p>则当 $f$ 与 $h$ 都是同构时，$g$ 也是同构。</p></div></div><h2 id="二、定理环境内插入图片"><a href="#二、定理环境内插入图片" class="headerlink" title="二、定理环境内插入图片"></a>二、定理环境内插入图片</h2><div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">含图的注记</span></div><div class="env-body"><p>下图来自 R2 图床，验证图片在环境内正常显示：</p><p><img src="https://img.yukina-math.top/2026/20260829101906938.png" alt="测试图" loading="lazy"></p></div></div><h2 id="三、引用外部链接"><a href="#三、引用外部链接" class="headerlink" title="三、引用外部链接"></a>三、引用外部链接</h2><ul><li><a href="https://hexo.io/zh-cn/docs/">Hexo 官方文档</a></li><li><a href="https://theme-next.js.org/">NexT 主题</a></li><li><a href="https://q.uiver.app/">quiver 交换图工具</a></li></ul><h2 id="五、符号宏测试（移植自-structure-sty）"><a href="#五、符号宏测试（移植自-structure-sty）" class="headerlink" title="五、符号宏测试（移植自 structure.sty）"></a>五、符号宏测试（移植自 structure.sty）</h2><p>数集：$\R$、$\Z$、$\Q$、$\C$、$\F$、$\K$</p><p>态射与群：$\Hom_R(M, N)$、$\GL_n(k)$、$\SL_n(k)$、$\id_M$、$\Aut(G)$</p><p>线性代数：$\rank A &#x3D; \tr A$、$\dim \ker f$、$\im \varphi$、$\coker f$</p><p>大算子：$\bigast_{i \in I} A_i$、$\bigboxplus_{i&#x3D;1}^{n} A_i$</p><h2 id="四、表格"><a href="#四、表格" class="headerlink" title="四、表格"></a>四、表格</h2><h3 id="4-1-短表格"><a href="#4-1-短表格" class="headerlink" title="4.1 短表格"></a>4.1 短表格</h3><table><thead><tr><th>概念</th><th>定义</th></tr></thead><tbody><tr><td>理想</td><td>加法子群且对乘法封闭</td></tr><tr><td>主理想</td><td>单个元素生成的理想</td></tr><tr><td>素理想</td><td>商环为整环的理想</td></tr></tbody></table><p><a id="tbl1"></a></p><h3 id="4-2-长表格（见-表格-1-说明）"><a href="#4-2-长表格（见-表格-1-说明）" class="headerlink" title="4.2 长表格（见 表格 1 说明）"></a>4.2 长表格（见 <a href="#tbl1">表格 1</a> 说明）</h3><table><thead><tr><th>序号</th><th>环 $R$</th><th>性质</th><th>备注</th></tr></thead><tbody><tr><td>1</td><td>$\mathbb{Z}$</td><td>主理想整环</td><td>PID</td></tr><tr><td>2</td><td>$\mathbb{Z}[x]$</td><td>唯一分解整环</td><td>非 PID</td></tr><tr><td>3</td><td>$k[x_1,\dots,x_n]$</td><td>诺特环</td><td>Hilbert 基定理</td></tr><tr><td>4</td><td>$\mathbb{Z}[\sqrt{-5}]$</td><td>整环</td><td>非 UFD</td></tr><tr><td>5</td><td>$k[[x]]$</td><td>局部诺特环</td><td>完备离散赋值环</td></tr><tr><td>6</td><td>$\mathbb{Q}$</td><td>域</td><td>平凡理想</td></tr><tr><td>7</td><td>$\mathbb{Z}&#x2F;n\mathbb{Z}$</td><td>不一定整环</td><td>$n$ 合数时有零因子</td></tr><tr><td>8</td><td>$M_n(k)$</td><td>非交换环</td><td>矩阵环</td></tr><tr><td>9</td><td>$\mathbb{H}$</td><td>除环</td><td>四元数</td></tr><tr><td>10</td><td>$\mathcal{O}_K$</td><td>戴德金整环</td><td>代数整数环</td></tr><tr><td>11</td><td>$k[x,y]&#x2F;(xy)$</td><td>非整环</td><td>有零因子</td></tr><tr><td>12</td><td>$\mathbb{F}_p$</td><td>有限域</td><td>特征 $p$</td></tr></tbody></table><p>如上表所示，<a href="#tbl1">表格 1</a> 汇总了常见环的例子。</p>]]>
+      <![CDATA[<p>本文测试 LaTeX 模板移植的符号宏、公式排版、表格与交换图：数集记号 $\R, \Z, \Q$、算子 $\Hom, \id, \GL$ 以及大算子 $\bigstar$ 等。摘要只展示这句话，正文需点开查看。</p><span id="more"></span><h2 id="一、符号宏"><a href="#一、符号宏" class="headerlink" title="一、符号宏"></a>一、符号宏</h2><p>数集：$\N \subset \Z \subset \Q \subset \R \subset \C$，以及 $\F_q$ 与 $\K$。</p><p>算子：$\Hom_R(M, N)$、$\id_M$、$\Aut(G)$、$\GL_n(k)$、$\rank A &#x3D; \tr A$、$\im \varphi$、$\coker f$。</p><p>大算子：$\bigstar_{i \in I} A_i$、$\bigoplus_{i&#x3D;1}^{n} A_i$。</p><h2 id="二、表格"><a href="#二、表格" class="headerlink" title="二、表格"></a>二、表格</h2><table><thead><tr><th>概念</th><th>记号</th><th>说明</th></tr></thead><tbody><tr><td>主理想</td><td>$(a)$</td><td>由单个元素生成的理想</td></tr><tr><td>素理想</td><td>$\mathfrak{p}$</td><td>$ab \in \mathfrak{p} \Rightarrow a \in \mathfrak{p}$ 或 $b \in \mathfrak{p}$</td></tr><tr><td>极大理想</td><td>$\mathfrak{m}$</td><td>非真且不被其他真理想包含</td></tr></tbody></table><h2 id="三、交换图（本地-SVG）"><a href="#三、交换图（本地-SVG）" class="headerlink" title="三、交换图（本地 SVG）"></a>三、交换图（本地 SVG）</h2><p>下方是五引理式的交换图（SVG 示例，<code>currentColor</code> 适配明暗模式）：</p><p><img src="/images/comm-diag-five.svg" alt="五引理交换图" loading="lazy"></p>]]>
     </content>
-    <id>https://www.yukina-math.top/posts/test2.html</id>
-    <link href="https://www.yukina-math.top/posts/test2.html"/>
-    <published>2026-08-29T12:22:00.000Z</published>
+    <id>https://www.yukina-math.top/posts/math-format-test.html</id>
+    <link href="https://www.yukina-math.top/posts/math-format-test.html"/>
+    <published>2026-08-30T00:01:00.000Z</published>
     <summary>
-      <![CDATA[<p>一、tikz 交换图 1.1 正文中的交换图 1.2 定理环境内的交换图 定理 1 五引理中的交换图 若下图可交换且行正合： 则当 $f$ 与 $h$ 都是同构时，$g$ 也是同构。 二、定理环境内插…</p>]]>
+      <![CDATA[<p>本文测试 LaTeX 模板移植的符号宏、公式排版、表格与交换图：数集记号 $\R, \Z, \Q$、算子 $\Hom, \id, \GL$ 以及大算子 $\bigstar$ 等。摘要只展示这句话，正文需点开查看。</p>]]>
     </summary>
-    <title>功能测试二：交换图/图片/链接/表格</title>
-    <updated>2026-08-29T15:20:38.225Z</updated>
+    <title>公式与排版测试</title>
+    <updated>2026-08-30T00:04:24.515Z</updated>
   </entry>
   <entry>
     <author>
       <name>逐影</name>
     </author>
+    <category term="测试" scheme="https://www.yukina-math.top/tags/test/"/>
     <content>
-      <![CDATA[<h2 id="一、同一文章内引用"><a href="#一、同一文章内引用" class="headerlink" title="一、同一文章内引用"></a>一、同一文章内引用</h2><div class="math-env env-definition" id="dirset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">上定向集</span></div><div class="env-body"><p>设 $I$ 是偏序集，若对任意 $i, j \in I$ 存在 $k$ 使 $i, j \le k$，则称 $I$ 是上定向集。</p></div></div><div class="math-env env-theorem" id="pid1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">主理想整环的每个理想都是主理想</span></div><div class="env-body"><p>设 $R$ 是主理想整环，$\mathfrak{a} \subseteq R$ 是理想，则存在 $a \in R$ 使 $\mathfrak{a} &#x3D; (a)$。</p></div></div><div class="math-env env-lemma" id="lem1"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span><span class="env-title">主理想整环是诺特环</span></div><div class="env-body"><p>若 $R$ 是主理想整环，则 $R$ 是诺特环。</p></div></div><div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span></div><div class="env-body"><p>由 <a class="env-ref" href="#pid1">定理 1</a> 与 <a class="env-ref" href="#dirset">定义 1</a> 可知，上定向集的定义与主理想的性质可以结合使用；<a class="env-ref" href="#lem1">引理 1</a> 是 <a class="env-ref" href="#pid1">定理 1</a> 的直接推论。</p></div></div><h2 id="二、跨文章引用"><a href="#二、跨文章引用" class="headerlink" title="二、跨文章引用"></a>二、跨文章引用</h2><div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span></div><div class="env-body"><p>「数学环境测试」一文中的 <a class="env-ref" href="/posts/env-test.html#thm1">定理 1</a> 给出了第一同构定理 $G &#x2F; \ker \varphi \cong \operatorname{Im} \varphi$。</p></div></div><h2 id="三、插入图片"><a href="#三、插入图片" class="headerlink" title="三、插入图片"></a>三、插入图片</h2><p>默认大小（来自 R2 图床）：</p><p><img src="https://img.yukina-math.top/2026/20260829101906938.png" alt="交换代数示意图" loading="lazy"></p><p>控制宽度（300px）：</p><img src="https://img.yukina-math.top/2026/20260829101906938.png" width="300" alt="缩小显示"><h2 id="四、插入-PDF-文件"><a href="#四、插入-PDF-文件" class="headerlink" title="四、插入 PDF 文件"></a>四、插入 PDF 文件</h2><p>物理复习笔记（R2 托管，iframe 嵌入）：</p><iframe src="https://img.yukina-math.top/2026/physics_review_ex.pdf#toolbar=1&navpanes=1&view=FitH" style="width:100%;height:500px;border:0" loading="lazy"></iframe>]]>
+      <![CDATA[<p>本文测试数学环境体系：包括定义、定理、引理、证明等环境的渲染，以及环境的小标题、编号与跨文章引用功能。摘要部分展示在首页，正文需点击「阅读全文」查看。</p><span id="more"></span><div class="math-env env-definition" id="dirset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">上定向集</span></div><div class="env-body"><p>若偏序集 $I$ 满足：对任意 $i, j \in I$，存在 $k \in I$ 使得 $i \le k$ 且 $j \le k$，则称 $I$ 为上定向集。</p></div></div><div class="math-env env-theorem" id="thm1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">第一同构定理</span></div><div class="env-body"><p>若 $\varphi: G \to H$ 是群同态，则 $G&#x2F;\ker\varphi \cong \operatorname{Im}\varphi$。</p></div></div><div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>由 <a class="env-ref" href="#dirset">定义 1</a> 的记号，定义映射 $\bar\varphi: G&#x2F;\ker\varphi \to H$，$\bar\varphi(g\ker\varphi) &#x3D; \varphi(g)$。易验证其良定义且为单射，满射显然，故为同构。</p></div></div><div class="math-env env-corollary" id="env-corollary-1"><div class="env-head"><span class="env-name">推论</span><span class="env-num">1</span></div><div class="env-body"><p>若 $\varphi: G \to H$ 是满同态，则 $H \cong G&#x2F;\ker\varphi$。</p></div></div><div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span></div><div class="env-body"><p>由 <a class="env-ref" href="#thm1">定理 1</a> 可得：有限群的同态像必为有限群。</p></div></div><div class="math-env env-lemma" id="pidnoeth"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span><span class="env-title">主理想整环是诺特环</span></div><div class="env-body"><p>若 $R$ 是主理想整环，则 $R$ 的每个理想都是有限生成的。</p></div></div>]]>
     </content>
-    <id>https://www.yukina-math.top/posts/test-full.html</id>
-    <link href="https://www.yukina-math.top/posts/test-full.html"/>
-    <published>2026-08-29T09:25:00.000Z</published>
+    <id>https://www.yukina-math.top/posts/math-env-test.html</id>
+    <link href="https://www.yukina-math.top/posts/math-env-test.html"/>
+    <published>2026-08-30T00:00:00.000Z</published>
     <summary>
-      <![CDATA[<p>一、同一文章内引用 定义 1 上定向集 设 $I$ 是偏序集，若对任意 $i, j \in I$ 存在 $k$ 使 $i, j \le k$，则称 $I$ 是上定向集。 定理 1 主理想整环的每个理想…</p>]]>
-    </summary>
-    <title>全面功能测试</title>
-    <updated>2026-08-29T14:16:43.957Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>逐影</name>
-    </author>
-    <content>
-      <![CDATA[<div class="math-env env-definition" id="env-definition-1"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">上定向集，下定向集</span></div><div class="env-body"><p>环 $R$ 的一个理想 $\mathfrak{a}$ 是 $R$ 的加法子群，且对任意 $r \in R$、$a \in \mathfrak{a}$，有 $ra \in \mathfrak{a}$。</p></div></div><div class="math-env env-axiom" id="env-axiom-1"><div class="env-head"><span class="env-name">公理</span><span class="env-num">1</span></div><div class="env-body"><p>选择公理（Zorn 引理形式）。</p></div></div><div class="math-env env-theorem" id="thm1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span><span class="env-title">第一同构定理</span></div><div class="env-body"><p>如果 $\varphi: G \to H$ 是群同态，则 $G &#x2F; \ker \varphi \cong \operatorname{Im} \varphi$。</p></div></div><div class="math-env env-theorem" id="thm2"><div class="env-head"><span class="env-name">定理</span><span class="env-num">2</span></div><div class="env-body"><p>如果 $R$ 是主理想整环，则 $R$ 的每个理想都是主理想。</p></div></div><div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span></div><div class="env-body"><p>由 <a class="env-ref" href="#thm1">定理 1</a> 可得：$\ker \varphi$ 的陪集与 $\operatorname{Im} \varphi$ 的元素一一对应。</p></div></div><div class="math-env env-lemma" id="env-lemma-1.2"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1.2</span></div><div class="env-body"><p>手动编号示例。</p></div></div><div class="math-env env-proposition" id="env-proposition-1"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span></div><div class="env-body"><p>每个主理想整环都是诺特环。</p></div></div><div class="math-env env-corollary" id="env-corollary-1"><div class="env-head"><span class="env-name">推论</span><span class="env-num">1</span></div><div class="env-body"><p>有限生成模的分解性质。</p></div></div><div class="math-env env-hypothesis" id="env-hypothesis-1"><div class="env-head"><span class="env-name">假设</span><span class="env-num">1</span></div><div class="env-body"><p>$A$ 是诺特环，$\mathfrak{a}$ 是其理想。</p></div></div><div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span></div><div class="env-body"><p>此结论仅在交换环情形成立，非交换情形不适用。</p></div></div><div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\mathfrak{a}$ 是 $R$ 的理想，取 $a \in \mathfrak{a}$……</p></div></div><div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span></div><div class="env-body"><p>这个结论可以推广到更一般的情形。</p></div></div><div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span></div><div class="env-body"><p>$\mathbb{Z}$ 是主理想整环。</p></div></div><div class="math-env env-exercise" id="env-exercise-1"><div class="env-head"><span class="env-name">练习</span><span class="env-num">1</span></div><div class="env-body"><p>证明 $\mathbb{Z}[x]$ 不是主理想整环。</p></div></div>]]>
-    </content>
-    <id>https://www.yukina-math.top/posts/env-test.html</id>
-    <link href="https://www.yukina-math.top/posts/env-test.html"/>
-    <published>2026-08-29T07:58:00.000Z</published>
-    <summary>
-      <![CDATA[<p>定义 1 上定向集，下定向集 环 $R$ 的一个理想 $\mathfrak{a}$ 是 $R$ 的加法子群，且对任意 $r \in R$、$a \in \mathfrak{a}$，有 $ra \in …</p>]]>
+      <![CDATA[<p>本文测试数学环境体系：包括定义、定理、引理、证明等环境的渲染，以及环境的小标题、编号与跨文章引用功能。摘要部分展示在首页，正文需点击「阅读全文」查看。</p>]]>
     </summary>
     <title>数学环境测试</title>
-    <updated>2026-08-29T14:16:43.954Z</updated>
+    <updated>2026-08-30T00:15:22.284Z</updated>
   </entry>
   <entry>
     <author>
       <name>逐影</name>
     </author>
-    <category term="笔记" scheme="https://www.yukina-math.top/categories/notes/"/>
-    <category term="代数学" scheme="https://www.yukina-math.top/categories/%E4%BB%A3%E6%95%B0%E5%AD%A6/"/>
-    <category term="交换代数" scheme="https://www.yukina-math.top/categories/%E4%BB%A3%E6%95%B0%E5%AD%A6/%E4%BA%A4%E6%8D%A2%E4%BB%A3%E6%95%B0/"/>
-    <category term="交换代数" scheme="https://www.yukina-math.top/tags/%E4%BA%A4%E6%8D%A2%E4%BB%A3%E6%95%B0/"/>
+    <category term="李代数" scheme="https://www.yukina-math.top/tags/lie-alg/"/>
+    <category term="李群" scheme="https://www.yukina-math.top/tags/lie-grp/"/>
     <content>
-      <![CDATA[<p>这是用来测试「笔记」页面的测试文章。</p><p><strong>定义</strong>设$R$ 是环， $\mathfrak{a}$ 是 $R$ 的加法子群。</p><ul><li>如果$R\mathfrak{a}\subseteq\mathfrak{a}$，则称$\mathfrak{a}$是$R$的左理想。</li><li>如果$\mathfrak{a}R\subseteq\mathfrak{a}$，则称$\mathfrak{a}$是$R$的右理想。</li><li>如果$\mathfrak{a}$既是$R$的左理想，又是$R$的右理想，则称之为$R$的双边理想。</li></ul>]]>
+      <![CDATA[<p>这是短的摘要。</p><span id="more"></span><p>这是正文</p>]]>
     </content>
-    <id>https://www.yukina-math.top/3.html</id>
-    <link href="https://www.yukina-math.top/3.html"/>
-    <published>2026-08-29T05:11:00.000Z</published>
+    <id>https://www.yukina-math.top/posts/2026-08-29-notes.html</id>
+    <link href="https://www.yukina-math.top/posts/2026-08-29-notes.html"/>
+    <published>2026-08-29T15:42:57.000Z</published>
     <summary>
-      <![CDATA[<p>这是用来测试「笔记」页面的测试文章。 定义 设$R$ 是环， $\mathfrak{a}$ 是 $R$ 的加法子群。 如果$R\mathfrak{a}\subseteq\mathfrak{a}$，则称…</p>]]>
+      <![CDATA[<p>这是短的摘要。</p>]]>
     </summary>
-    <title>交换代数笔记：环与理想</title>
-    <updated>2026-08-29T14:16:43.956Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>逐影</name>
-    </author>
-    <category term="书评" scheme="https://www.yukina-math.top/categories/reviews/"/>
-    <category term="读书" scheme="https://www.yukina-math.top/tags/%E8%AF%BB%E4%B9%A6/"/>
-    <content>
-      <![CDATA[<p>这是用来测试「书评」页面的测试文章。</p><p>Bourbaki 的《数学原本》第一卷以集合论为基础，采用公理化方法。读后笔记待补充。</p>]]>
-    </content>
-    <id>https://www.yukina-math.top/4.html</id>
-    <link href="https://www.yukina-math.top/4.html"/>
-    <published>2026-08-29T05:11:00.000Z</published>
-    <summary>
-      <![CDATA[<p>这是用来测试「书评」页面的测试文章。</p>
-<p>Bourbaki]]>
-    </summary>
-    <title>《数学原本》第一卷读后</title>
-    <updated>2026-08-29T14:16:43.956Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>逐影</name>
-    </author>
-    <category term="测试标签1" scheme="https://www.yukina-math.top/tags/%E6%B5%8B%E8%AF%95%E6%A0%87%E7%AD%BE1/"/>
-    <category term="测试标签2" scheme="https://www.yukina-math.top/tags/%E6%B5%8B%E8%AF%95%E6%A0%87%E7%AD%BE2/"/>
-    <id>https://www.yukina-math.top/2.html</id>
-    <link href="https://www.yukina-math.top/2.html"/>
-    <published>2026-08-28T15:16:49.000Z</published>
-    <title>测试标题</title>
-    <updated>2026-08-29T14:16:43.959Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>逐影</name>
-    </author>
-    <category term="笔记" scheme="https://www.yukina-math.top/categories/notes/"/>
-    <category term="代数学" scheme="https://www.yukina-math.top/categories/%E4%BB%A3%E6%95%B0%E5%AD%A6/"/>
-    <category term="表示论" scheme="https://www.yukina-math.top/categories/%E4%BB%A3%E6%95%B0%E5%AD%A6/%E8%A1%A8%E7%A4%BA%E8%AE%BA/"/>
-    <category term="分析学" scheme="https://www.yukina-math.top/categories/%E5%88%86%E6%9E%90%E5%AD%A6/"/>
-    <category term="实值函数的极限" scheme="https://www.yukina-math.top/categories/%E5%88%86%E6%9E%90%E5%AD%A6/%E5%AE%9E%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90/"/>
-    <category term="抽象代数" scheme="https://www.yukina-math.top/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/"/>
-    <category term="表示论" scheme="https://www.yukina-math.top/tags/%E8%A1%A8%E7%A4%BA%E8%AE%BA/"/>
-    <content>
-      <![CDATA[<p>你看得到后面的内容吗?</p><span id="more"></span><p>测试内容</p>]]>
-    </content>
-    <id>https://www.yukina-math.top/1.html</id>
-    <link href="https://www.yukina-math.top/1.html"/>
-    <published>2026-06-18T03:45:14.000Z</published>
-    <summary>
-      <![CDATA[<p>你看得到后面的内容吗?</p>]]>
-    </summary>
-    <title>测试</title>
-    <updated>2026-08-29T14:16:43.958Z</updated>
+    <title>2026-08-29 笔记</title>
+    <updated>2026-08-30T00:16:12.850Z</updated>
   </entry>
 </feed>
