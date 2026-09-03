@@ -1,6 +1,337 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>回归分析(1)</title>
+    <url>/posts/applied-regression-analysis-notes-01.html</url>
+    <content><![CDATA[<p>参考教材:何晓群《应用回归分析(R语言版)》</p>
+<span id="more"></span>
+
+<p>Chapter 2 一元线性回归模型</p>
+<p>概览:</p>
+<ul>
+<li>估计参数$\beta_{0},\beta_{1}$(点估计);</li>
+<li>怎么估计这俩参数;</li>
+<li>OLSE和MLE怎么用,了解基本思想;</li>
+<li>参数的“好的”性质</li>
+<li>检验”好不好”、“是否可用”;</li>
+<li>随机误差项$\varepsilon$的分析;</li>
+<li>两种估计:点估计、<strong>区间估计</strong>;</li>
+<li>分析微扰项以后,判断好不好、能不能用.</li>
+</ul>
+<p>(1)回归方程的写法:要么不写epsilon,要么写带hat的.</p>
+<p>hat是具体的估计值,不是真实值;</p>
+<p>好的回归模型:即便样本有出入,两个回归方程的变化不大(稳定性比较好).</p>
+]]></content>
+      <tags>
+        <tag>应用回归分析</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bertsimas《线性优化导论》读书笔记（1）</title>
+    <url>/posts/bertsimas-ilo-notes-01.html</url>
+    <content><![CDATA[<p>读Dimitris Bertsimas和John N. Tsitsiklis所写的《Introduction to Linear Optimization》的笔记。</p>
+<span id="more"></span>
+
+<p><strong>记号约定</strong>:</p>
+<ul>
+<li>$M_{1},M_{2},M_{3},N_{1},N_{2}$是有限集,$I=M_{1}\cup M_{2}\cup M_{3}$,$M_{1},M_{2},M_{3}$不能同时为空,$N_{1},N_{2}$不能同时为空.</li>
+<li>装备了标准内积$\langle\cdot,\cdot\rangle$的$\R^{n}$典范等同于装备了Frobenius内积$\langle\cdot,\cdot\rangle:(u,v)\mapsto\operatorname{tr}(u\otimes v)$的$M_{n,1}(\R)$.</li>
+<li>典范等同如下三者:$\R^{n},\underbrace{\R\times\ldots\times\R}_{n},\prod\limits_{i=1}^{n}\R$.</li>
+<li>$c,x\in\R^{n}$,其中$c=(c_{1},\ldots,c_{n}),x=(x_{1},\ldots,x_{n})$.</li>
+<li>$(a_{i})_{i\in M_{1}},(a_{i}^{\prime})_{i\in M_{2}},(a_{i}^{\prime\prime})_{i\in M_{3}}$都是$\R^{n}$中的元素族.</li>
+</ul>
+<div class="math-env env-definition" id="env-definition-1"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">LP问题</span></div><div class="env-body"><p>如下问题称为线性规划(LP)问题:</p>
+<p>$$
+
+\min\quad\langle c,x\rangle,
+\text{s.t.}
+\begin{cases}
+\langle a_{i},x\rangle &\geq b_{i},&\forall i\in M_{1},\\
+\langle a_{i}^{\prime},x\rangle &\leq b_{i},&\forall i\in M_{2},\\
+\langle a_{i},x\rangle &= b_{i},&\forall i\in M_{3},\\
+ x_{i}&\geq 0,&\forall i\in N_{1},\\
+ x_{i}&\leq 0,&\forall i\in N_{2},
+\end{cases}
+
+$$</p>
+<ul>
+<li>$x$叫做决策变量,满足上述约束条件d的$x$叫做该LP问题的可行解,这些可行解构成的集合叫做该LP问题的可行域.</li>
+<li>如果$j\in [1,n]\setminus(N_{1}\cup N_{2})$,则称$x$的第$j$个分量是自由变量.</li>
+<li>映射$f:\R^{n}\times\R^{n}\to\R,(c,x)\mapsto\langle c,x\rangle$叫做这个LP问题的目标函数,它在可行域中的最小值点叫做该LP问题的最优(可行)解.</li>
+<li>如果对每个$K\in\R_{>0}$都存在可行解$x^{\ast}$使得$f(x^{\ast})\leq K$,则称满足这个条件的可行解是无界可行解(或$f$在该点的取值为$-\infty$),(滥用语言)称该LP问题是无界的.</li>
+</ul>
+</div></div>
+
+<blockquote>
+<ul>
+<li>集合$M_{1},M_{2},M_{3}$刻画了约束条件中的序关系,按照大于-小于-等于的顺序来排列约束条件,只是为了说明这一个简单的事实:借助格序群的性质,我们可以把含有不等号的约束条件约化到含有等号的约束条件.</li>
+<li>集合$N_{1},N_{2}$分别刻画了决策变量各个分量是正是负.类似的,我们可以把含有$\leq 0$的分量的决策变量约化为各个分量都$\geq 0$的决策变量.</li>
+</ul>
+<p>借助如上两个步骤,我们就初步完成了对LP问题的约化.</p>
+</blockquote>
+<p>进入下一步的讨论以前,我们首先回顾如下事实:</p>
+<ul>
+<li>设$(P,\leq)$是偏序集,$A\subseteq P$.<ul>
+<li>如果对每个$a\in A$有$[a,+\infty)\subseteq A$,则称$A$向上封闭($A$是$P$中的上集).</li>
+<li>如果对每个$a\in A$有$(-\infty,a]\subseteq A$,则称$A$向下封闭($A$是$P$中的下集).</li>
+<li>$U(A)=\bigcap\limits_{a\in A}[a,+\infty)$是$P$中的上集,称为$A$在$P$中生成的上集.</li>
+<li>$L(A)=\bigcap\limits_{a\in A}(-\infty,a]$是$P$中的下集,称为$A$在$P$中生成的下集.</li>
+<li>当$U(A)\cap L(U(A))\neq\varnothing$时,它一定是单点集,其元素称为$A$的上确界,记作$\sup(A)$.</li>
+<li>当$L(A)\cap U(L(A))\neq\varnothing$时,它一定是单点集,其元素称为$A$的下确界,记作$\inf(A)$.</li>
+<li>当$\sup(a)\in A$时,称之为$A$的最大元,记作$\max(A)$;当$\inf(A)\in A$时,称之为$A$的最大元,记作$\max(A)$.</li>
+<li>当$P$有最大元时,定义$\sup\varnothing=\max(P)$;当$P$有最小元时,定义$\inf\varnothing=\min(P)$.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>上&#x2F;下确界总是<strong>相对于某个偏序集</strong>而言的,扩大偏序集以后,原来的上&#x2F;下确界不一定是新偏序集的上&#x2F;下确界.</p>
+</blockquote>
+<ul>
+<li>在格序群$(G,+,0,\leq)$中,对每个$x\in G$,<ul>
+<li>$x^{+}=\sup(x,0)$称为为$x$的正部,</li>
+<li>$x^{-}=\sup(-x,0)$称为$x$的负部,</li>
+<li>$\left|x\right|=\sup(x,-x)$为$x$的绝对值.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对$x\in G$有$x=x^{+}-x^{-},\left\{x^{+},x^{-}\right\}\subseteq G_{\geq 0},\left|x\right|=x^{+}+x^{-}$.</p>
+</blockquote>
+<p>下面指出怎么对LP问题的条件进行约化.大体的想法是:</p>
+<p>(1)约化变元直至其各个分量都$\geq 0$;</p>
+<p>(2)不要处理绝对值.</p>
+<ul>
+<li>上确界和下确界(特别地,最大值和最小值)的转化:见下图.</li>
+</ul>
+<p><img src="https://img.yukina-math.top/2026/sup-inf-transform.png" loading="lazy"></p>
+<blockquote>
+<p>最(大&#x2F;小)值仅仅是<strong>确界落入集合</strong>中的特殊情形,因此不必刻意单独讨论.</p>
+</blockquote>
+<ul>
+<li>偏序到平凡偏序(即,不等号到等号)的转化:见下图.</li>
+</ul>
+<p><img src="https://img.yukina-math.top/2026/order-trivial-order-transform.png" loading="lazy"></p>
+<ul>
+<li>无符号限制到带符号限制的转化:见下图.</li>
+</ul>
+<p><img src="https://img.yukina-math.top/2026/jordan-riesz-decomposition-in-l-group.png" loading="lazy"></p>
+<p>注意,对每个$x\in\R$,它的正部和负部总是$\geq 0$,并且满足$x^{+}=\frac{1}{2}(x+\left|x\right|)$和$x^{+}=\frac{1}{2}(x-\left|x\right|)$,后面的等式依赖于$\R$的特征是$0$.</p>
+<ul>
+<li>列矩阵写法到矩阵写法的转化</li>
+</ul>
+<p>待补</p>
+<ul>
+<li>绝对值的处理</li>
+</ul>
+<p>令$\left|x\right|=(\left|x_{1}\right|,\ldots,\left|x_{n}\right|)$.考虑下面的问题(P):</p>
+<p>$$
+
+\min\quad\langle c,\left|x\right|\rangle,
+\text{s.t.}
+\begin{cases}
+Ax\geq b,\\
+x\geq 0.
+\end{cases}
+
+$$</p>
+<p>【方法1】Jordan-Riesz Decomposition</p>
+<p>对每个$1\leq i\leq n$,令$u_{i}=x_{i}^{+},v_{i}=x_{i}^{-}$.</p>
+<p>记$u=(u_{1},\ldots,u_{n}),v=(v_{1},\ldots,v_{n}),\tilde{c}=(c_{1},\ldots,c_{n},c_{1},\ldots,c_{n}),\tilde{x}=(u_{1},\ldots,u_{n},v_{1},\ldots,v_{n})$.</p>
+<p>原问题转化为LP问题(Q)</p>
+<p>$$
+
+\min\quad\langle\tilde{c},\tilde{x}\rangle,
+\text{s.t.}
+\begin{cases}
+\begin{bmatrix}
+A&-A
+\end{bmatrix}
+\begin{bmatrix} 
+  u\\
+v
+\end{bmatrix}
+\geq b\\
+\begin{bmatrix} 
+  u\\
+  v
+\end{bmatrix}
+\geq 0
+\end{cases}
+
+$$</p>
+<blockquote>
+<p>注意到$x=u-v$.求解(Q)以后可以得到$u,v$,进一步得到(P)的解$x$.</p>
+</blockquote>
+<p>【方法2】Epigraph</p>
+<p>对每个$1\leq i\leq n$,令$t_{i}=\left|x_{i}\right|$.</p>
+<p>记$t=(t_{1},\ldots,t_{n}),\tilde{c}=(0,\ldots,0,c_{1},\ldots,c_{n}),\tilde{x}=(x_{1},\ldots,x_{n},t_{1},\ldots,t_{n})$.</p>
+<p>原问题转化为LP问题(R)</p>
+<p>$$
+
+\min\quad\langle\tilde{c},\tilde{x}\rangle,
+\text{s.t.}\begin{bmatrix}
+A&O\\
+-I&I\\
+I&I
+\end{bmatrix}
+\begin{bmatrix} 
+x\\
+t
+\end{bmatrix}
+\geq
+\begin{bmatrix}
+b\\
+O\\
+O
+\end{bmatrix}
+
+$$</p>
+<blockquote>
+<p>注意到$x$由$\tilde{x}$的前$n$个分量构成.求解(P)以后可以得到$\tilde{x}$,进一步得到(P)的解$x$.&gt; </p>
+</blockquote>
+<p>接下来我们对刚才的两种做法做严格的讨论.记号约定如下:</p>
+<ul>
+<li>$W=\mathbb R^n$,其正锥为$W_{+}=\R_{\geq 0}^{n}$.</li>
+<li>$\ell_c:W\to\mathbb\R,x\mapsto\langle c,x\rangle$,其中$c\geq 0$.</li>
+<li>$E=W\oplus W,C=W_+\oplus W_+$.</li>
+<li>$\Delta:E\to W,(p,q)\mapsto p-q,\Sigma:E\to W,(p,q)\mapsto p+q$.</li>
+<li>$\pi:E\to W,(p,q)\mapsto p,\pi^{\prime}:E\to W,(p,q)\mapsto q$.</li>
+<li>$K=\ker(\Delta),K^{\prime}=\ker(\pi),K_{+}=K\cap C,K_{+}^{\prime}=\{0\}\oplus W_{\geq 0},C^{\prime}=\left\{(x,t)\in E\middle|t\geq |x|\right\}$.</li>
+<li>$\sigma:W\to C,x\mapsto(x^{+},x^{-}),\sigma^{\prime}:W\to C^{\prime},x\mapsto(x,|x|)$.</li>
+<li>$i:C\hookrightarrow E$是典范嵌入,$g=\ell_{c}\circ\Sigma,h=\ell_{c}\circ\pi_{2}$.</li>
+<li>问题$(P):\min\limits_{x\in W,Ax\geq b}\ell_{c}(|x|)$,问题$(Q):\min\limits_{(p,q)\in C,A(u-v)\geq b}g(u,v)$,问题$(R):\min\limits_{(x,t)\in C^{\prime}}A\pi_{1}(x,t)\geq b$.</li>
+<li>$F_{P}=\left\{x\in W\middle|Ax\geq b\right\},F_{Q}=\left\{(u,v)\in C\middle|A(u-v)\geq b\right\},F_{R}=\left\{(x,t)\in C^{\prime}\middle|A\pi_{1}(x,t)\geq b\right\}$.</li>
+<li>$\operatorname{Opt}(P),\operatorname{Opt}(Q),\operatorname{Opt}(R)$分别是$P,Q,R$的最优解组成的集合.</li>
+</ul>
+<h3 id="对方法1的分析"><a href="#对方法1的分析" class="headerlink" title="对方法1的分析"></a>对方法1的分析</h3><p>下面的命题是熟知的.</p>
+<div class="math-env env-proposition" id="env-proposition-1"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span></div><div class="env-body"><p>$\Delta$既是满射又是线性映射,它诱导了典范的线性同构$E/K\xrightarrow{\sim} W,(p,q)+K\mapsto p-q$.</p>
+</div></div>
+
+<p>由于问题$(Q)$的可行解必须在$C$中,因此我们并不关心$E/K$,而是$E/K$的元素沿$i$拉回的样子.</p>
+<div class="math-env env-lemma" id="env-lemma-1"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span></div><div class="env-body"><p>对每个$x\in W$有$\Delta^{-1}(\{x\})\cap C=\sigma(x)+K_{+}$.</p>
+</div></div>
+
+<div class="math-env env-corollary" id="env-corollary-1"><div class="env-head"><span class="env-name">推论</span><span class="env-num">1</span></div><div class="env-body"><p>对每个$r\in E$有$i^{-1}(r+K)=(r+K)\cap C=\sigma(\Delta(r))+K_{+}$.</p>
+</div></div>
+
+<p>$E/K$的元素沿$i$拉回,是以$\sigma(x)$为尖点的$K_{+}$-锥.</p>
+<div class="math-env env-corollary" id="env-corollary-2"><div class="env-head"><span class="env-name">推论</span><span class="env-num">2</span></div><div class="env-body"><p>对每个$r\in E$有$i^{-1}(r+K)\neq\varnothing$.进一步,复合映射$C\xrightarrow{i}E\twoheadrightarrow E/K$是满射,它诱导了双射</p>
+<p>$$
+
+C/{\sim_\Delta}\xrightarrow{\sim}E/K\xrightarrow{\sim}W,[(p,q)]_{\sim_{\Delta}}\mapsto p-q,
+
+$$</p>
+<p>其中$\sim_{\Delta}$是$\Delta|_{C}$在$C$上诱导的等价关系.</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span></div><div class="env-body"><ul>
+<li><p>对每个$w\in W$,它在映射$C/\sim_{\Delta}\to W$下的纤维是$[\sigma(w)]_{\sim_{\Delta}}+K_{+}$,并且$\sigma(w)$是这根纤维里的最小元.因此,$\sigma(W)$诱导了$C/\sim_{\Delta}$的一个完全代表系.</p>
+</li>
+<li><p>注意,$g$不能下降为$C/\sim_{\Delta}$上:对每个$x\in W$和$w\in W_{+}$有$g(\sigma(x)+(w,w))=\ell_{c}(|x|)+2\ell_{c}(w)$.虽然我们可以考虑选取截面$\tau:W\to C/\sim_{\Delta}$,再考虑$\tau^{*}g$,但是$\tau$不是典范的.</p>
+</li>
+</ul>
+</div></div>
+
+<div class="math-env env-definition" id="env-definition-2"><div class="env-head"><span class="env-name">定义</span><span class="env-num">2</span></div><div class="env-body"><p>定义$\Delta_{\flat}g:W\to\R,x\mapsto\min\limits_{p\in\Delta^{-1}(\{x\})\cap C}g(p)$,并记$|\cdot|:E\to E,x\mapsto\sup(x,-x)$.</p>
+</div></div>
+
+<p>下一个命题直接给出了$\Delta_{\flat}g$的显式计算公式.</p>
+<div class="math-env env-proposition" id="env-proposition-2"><div class="env-head"><span class="env-name">命题</span><span class="env-num">2</span></div><div class="env-body"><p>$\Delta_{\flat}g=\ell_c\circ|\cdot|$.</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span></div><div class="env-body"><ul>
+<li>$\Delta_{\flat}g$满足如下条件:<ul>
+<li>它确实是良好定义的.</li>
+<li>它是逐点偏序下满足$h\circ\Delta\leq g$的最大映射$h:W\to\R$.</li>
+<li>对每个映射$h:W\to\R$有$h\circ\Delta\leq g\iff h\leq\Delta_{\flat}g$.</li>
+</ul>
+</li>
+<li>$\Sigma\circ i\circ\sigma=|\cdot|$,因此$g\circ i\circ\sigma=\ell_{c}\circ|\cdot|$.</li>
+</ul>
+</div></div>
+
+<div class="math-env env-lemma" id="env-lemma-2"><div class="env-head"><span class="env-name">引理</span><span class="env-num">2</span></div><div class="env-body"><p>$F_{Q}=\Delta^{-1}(F_{P})\cap C=\bigsqcup\limits_{x\in F_P}\bigl(\Delta^{-1}(\{x\})\cap C\bigr)$.</p>
+</div></div>
+
+<div class="math-env env-lemma" id="env-lemma-3"><div class="env-head"><span class="env-name">引理</span><span class="env-num">3</span></div><div class="env-body"><p>设$X,Y$是集合,$S$是$Y$的子集,$\pi:X\twoheadrightarrow Y,g:X\to\mathbb R$.如果对每个$y\in S$,映射$\pi_{\flat}g$在$\pi^{-1}(\{y\})$上有最小值,那么</p>
+<p>$$
+
+\min_{x\in\pi^{-1}(S)}g(x)=\min_{y\in S}(\pi_{\flat}g)(y).
+
+$$</p>
+</div></div>
+
+<div class="math-env env-theorem" id="env-theorem-1"><div class="env-head"><span class="env-name">定理</span><span class="env-num">1</span></div><div class="env-body"><p>$<br>\min\limits_{p\in F_Q}g(p)&#x3D;\min\limits_{x\in F_{P}}\ell_c(|x|).<br>$</p>
+</div></div>
+
+<div class="math-env env-corollary" id="env-corollary-3"><div class="env-head"><span class="env-name">推论</span><span class="env-num">3</span></div><div class="env-body"><p>$\operatorname{Opt}(Q)=\sigma(\operatorname{Opt}(P))$.</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">方法1的总结</span></div><div class="env-body"><ul>
+<li>基本想法:满射纤维化-映射前推0纤维公式;等价类&#x3D;纤维,商空间上的目标&#x3D;原目标的推前,规范代表元&#x3D;映射前推后的最小值点.</li>
+<li>约化定理成立的全部要求:可行集饱和＋纤维有极小值点.方法2的区别仅仅在于纤维是$\{t:t\ge|x|\}$,其余做法原样复用.</li>
+</ul>
+<p>思路:</p>
+<ul>
+<li>把$W$上的绝对值问题先提升到$E$上,再限制到锥$C$里,用$\Delta$纤维化.</li>
+<li>计算出$\Delta|_{C}$的每根纤维,并选出一个典范的代表元$\sigma(x)$.</li>
+<li>目标$g$在每一点上的纤维都递增,将其沿$\Delta$前推就得到了$\ell_{c}\circ|\cdot|$.</li>
+<li>可行集沿纤维饱和,第2条引理把$(Q)$的最小值按照”先纤维后基”来计算,这样就得到了$(P)$.</li>
+</ul>
+</div></div>
+
+<p>【方法2】</p>
+<p>注意$C_{2}$是闭凸锥.</p>
+<div class="math-env env-proposition" id="env-proposition-3"><div class="env-head"><span class="env-name">命题</span><span class="env-num">3</span></div><div class="env-body"><p>$\pi$既是满射又是线性映射,它诱导了典范同构$E/K^{\prime}\xrightarrow{\sim}W,(x,t)+K^{\prime}\mapsto x$</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span></div><div class="env-body"><p>与方法1不同,这里的商映射由$\pi$诱导,没有”差值”的伪装,直觉上来看更为直接.</p>
+</div></div> 
+
+<div class="math-env env-lemma" id="env-lemma-4"><div class="env-head"><span class="env-name">引理</span><span class="env-num">4</span></div><div class="env-body"><p>对每个$x\in W$有$\pi^{-1}(x)\cap C^{\prime}=\sigma^{\prime}(x)+K_{+}^{\prime}$.</p>
+</div></div>
+
+<div class="math-env env-corollary" id="env-corollary-4"><div class="env-head"><span class="env-name">推论</span><span class="env-num">4</span></div><div class="env-body"><p>对每个$x\in W$有$\pi^{-1}(x)\cap C^{\prime}\neq\varnothing$,因此$\pi|_{C^{\primw}}$是满射,它诱导了典范双射$C^{\prime}/{\sim}_{\pi}\xrightarrow{\sim}W$,其中$\sim_{\pi}$是$\pi|_{C^{\prime}}$在$C^{\prime}$上诱导的等价关系.</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-5"><div class="env-head"><span class="env-name">注记</span><span class="env-num">5</span></div><div class="env-body"><p>对每个$x\in W$,集合$\pi^{-1}(x)\cap C^{\prime}$的最小元是$\sigma^{\prime}(x)$.因此,$\sigma(W)$是$C^{\prime}/\sim_{\pi}$的完全代表系,并且是$C^{\prime}$的下包络.</p>
+</div></div>
+
+<div class="math-env env-proposition" id="env-proposition-4"><div class="env-head"><span class="env-name">命题</span><span class="env-num">4</span></div><div class="env-body"><p>$\pi_{\flat}h=\ell_{c}\circ|\cdot|$.</p>
+</div></div>
+
+
+<blockquote>
+<p> 纤维上的 $g$ 值：方法 1 是 $\ell_c(|x|)+2\ell_c(w)$，方法 2 是 $\ell_c(|x|)+\ell_c(w)$——差一个因子 2，来自 $\Sigma(w\oplus w)=2w$ 对 $\pi_2(0\oplus w)=w$。这正预示后面的共轭 $T$ 会把 $\{w\oplus w\}$ 映到 $\{0\oplus 2w\}$。</p>
+</blockquote>
+<div class="math-env env-lemma" id="env-lemma-5"><div class="env-head"><span class="env-name">引理</span><span class="env-num">5</span></div><div class="env-body"><p>$F_{R}=\pi^{-1}(F_{P})\cap C^{\prime}$.</p>
+</div></div>
+
+<div class="math-env env-theorem" id="env-theorem-2"><div class="env-head"><span class="env-name">定理</span><span class="env-num">2</span></div><div class="env-body"><p>$\min\limits_{x\in F_{R}}h(x)=\min\limits_{x\in F_{P}}\ell_{c}(|x|)$.</p>
+</div></div>
+
+<div class="math-env env-corollary" id="env-corollary-5"><div class="env-head"><span class="env-name">推论</span><span class="env-num">5</span></div><div class="env-body"><p>$\operatorname{Opt}(R)=\sigma^{\prime}(\operatorname{Opt}(P))$.</p>
+</div></div>
+
+<div class="math-env env-proposition" id="env-proposition-5"><div class="env-head"><span class="env-name">命题</span><span class="env-num">5</span></div><div class="env-body"><p>定义$T:E\to E,(p,q)\mapsto(p-q,p+q)$.</p>
+<ul>
+<li>$T\in\Aut_{\R}(E)$,并且$T^{-1}:E\to E,(p,q)\mapsto(\frac{p+q}{2},\frac{-p+q}{2})$.</li>
+<li>$T(C)=C^{\prime},T(K_{+})=K_{+}^{\prime},T\circ\sigma=\sigma^{\prime},h\circ T=g$.</li>
+<li>$\pi\circ\sigma^{\prime}=\Delta\circ\sigma=\operatorname{id}_{W}$.</li>
+</ul>
+</div></div>
+
+<blockquote>
+<p>可见,方法2只不过是方法1的另一种写法.</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数学笔记写作的原则</title>
     <url>/posts/principles-of-writing-mathematical-notes.html</url>
     <content><![CDATA[<p>本文简要讨论数学写作的原则。</p>
@@ -550,8 +881,8 @@ $$</p>
 $$</p>
 ]]></content>
       <tags>
-        <tag>数学杂谈</tag>
         <tag>笔记</tag>
+        <tag>数学杂谈</tag>
         <tag>教学</tag>
       </tags>
   </entry>
