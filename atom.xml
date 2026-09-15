@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, 逐影</rights>
   <subtitle>数学笔记与随想</subtitle>
   <title>Yukina's Blog</title>
-  <updated>2026-09-01T06:04:07.514Z</updated>
+  <updated>2026-09-08T06:36:23.609Z</updated>
   <entry>
     <author>
       <name>逐影</name>
@@ -18,7 +18,7 @@
     <category term="应用回归分析" scheme="https://www.yukina-math.top/tags/applied-regression-analysis/"/>
     <category term="笔记" scheme="https://www.yukina-math.top/tags/notes/"/>
     <content>
-      <![CDATA[<p>参考教材:何晓群《应用回归分析(R语言版)》</p><span id="more"></span><p>Chapter 2 一元线性回归模型</p><p>概览:</p><ul><li>估计参数$\beta_{0},\beta_{1}$(点估计);</li><li>怎么估计这俩参数;</li><li>OLSE和MLE怎么用,了解基本思想;</li><li>参数的“好的”性质</li><li>检验”好不好”、“是否可用”;</li><li>随机误差项$\varepsilon$的分析;</li><li>两种估计:点估计、<strong>区间估计</strong>;</li><li>分析微扰项以后,判断好不好、能不能用.</li></ul><p>(1)回归方程的写法:要么不写epsilon,要么写带hat的.</p><p>hat是具体的估计值,不是真实值;</p><p>好的回归模型:即便样本有出入,两个回归方程的变化不大(稳定性比较好).</p>]]>
+      <![CDATA[<p>参考教材:何晓群《应用回归分析(R语言版)》</p><span id="more"></span><p>Chapter 2 一元线性回归模型</p><p>概览:</p><ul><li>估计参数$\beta_{0},\beta_{1}$(点估计);</li><li>怎么估计这俩参数;</li><li>OLSE和MLE怎么用,了解基本思想;</li><li>参数的“好的”性质</li><li>检验”好不好”、“是否可用”;</li><li>随机误差项$\varepsilon$的分析;</li><li>两种估计:点估计、<strong>区间估计</strong>;</li><li>分析微扰项以后,判断好不好、能不能用.</li></ul><p>(1)回归方程的写法:要么不写epsilon,要么写带hat的.</p><p>hat是具体的估计值,不是真实值;</p><p>好的回归模型:即便样本有出入,两个回归方程的变化不大(稳定性比较好).</p><p>线性型,无偏性,有效性</p><p>无偏性——期望<br>有效性——方差</p><p>收集数据的时候需要控制数目,数据不要过度分散或过度集中</p><p>OLE的核心:残差平方和最小</p><p>离差分解——平方和最小</p><p>评价的时候,希望SSR的占比要比较高</p><p>一元线性回归中,决定系数&#x3D;线性相关系数,多元线性回归中这一关系不再成立</p><p>决定系数的意义:</p>]]>
     </content>
     <id>https://www.yukina-math.top/posts/applied-regression-analysis-notes-01.html</id>
     <link href="https://www.yukina-math.top/posts/applied-regression-analysis-notes-01.html"/>
@@ -27,7 +27,7 @@
       <![CDATA[<p>参考教材:何晓群《应用回归分析(R语言版)》</p>]]>
     </summary>
     <title>回归分析(1)</title>
-    <updated>2026-09-01T06:04:07.514Z</updated>
+    <updated>2026-09-08T06:36:23.609Z</updated>
   </entry>
   <entry>
     <author>
