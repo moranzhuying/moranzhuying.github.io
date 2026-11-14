@@ -1,41 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>记号约定：从书上的到自己的</title>
-    <url>/posts/placeholder-notation.html</url>
-    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 3 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p>
-<p>一本书有一本书的记号体系。读的时候照着用最省事，写笔记的时候还照着用，<br>等换一本书就会出现两套符号并存的情况。</p>
-<p>可行的做法是：笔记里维护一份自己的符号表，每次引入新记号先登记，<br>冲突时以自己那份为准，书上那套只作为对照。</p>
+    <title>『格论』1.1 读法：从六个杂例到三条公理</title>
+    <url>/posts/priestley-lattices-1-1.html</url>
+    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 1 篇</span></div><p>Priestley 与 Davey 这本书第 1 章讲有序集。1.1 节只办一件事：把「序」说清楚。多数教材在这里直接抛出偏序的三条公理，然后补几个例子了事。这本书反过来走——先摆出一堆看起来毫不相干的句子，再问它们凭什么共用一个名字。</p>
+<p>这篇是我读这一节时记下的手法与想法，不是原文的翻译，也不追求复述全部细节。</p>
+<span id="more"></span>
+
+<h2 id="一、她从哪里起手"><a href="#一、她从哪里起手" class="headerlink" title="一、她从哪里起手"></a>一、她从哪里起手</h2><p>开篇列了六个句子，彼此毫无关联：</p>
+<ol>
+<li>$0<1$，且 $1<1023$。</li>
+<li>两个表亲有共同的祖父。</li>
+<li>$22/7$ 是比 $3.141592654$ 更差的 $\pi$ 的近似。</li>
+<li>按距日由近及远排列行星：水星、金星、地球、火星、木星、土星、天王星、海王星、冥王星。</li>
+<li>$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，但 $\{1,2,3,4,5\}$ 同时包含二者。</li>
+<li>任给两个不同的实数 $a,b$，要么 $a>b$，要么 $b>a$。</li>
+</ol>
+<p>然后她问：这些陈述有什么共同之处？</p>
+<p>问题提得平常，选例却不平常。第 1、6 条是线性的比大小；第 5 条讲的包含关系只给出偏序，两个集合可以互不可比；第 2 条根本不是序，它是「关系」这个词的用法，用来提醒读者后面要处理的对象有多宽；第 3 条是一次具体的数值比较，落在一个序上，但不属于某个结构；第 4 条是一条链，顺序由外部规则指定。</p>
+<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">先给例子，再给公理</span></div><div class="env-body"><p>这是归纳式的引入：先让读者承认自己早就在用「序」，再告诉他这件事有多杂，最后才收网。</p>
+<p>代价是公理的动机被推迟了。读者读到定义时，已经积累了六种直觉，却还不清楚这三条公理为什么恰好是这三条、少一条会怎样。这一节后半段补上了这个缺口，但补充的位置在定义之后。</p>
+</div></div>
+
+<h2 id="二、抽公理"><a href="#二、抽公理" class="headerlink" title="二、抽公理"></a>二、抽公理</h2><p>从这堆句子里能拣出的共同性质只有三条。</p>
+<div class="math-env env-definition" id="def-poset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">偏序，偏序集</span></div><div class="env-body"><p>设 $P$ 是集合，$\leq$ 是 $P$ 上的二元关系。若对任意 $x,y,z\in P$ 都有</p>
+<ul>
+<li>（R）自反：$x\leq x$；</li>
+<li>（T）传递：$x\leq y$ 且 $y\leq z$，则 $x\leq z$；</li>
+<li>（A）反对称：$x\leq y$ 且 $y\leq x$，则 $x=y$，</li>
+</ul>
+<p>则称 $\leq$ 为 $P$ 上的<strong>偏序</strong>，$(P,\leq)$ 为<strong>偏序集</strong>，简称 poset。</p>
+</div></div>
+
+<p>三条里，自反与传递是几乎任何「比较」都要的；反对称反而容易被当成多余的。它的作用是把「互相不大于」压回相等：若两个元素彼此可达，它们就是同一个东西，不允许出现两个不同的元素在一个偏序里互相「小于等于」。</p>
+<div class="math-env env-convention" id="env-convention-1"><div class="env-head"><span class="env-name">约定</span><span class="env-num">1</span><span class="env-title">记号</span></div><div class="env-body"><p>此后用 $(P,\leq)$ 而不是 $\langle P,\leq\rangle$ 表示偏序集。两种写法在文献中都通行，本文统一用前者。</p>
+<p>记号 $x<y$ 表示 $x\leq y$ 且 $x\neq y$，即把偏序分解成严格部分。这个分解在下面命题 1 里被反过来用了一次。</p>
+</div></div>
+
+<h2 id="三、立刻回到例子"><a href="#三、立刻回到例子" class="headerlink" title="三、立刻回到例子"></a>三、立刻回到例子</h2><p>定义给完，她马上把之前的句子逐一认领回去。</p>
+<div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span><span class="env-title">幂集的包含</span></div><div class="env-body"><p>设 $X$ 为集合，$\mathcal{P}(X)$ 为其幂集，$\subseteq$ 为包含关系。则 $(\mathcal{P}(X),\subseteq)$ 是偏序集。</p>
+<p>自反与传递是集合论的常识。反对称就是外延公理：若 $A\subseteq B$ 且 $B\subseteq A$，则 $A=B$。</p>
+<p>这个例子的价值在于它不线性：$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，这正是第 5 条的位置。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-2"><div class="env-head"><span class="env-name">例</span><span class="env-num">2</span><span class="env-title">整除</span></div><div class="env-body"><p>在正整数集 $\mathbb{Z}_{>0}$ 上定义 $a\mid b$ 当且仅当存在 $c\in\mathbb{Z}_{>0}$ 使 $b=ac$。则 $(\mathbb{Z}_{>0},\mid)$ 是偏序集。</p>
+<p>反对称只用一个事实：若 $a\mid b$ 且 $b\mid a$，则 $a=b$。</p>
+<p>这里已经出现一个值得留心的地方：$2$ 与 $3$ 互不整除，但最小公倍数存在。公倍数的存在性并不由偏序公理保证，它需要额外的算术结构。这一节不处理上确界，留到后面。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-3"><div class="env-head"><span class="env-name">例</span><span class="env-num">3</span><span class="env-title">实数与全序</span></div><div class="env-body"><p>$(\mathbb{R},\leq)$ 是偏序集，并且任意两个元素可比，这是第 6 条的位置。这类偏序叫全序或线性序。</p>
+</div></div>
+
+<p>三个例子分别落在三种位置上：幂集是典型的非全序，整除是非全序且带算术内容，实数是最熟悉的线性序。这样选，覆盖了读者可能有的全部直觉。</p>
+<h2 id="四、弱化与强化"><a href="#四、弱化与强化" class="headerlink" title="四、弱化与强化"></a>四、弱化与强化</h2><p>偏序的三条公理可以拆开重组，得到两种常用变体。</p>
+<div class="math-env env-definition" id="env-definition-2"><div class="env-head"><span class="env-name">定义</span><span class="env-num">2</span><span class="env-title">准序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $\preceq$ 为<strong>准序</strong>（quasi-order，亦称预序），若它满足自反与传递，不要求反对称。</p>
+</div></div>
+
+<div class="math-env env-definition" id="env-definition-3"><div class="env-head"><span class="env-name">定义</span><span class="env-num">3</span><span class="env-title">严格序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $<$ 为<strong>严格序</strong>，若它满足</p>
+<ul>
+<li>（Ir）反自反：$x<x$ 恒不成立；</li>
+<li>（T）传递：$x<y$ 且 $y<z$，则 $x<z$。</li>
+</ul>
+</div></div>
+
+<p>这两条定义各自只删掉一条公理，删的方向相反：准序删反对称，严格序删自反并改写成反自反。后果完全不同——准序是偏序的宽松版，严格序则是偏序去掉对角线后的样子。</p>
+<div class="math-env env-proposition" id="prop-strict"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span><span class="env-title">严格序与偏序互相决定</span></div><div class="env-body"><p>设 $<$ 是 $P$ 上满足反自反与传递的关系。定义</p>
+<p>$$
+
+x\leq y \iff x<y \ \text{或}\ x=y,
+
+$$</p>
+<p>则 $\leq$ 是 $P$ 上的偏序。反之，若 $\leq$ 是偏序，定义 $x<y\iff x\leq y \land x\neq y$，则 $<$ 反自反且传递。两个构造互逆。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>先证 $\leq$ 是偏序。</p>
+<p>自反：取 $x=y$，由定义即得 $x\leq x$。</p>
+<p>传递：设 $x\leq y$、$y\leq z$。若其中至少一个等号成立，直接代入即得；若两个都是严格不等，用 $<$ 的传递性得 $x<z$，故 $x\leq z$。</p>
+<p>反对称：设 $x\leq y$ 且 $y\leq x$。若 $x\neq y$，则两个关系都必须是严格的，即 $x<y$ 且 $y<x$，由 $<$ 的传递性得 $x<x$，与反自反矛盾。故 $x=y$。</p>
+<p>再证逆构造。</p>
+<p>反自反：若 $x<x$，则 $x\leq x$ 且 $x\neq x$，矛盾。</p>
+<p>传递：设 $x<y$、$y<z$，则 $x\leq y\leq z$，由 $\leq$ 的传递性得 $x\leq z$；又 $x\neq z$，否则由 $x\leq y\leq x$ 与反对称性得 $x=y$，与 $x<y$ 矛盾。故 $x<z$。</p>
+<p>互逆：由 $<$ 造出的 $\leq$ 再取严格部分，恰好还原 $<$，因为 $x\leq y\land x\neq y$ 等价于 $x<y$。反方向同理。</p>
+</div></div>
+
+<div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span><span class="env-title">别把两种序混用</span></div><div class="env-body"><p>如果把严格序和偏序用同一个符号 $\leq$ 表示，命题 1 就退化成恒等式，看起来什么都没说。反过来，如果在一段论证里既用 $x\leq y$ 又用 $x<y$，必须先确认后者是前者的严格部分，而不是另一条独立的关系。</p>
+<p>混用的后果通常不是立刻报错，而是在某一步悄悄用掉了反对称或自反性，事后无法追溯。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span><span class="env-title">准序为什么值得单独留名</span></div><div class="env-body"><p>准序（自反 + 传递）加上反对称就是偏序，加上对称就是等价关系。换言之，偏序与等价关系都是准序的特例，区别只在于补哪一条。</p>
+<p>这个视角在构造商结构时好用：先给一个准序，再把「互相可达」的元素粘成等价类，商集上自然落下一个偏序。这一步本节没有展开，但它是后面把准序化成偏序的标准手法。</p>
+</div></div>
+
+<h2 id="五、保持结构"><a href="#五、保持结构" class="headerlink" title="五、保持结构"></a>五、保持结构</h2><p>最后，她引入比较两个偏序集的方式。</p>
+<div class="math-env env-definition" id="env-definition-4"><div class="env-head"><span class="env-name">定义</span><span class="env-num">4</span><span class="env-title">序同构</span></div><div class="env-body"><p>设 $(P,\leq_P)$ 与 $(Q,\leq_Q)$ 为偏序集。称映射 $\varphi:P\to Q$ 为<strong>序同构</strong>，若 $\varphi$ 是满射，且对任意 $x,y\in P$ 有</p>
+<p>$$
+
+x\leq_P y \iff \varphi(x)\leq_Q \varphi(y).
+
+$$</p>
+</div></div>
+
+<p>这里刻意只要求满射，不要求单射。单射是结论，不是条件。</p>
+<div class="math-env env-proposition" id="prop-iso"><div class="env-head"><span class="env-name">命题</span><span class="env-num">2</span><span class="env-title">序同构必为双射</span></div><div class="env-body"><p>若 $\varphi:P\to Q$ 是序同构，则 $\varphi$ 是单射，从而是双射。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi(x)=\varphi(y)$。由 $(Q,\leq_Q)$ 的自反性，$\varphi(x)\leq_Q\varphi(y)$ 且 $\varphi(y)\leq_Q\varphi(x)$。由同构条件反向读，得 $x\leq_P y$ 且 $y\leq_P x$。再由 $(P,\leq_P)$ 的反对称性得 $x=y$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">为什么这个证明值得记</span></div><div class="env-body"><p>三步全部落在公理上：自反性提供前提，同构条件负责搬运，反对称性负责收口。三个条件各用一次，不多不少。</p>
+<p>这也是反对称性第一次显出不可替代的作用——它保证「互相不小于」这件事足以判定相等。</p>
+</div></div>
+
+<h2 id="六、三条公理能不能再少"><a href="#六、三条公理能不能再少" class="headerlink" title="六、三条公理能不能再少"></a>六、三条公理能不能再少</h2><p>定义放在例子之后，最大的隐患是读者以为三条公理是从例子里「归纳」出来的。归纳不出公理，只能归纳出候选，公理是刻画。她用一个练习把这个疑问摊开。</p>
+<div class="math-env env-exercise" id="exo-independent"><div class="env-head"><span class="env-name">练习</span><span class="env-num">1</span><span class="env-title">三公理的独立性</span></div><div class="env-body"><p>逐条验证三条公理彼此不能推出：</p>
+<ol>
+<li>去掉自反：在 $\{1,2\}$ 上取关系 $\{(1,2)\}$。它传递且反对称，但 $1\not\leq 1$。</li>
+<li>去掉传递：在 $\{1,2,3\}$ 上取 $\{(1,1),(2,2),(3,3),(1,2),(2,3)\}$。自反、反对称，但 $1\leq 2$ 且 $2\leq 3$ 而 $1\not\leq 3$。</li>
+<li>去掉反对称：在 $\mathbb{Z}$ 上定义 $x\preceq y\iff |x|\leq|y|$。自反、传递，但 $1\preceq-1$ 且 $-1\preceq 1$，而 $1\neq-1$。</li>
+</ol>
+</div></div>
+
+<p>三个反例都很小，小到可以当场验算。选小反例是有讲究的：反例一旦大了，读者就得先信任构造，反而证明不了公理的必要性。</p>
+<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span><span class="env-title">我在这一节最想记住的一点</span></div><div class="env-body"><p>三条公理各自独立，意味着它们不是对「序」这个词的分析，而是对它的<strong>约定</strong>。凡满足三条的关系，我们就叫它偏序，不管它长得像不像比大小。</p>
+<p>这一点和我读 Bourbaki 时的感受相反：那边是从结构出发，先规定一个结构类型，再问哪些对象带这种结构；这边是从用法出发，先把话说顺，再收成公理。两条路的终点相同，途中养成的直觉不一样。前者更严，后者更快，代价是后者容易让人误以为公理是被发现的。</p>
+</div></div>
+
+<h2 id="七、节末小结"><a href="#七、节末小结" class="headerlink" title="七、节末小结"></a>七、节末小结</h2><h3 id="本节的框架"><a href="#本节的框架" class="headerlink" title="本节的框架"></a>本节的框架</h3><p>$$
+
+\text{杂例}
+\longrightarrow
+\text{抽公理}
+\longrightarrow
+\text{定义}
+\longrightarrow
+\text{例子回填}
+\longrightarrow
+\text{变体}
+\longrightarrow
+\text{结构保持}
+
+$$</p>
+<p>这个顺序不是随意的。先例后义，读者拿到定义时手里已有六种以上的具体情形，定义一落地就能对号；先义后例，读者得先在抽象层面站稳，才能理解例子想说什么。前者降低入门门槛，后者压缩篇幅。这本书选了前者，所以第 1 章读起来慢，但不必反复回翻。</p>
+<h3 id="值得注意的四处"><a href="#值得注意的四处" class="headerlink" title="值得注意的四处"></a>值得注意的四处</h3><p><strong>定义。</strong> <a class="env-ref" href="#def-poset">定义 1</a> 是本节全部后续内容的语言基础，三个条件缺一不可，独立性见 <a class="env-ref" href="#exo-independent">练习 1</a>。<a class="env-ref" href="#prop-strict">命题 1</a> 把严格序与偏序接上，是用 $<$ 写论证的合法性来源。</p>
+<p><strong>命题。</strong> <a class="env-ref" href="#prop-strict">命题 1</a> 与 <a class="env-ref" href="#prop-iso">命题 2</a> 都不难，但用到的技术不同：前者是双向构造并验证互逆，后者靠公理三次收口。这两种动作在序论里会反复出现，值得当成模板记住。</p>
+<p><strong>注记。</strong> 准序的定位容易被略过。它解释了为什么后面谈商结构时总能先得到一个偏序——粘合等价类本质上是在把一个准序化成偏序。</p>
+<p><strong>警示。</strong> 本节没有大定理，全是定义和两个小命题。真正的风险不在证明，而在记号：$<$ 与 $\leq$ 一旦混用，所有论证都失去意义。读到这里应当能自己说出，为什么反对称性不能放宽成「$x\leq y$ 且 $y\leq x$ 则 $x\sim y$」这种表述。</p>
+<h3 id="读完这一节该能做什么"><a href="#读完这一节该能做什么" class="headerlink" title="读完这一节该能做什么"></a>读完这一节该能做什么</h3><ul>
+<li>判定一个给定的关系是不是偏序，并指出缺了哪一条；</li>
+<li>由一个严格序造出偏序，反向也做一遍；</li>
+<li>用幂集、整除、实数三个模型检验自己对反对称性的理解；</li>
+<li>说明序同构的定义为什么只要求满射。</li>
+</ul>
+<p>下一节开始画图，Hasse 图会把这一节的定义压成视觉对象。三个条件如果没在自己手上验证过一遍，看图时会分不清哪些线该画、哪些不该画。</p>
 ]]></content>
       <tags>
-        <tag>代数</tag>
-        <tag>数学杂谈</tag>
+        <tag>格论</tag>
+        <tag>读书笔记</tag>
         <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「留作练习」值不值得补</title>
-    <url>/posts/placeholder-exercises.html</url>
-    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 2 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p>
-<p>教科书把证明推给读者，有两种情况：一是真的机械，二是作者自己也懒得写。<br>前者跳过去无妨，后者跳过去就是一个洞，后面某处会突然报错。</p>
-<p>判断标准大概只有一个：这段结论后面还会不会被用到。用得到就补，用不到就记账。</p>
-]]></content>
-      <tags>
-        <tag>代数</tag>
-        <tag>数学杂谈</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读《代数》第一章的两处困惑</title>
-    <url>/posts/placeholder-reading-algebra-ch01.html</url>
-    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p>
-<p>Bourbaki 在开篇把「运算」拆成内部运算与外部运算两种，形式上先给一个集合与<br>作用域，再谈幺半群。这样写的好处是后面谈模、谈代数时不用重新定义一遍，<br>代价是第一章的门槛被抬得很高。</p>
-<p>第二处是「结合律」的处理：先有 magma，再加结合律得到幺半群，再补单位元得到<br>幺半群。这条链子把每个条件的影响都摊开说了，但读者在拿到幺半群之前，<br>手上一个像样的例子都没有。</p>
-]]></content>
-      <tags>
-        <tag>代数</tag>
-        <tag>笔记</tag>
-        <tag>Bourbaki</tag>
       </tags>
   </entry>
   <entry>
@@ -588,8 +709,8 @@ $$</p>
 $$</p>
 ]]></content>
       <tags>
-        <tag>数学杂谈</tag>
         <tag>笔记</tag>
+        <tag>数学杂谈</tag>
         <tag>教学</tag>
       </tags>
   </entry>
