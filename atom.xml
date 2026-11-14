@@ -10,7 +10,63 @@
   <rights>All rights reserved 2026, 逐影</rights>
   <subtitle>数学笔记与随想</subtitle>
   <title>Yukina's Blog</title>
-  <updated>2026-11-14T13:15:32.290Z</updated>
+  <updated>2026-11-14T15:01:17.272Z</updated>
+  <entry>
+    <author>
+      <name>逐影</name>
+    </author>
+    <category term="代数" scheme="https://www.yukina-math.top/tags/%E4%BB%A3%E6%95%B0/"/>
+    <category term="数学杂谈" scheme="https://www.yukina-math.top/tags/discusstions-on-mathematics/"/>
+    <category term="笔记" scheme="https://www.yukina-math.top/tags/notes/"/>
+    <content>
+      <![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 3 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p><p>一本书有一本书的记号体系。读的时候照着用最省事，写笔记的时候还照着用，<br>等换一本书就会出现两套符号并存的情况。</p><p>可行的做法是：笔记里维护一份自己的符号表，每次引入新记号先登记，<br>冲突时以自己那份为准，书上那套只作为对照。</p>]]>
+    </content>
+    <id>https://www.yukina-math.top/posts/placeholder-notation.html</id>
+    <link href="https://www.yukina-math.top/posts/placeholder-notation.html"/>
+    <published>2026-11-19T11:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>占位文章。 正式内容待补，此处只用来验证合集排序与横幅显示。 一本书有一本书的记号体系。读的时候照着用最省事，写笔记的时候还照着用， 等换一本书就会出现两套符号并存的情况。 可行的做法是：笔记里维护一…</p>]]>
+    </summary>
+    <title>记号约定：从书上的到自己的</title>
+    <updated>2026-11-14T15:01:17.272Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>逐影</name>
+    </author>
+    <category term="代数" scheme="https://www.yukina-math.top/tags/%E4%BB%A3%E6%95%B0/"/>
+    <category term="数学杂谈" scheme="https://www.yukina-math.top/tags/discusstions-on-mathematics/"/>
+    <content>
+      <![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 2 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p><p>教科书把证明推给读者，有两种情况：一是真的机械，二是作者自己也懒得写。<br>前者跳过去无妨，后者跳过去就是一个洞，后面某处会突然报错。</p><p>判断标准大概只有一个：这段结论后面还会不会被用到。用得到就补，用不到就记账。</p>]]>
+    </content>
+    <id>https://www.yukina-math.top/posts/placeholder-exercises.html</id>
+    <link href="https://www.yukina-math.top/posts/placeholder-exercises.html"/>
+    <published>2026-11-17T12:10:00.000Z</published>
+    <summary>
+      <![CDATA[<p>占位文章。 正式内容待补，此处只用来验证合集排序与横幅显示。 教科书把证明推给读者，有两种情况：一是真的机械，二是作者自己也懒得写。 前者跳过去无妨，后者跳过去就是一个洞，后面某处会突然报错。 判断标…</p>]]>
+    </summary>
+    <title>「留作练习」值不值得补</title>
+    <updated>2026-11-14T15:01:17.272Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>逐影</name>
+    </author>
+    <category term="代数" scheme="https://www.yukina-math.top/tags/%E4%BB%A3%E6%95%B0/"/>
+    <category term="笔记" scheme="https://www.yukina-math.top/tags/notes/"/>
+    <category term="Bourbaki" scheme="https://www.yukina-math.top/tags/Bourbaki/"/>
+    <content>
+      <![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 3 篇</span></div><p><strong>占位文章。</strong> 正式内容待补，此处只用来验证合集排序与横幅显示。</p><p>Bourbaki 在开篇把「运算」拆成内部运算与外部运算两种，形式上先给一个集合与<br>作用域，再谈幺半群。这样写的好处是后面谈模、谈代数时不用重新定义一遍，<br>代价是第一章的门槛被抬得很高。</p><p>第二处是「结合律」的处理：先有 magma，再加结合律得到幺半群，再补单位元得到<br>幺半群。这条链子把每个条件的影响都摊开说了，但读者在拿到幺半群之前，<br>手上一个像样的例子都没有。</p>]]>
+    </content>
+    <id>https://www.yukina-math.top/posts/placeholder-reading-algebra-ch01.html</id>
+    <link href="https://www.yukina-math.top/posts/placeholder-reading-algebra-ch01.html"/>
+    <published>2026-11-15T13:30:00.000Z</published>
+    <summary>
+      <![CDATA[<p>占位文章。 正式内容待补，此处只用来验证合集排序与横幅显示。 Bourbaki 在开篇把「运算」拆成内部运算与外部运算两种，形式上先给一个集合与 作用域，再谈幺半群。这样写的好处是后面谈模、谈代数时不…</p>]]>
+    </summary>
+    <title>读《代数》第一章的两处困惑</title>
+    <updated>2026-11-14T15:01:17.272Z</updated>
+  </entry>
   <entry>
     <author>
       <name>逐影</name>
