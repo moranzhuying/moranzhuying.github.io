@@ -1632,7 +1632,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #12ff79;
+    background: #ffd9ed;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -3608,6 +3608,15 @@ img:hover {
 .env-proof .env-name,
 .env-answer .env-name {
   color: light-dark(#5a6a7e, #a8bcd4);
+}
+.ai-notice {
+  margin: 0 0 1.8em;
+  padding: 0.55em 0.9em;
+  border-left: 3px solid light-dark(rgba(0,0,0,0.18), rgba(255,255,255,0.22));
+  background: light-dark(rgba(0,0,0,0.03), rgba(255,255,255,0.05));
+  color: light-dark(#6b6b6b, #a6a6a6);
+  font-size: 0.9em;
+  line-height: 1.7;
 }
 .series-banner {
   display: flex;
