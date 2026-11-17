@@ -234,13 +234,17 @@ window.MathJax = {
     }
   }
 
-  // 首页自己不排版，但预取组件：访客点开的第一篇多半是公式文章，
-  // 提前下载能把「点进去先看到一片 $」的窗口压到一次排版的时间。
+  // 首页自己不排版，但把组件拉下来：访客点开的第一篇多半是公式文章。
+  //
+  // 用 preload 而不是 prefetch —— 实测 prefetch 是最低优先级，浏览器要等
+  // 页面闲下来才动手，等访客点进文章时往往还没下完，那一次跳转仍要
+  // 重新等 974 KB（PJAX 首跳实测 2.8 秒）。preload 立刻按脚本优先级取，
+  // 点进去时通常已在缓存里。代价是没点文章的访客也下载一次（gzip 后约 280 KB）。
   function prefetch() {
     if (location.pathname !== '/') return;
     if (document.querySelector('link[data-mjx-prefetch]')) return;
     var l = document.createElement('link');
-    l.rel = 'prefetch';
+    l.rel = 'preload';
     l.as = 'script';
     l.href = BUNDLE;
     l.setAttribute('data-mjx-prefetch', '');
