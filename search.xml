@@ -1,237 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>笔记之外：Bourbaki 工程的工具与工作流</title>
-    <url>/posts/bourbaki-notes-toolchain.html</url>
-    <content><![CDATA[<p>正文四万三千行，围着它长出来的工具两万六千行。这个比例不正常。</p>
-<p>写笔记的人本该把时间花在定义和证明上，不该花在路径长度和退出码上。但真正卡住进度的，一直是后一类事：一个超长的路径能让 XeLaTeX 报「文件不存在」，一次跑完的编译能让整章公式悄悄错位，一个「检查通过」的钩子可能扫错了仓库。每一条工具都是被某次具体的失败逼出来的，没有一条是为了自动化而自动化。</p>
-<p>这篇文章按失败的类型讲，不按工具的目录讲。</p>
-<span id="more"></span>
-
-<div class="ai-notice">本文完全由 AI 创作，本人只负责发布和提出修改意见。</div>
-
-<h2 id="一、先看规模"><a href="#一、先看规模" class="headerlink" title="一、先看规模"></a>一、先看规模</h2><p>代数卷现在是这样：</p>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>章</td>
-<td>14</td>
-</tr>
-<tr>
-<td><code>.tex</code> 文件</td>
-<td>1389</td>
-</tr>
-<tr>
-<td>正文行数</td>
-<td>约 4.3 万</td>
-</tr>
-<tr>
-<td><code>structure.sty</code> 里的宏与环境</td>
-<td>238</td>
-</tr>
-<tr>
-<td>目级台账 <code>record.md</code></td>
-<td>845</td>
-</tr>
-<tr>
-<td>原书页图片</td>
-<td>2523</td>
-</tr>
-<tr>
-<td>工具脚本</td>
-<td>20303 行</td>
-</tr>
-<tr>
-<td>面板</td>
-<td>6327 行</td>
-</tr>
-</tbody></table>
-<p>「14 章」是结构，不是进度。超过 2 KB 的 <code>.tex</code> 分布得很不均匀：第 5、6、7 章分别是 57、72、72 份，这三章是真正写起来的；第 1、2、3、8、10、11、13 章零散成篇；第 4 章是 11 月 15 日刚插进来的空架，24 个文件加起来 104 行；第 9、12、14 章连正文都没开始，167、238、119 个文件合计不到 1400 行。</p>
-<p>这个不均匀是有意的。流程不是按章顺序推进，而是正文主线向前、证明滞后一章回填。所以「第 9 章有 167 个文件」只能说明骨架搭好了，不能说明写了多少。</p>
-<h2 id="二、路径-260：第一个真正的钉子"><a href="#二、路径-260：第一个真正的钉子" class="headerlink" title="二、路径 260：第一个真正的钉子"></a>二、路径 260：第一个真正的钉子</h2><p>Windows 的 <code>MAX_PATH</code> 是 260 字符。本机的 <code>LongPathsEnabled</code> 已经是 1，照样超限就失败——因为 XeLaTeX 没有声明 <code>longPathAware</code>，系统不会替它放宽。</p>
-<p>失败的样子很有欺骗性：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">! LaTeX Error: File `...&#x27; not found.</span><br><span class="line">! Emergency stop.</span><br></pre></td></tr></table></figure>
-
-<p>看起来像文件丢了，实际是路径太长，编译器根本没走到打开文件那一步。我第一次遇到时去查了 <code>git status</code>、查了文件名拼写、查了 <code>\input</code> 的相对路径，全都没问题，最后才想到数一下字符数。</p>
-<p>现在的硬判据是<strong>任意 <code>.tex</code> 的绝对路径不超过 232 字符</strong>，留 28 给 <code>Summary/</code> 这类子目录。判据由 <code>path_budget.py</code> 执行，它按「书 &#x2F; 章 &#x2F; 节」分组，算出每组最长路径，以及压到 232 需要缩减多少字符。输出是一份最小改动清单，不是一句「有文件超了」。</p>
-<p>压长度时最容易犯的错是硬砍词。为此付过学费，实测出现过五个半截词：<code>algebr</code>、<code>Coxete</code>、<code>propert</code>、<code>matri</code>、<code>quaternioni</code>。砍到这种程度，文件名已经不能读了。现在有两条规矩：名字只保留完整单词，超长先压虚词（<code>of</code>、<code>the</code>、<code>in</code>、<code>and</code>、<code>with</code>）再缩写；单层名字不超过 55 字符。</p>
-<p>光有规矩不够，还得有检查。<code>name_vs_title.py</code> 把文件名与首行 <code>% English title</code> 比对，要求文件名是标题的前缀——这一条能同时抓住单复数错误和漏词。<code>spell_names.py</code> 扫全库低频词，给出形近候选。两个脚本都不判断「名字好不好」，只判断「名字和标题是不是同一件事」。</p>
-<p>还有一类同形的失败，出在编码上。在 Windows 上抓中文关键词，取到的可能是 <code>ç¾¤</code>、<code>å·®ç¾¤</code> 这样的乱码——UTF-8 字节被按 Latin-1 解读了。拿这串东西去搜，必然零命中，然后得出「全书没有定义 X」的结论。搜索前先看一眼取到的串是不是正常汉字，是乱码就换个入口重取。零命中不等于不存在。</p>
-<div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span><span class="env-title">报错的位置不是出错的位置</span></div><div class="env-body"><p><code>File not found</code> 有至少四种成因：路径超长、大小写不匹配、<code>\input</code> 的相对路径基准错了、文件真的不存在。前三种都不会在报错信息里留下痕迹。</p>
-<p>处理这类错误，先问「这个报错可能由几种原因产生」，再逐条排除，不要顺着报错指向的位置找。报错指向的位置，往往是系统发现问题的位置，不是问题发生的位置。</p>
-</div></div>
-
-<h2 id="三、编译：不要相信退出码"><a href="#三、编译：不要相信退出码" class="headerlink" title="三、编译：不要相信退出码"></a>三、编译：不要相信退出码</h2><p><code>main.tex</code> 第一行是 <code>\usepackage&#123;./structure&#125;</code>。<code>./</code> 按<strong>进程当前工作目录</strong>解析，不是按 <code>main.tex</code> 所在目录解析。所以编译前必须先 <code>cd</code> 进书目录，否则报 <code>File &#39;./structure.sty&#39; not found</code>——又一个伪装成「文件丢了」的错误。</p>
-<p>编译命令是两遍 XeLaTeX，输出目录隔离到 <code>tmp\build</code>：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\texlive\2025\bin\windows\xelatex.exe -interaction=nonstopmode ^</span><br><span class="line">  -output-directory=D:\LaTeX_Study\tmp\build main.tex</span><br></pre></td></tr></table></figure>
-
-<p>为什么要隔离输出，而不是老老实实在书目录里编译：旁边可能还有另一路在编译同一本书，两个进程写同一批 <code>.aux</code>、<code>.log</code>、<code>.toc</code>。实测过一次互相破坏，读到的是对方写坏的日志，报出 99 个 <code>l.1 ^^@^^@</code>——而仓库里一个 NUL 字节都没有。那不是文档的问题，是并发的问题。隔离之后，「日志里没有 <code>!</code>」判定的是我自己这一次。</p>
-<p>判定成功只看两件事：<code>main.log</code> 没有行首 <code>!</code>，且 <code>main.pdf</code> 存在。<strong>不看退出码。</strong></p>
-<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">退出码回答的是另一个问题</span></div><div class="env-body"><p>退出码说的是「进程有没有异常终止」，不是「产物对不对」。<code>-interaction=nonstopmode</code> 下，一个未定义命令、一个错位的 <code>\end</code>，都能让进程正常退出，产出一个缺页的 PDF。把退出码当成功判据，等于把「跑完了」当成「写对了」。</p>
-<p>这两件事在软件工程里早就分开了：编译通过不保证程序正确。排版也一样，日志干净不保证数学正确。后者还得另有人看。</p>
-</div></div>
-
-<p>还有两条容易忘的：禁用 pdfLaTeX；<code>latexmk</code> 必须显式 <code>-xelatex</code>，否则 <code>ctexbook</code> 会退回 <code>inputenc</code>&#x2F;<code>CJK</code>，出来的是错的，而且不报错。</p>
-<h2 id="四、Git：让每一节都留得住"><a href="#四、Git：让每一节都留得住" class="headerlink" title="四、Git：让每一节都留得住"></a>四、Git：让每一节都留得住</h2><p>规则只有一句：<strong>一节写完、两遍编译通过，立刻提交。</strong> 先提交后编译不算——中间那几分钟，错误已经进了历史。</p>
-<p>跨会话改正文之前，先确认工作区干净。没有干净的中间快照，就回退不到某一段。这条比「多提交几次」重要得多：提交的价值不在备份，在于「能回到写坏之前」。</p>
-<p>手工敲 <code>add</code>、<code>commit</code>、<code>push</code> 三个命令太啰嗦，于是有了 <code>commit.py</code>，400 行：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">python commit.py &quot;说明&quot; -y</span><br><span class="line">python commit.py &quot;说明;另一条&quot; --log config</span><br><span class="line">python commit.py &quot;说明&quot; --log auto</span><br><span class="line">python commit.py &quot;说明&quot; --dry-run</span><br></pre></td></tr></table></figure>
-
-<p><code>--log</code> 顺手把说明写进 <code>CHANGELOG.md</code> 的对应分节，<code>auto</code> 按关键词判断该进「tex 配置调整」还是「正文内容调整」。<code>--check</code> 是给 git 钩子用的模式：只扫描、不提交，命中就返回非零。</p>
-<p><code>check_sensitive.py</code> 是另一道闸门：提交前扫暂存区，找本机路径、用户名、专有词。词表从脚本目录向上合并，最多四级 <code>.sensitive-words.txt</code>，这样「本机专有词」不必写进脚本本身——脚本也要进仓库，写进脚本等于把泄露源一起提交了。</p>
-<p>这两道闸门都失效过一次，而且失效时都不出声。</p>
-<p>第一次：<code>--check</code> 在 <code>chdir</code> <strong>之后</strong>执行。脚本原本会切到 <code>Tools/commit/</code> 再干活，作为钩子触发时，工作目录已经变了，扫的是工具集仓库的暂存区，不是触发钩子的那个笔记仓库。防泄露机制看起来在跑，报告也是「干净」，但它检查的是另一个仓库。</p>
-<p>第二次：<code>git ls-files</code> 与 <code>git diff</code> 的 <code>core.quotepath</code> 默认开着，中文和希腊字母文件名被转义成八进制，脚本拼出来的路径不存在，于是<strong>静默跳过</strong>。实测 Algebra 仓库漏了 10 个正文文件。扫了 100 个文件报告「干净」，和扫了 90 个报告「干净」，输出一模一样。</p>
-<div class="math-env env-alarm" id="env-alarm-2"><div class="env-head"><span class="env-name">警示</span><span class="env-num">2</span><span class="env-title">会静默失效的检查，比没有检查更糟</span></div><div class="env-body"><p>没有检查，人还会自己看一眼。有一个显示「通过」的检查，人会放心不看。一旦这个检查因为工作目录、编码、路径转义悄悄少扫了一部分，风险就从「已知」变成了「以为已经处理」。</p>
-<p>写这类脚本时，要让它<strong>在扫不到东西的时候也出声</strong>：扫了几个文件、跳过几个、为什么跳过。宁可输出啰嗦，不可输出一句「干净」。</p>
-</div></div>
-
-<p>还有一个同类的：<code>clean_aux</code> 最早只按扩展名在整个工作区匹配，实测会把 <code>outputs/</code> 里的转录日志、<code>watch_notes/_logs/</code> 的运行日志一起删掉；带 <code>--with-pdf</code> 时更是把全工作区 2189 个 PDF 都算进去。现在的规则收窄了：产物所在目录必须有 <code>.tex</code> 源文件，PDF 只删与同目录某个 <code>.tex</code> 同名的。</p>
-<p>删东西的工具，默认值应该保守。要删得多，得让人多打一个参数。</p>
-<p>再说一下仓库的边界，这条不讲清楚会天天踩。工作区根目录<strong>不是</strong> git 仓库；<code>LaTeX_Notes/</code> 和 <code>Template/</code> 的上一层也<strong>不是</strong>。10 本笔记、4 个模板、<code>Tools/</code>，一共 15 个独立仓库，没有父仓库把它们串起来。所以在 <code>LaTeX_Notes/</code> 下跑 <code>git status</code> 会得到 <code>fatal: not a git repository</code>——这不是仓库坏了，是它本来就不存在。要查状态得遍历子仓库。</p>
-<p>分支也不统一：10 本笔记和 Beamer 模板走 <code>master</code>，另外三个模板和 <code>Tools/</code> 走 <code>main</code>。核验推送时不要想当然，<code>git ls-remote --heads origin</code> 看一眼实际分支。另一个隐形的坑是 <code>core.longpaths</code>——长路径仓库要先开，否则 <code>git add</code> 会报「文件名过长」，而文件本身完全正常。</p>
-<h2 id="五、watch-notes：把工程判断写成命题"><a href="#五、watch-notes：把工程判断写成命题" class="headerlink" title="五、watch_notes：把工程判断写成命题"></a>五、watch_notes：把工程判断写成命题</h2><p><code>watch_notes.py</code> 做两件事：定时检测笔记目录，有变化就提交并推送；按另一个间隔把历史裁剪到固定条数。</p>
-<p>第二件事的动机很朴素：这么多仓库，定时提交会让历史无限增长。最初的实现是「每次删掉最早一条」。写完之后发现不对劲——提交也在按同一个间隔产生，一次只删一条，净增长永远为正，历史只会变慢地涨下去。</p>
-<p>这件事值得写成一句可以复查的话。</p>
-<div class="math-env env-proposition" id="env-proposition-1"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span><span class="env-title">逐条裁剪不收敛</span></div><div class="env-body"><p>设每轮新增 $a$ 个提交、删除最早的 $1$ 个，$a\ge 1$，则提交数 $H_n$ 单调不减。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>每轮的变化量是 $H_{n+1}-H_n=a-1\ge 0$，故不减。若改为按上限 $K$ 裁剪，则 $H_{n+1}=\min(H_n+a,K)$，序列被夹在 $\min(H_0,K)$ 与 $K$ 之间，与 $a$ 无关。</p>
-</div></div>
-
-<p>所以现在的实现是 <code>--keep</code>，默认 20：超过就裁到 20 条，内容与提交信息都保留，只重写历史。这条结论一句话就能说完，写成命题的好处是改参数时不用再想一遍——哪里变了、结论还成不成立，对着式子看就行。</p>
-<p>同一轮里还修了一个更危险的问题：<code>--no-push</code> 原先仍然执行 <code>reflog expire</code> 与 <code>gc --prune=now</code>，也就是本地历史被改写了、却发现没推送成功，此时既回退不了，也和远程彻底分叉。现在只在推送成功之后才清理。</p>
-<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span><span class="env-title">命题的用处不是证明</span></div><div class="env-body"><p>上面那条命题，推到最后只有两行。它真正的价值是让「为什么不能一条一条删」变成一句有条件的判断，而不是一个人当时的直觉。</p>
-<p>工程里的这类判断很多，绝大多数没写下来，于是半年后同一个人会重犯。写下来的成本是几行，重犯的成本是几天。</p>
-</div></div>
-
-<h2 id="六、符号库：14-份副本与一份补全"><a href="#六、符号库：14-份副本与一份补全" class="headerlink" title="六、符号库：14 份副本与一份补全"></a>六、符号库：14 份副本与一份补全</h2><p><code>structure.sty</code> 在磁盘上有 14 份副本：10 本笔记各一份，4 个模板各一份。改一个宏，这 14 份都要改，而且不能改错顺序。</p>
-<p>工具 <code>symbols.py</code> 1818 行，做的就是把这件事变成一条命令：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">python symbols.py --all --write         # 提取 + 回填 + 刷新补全 + 分发</span><br><span class="line">python symbols.py --cwl --write         # 只刷新 TeXStudio 补全</span><br><span class="line">python symbols.py --drop NAME --write   # 删除指定符号</span><br></pre></td></tr></table></figure>
-
-<p>流程是：扫描各子文件夹，收集模板里没有的新符号，记进提取档案；回填时先写 <code>structure.sty</code>，再刷新 <code>custom.cwl</code>，最后分发到各子文件夹。TeXStudio 对项目自定义宏一律报「未知命令」，补全靠的就是这份 cwl——不刷新，编辑器里 <code>\Hom</code>、<code>\Mat</code>、<code>\coloneq</code> 全是红波浪线。</p>
-<p>这里也出过事故：录入新定义时没有拦未转义的 <code>%</code>，而 <code>%</code> 在 TeX 里是注释符，后面的整行被吞掉，所有笔记一起编译失败。现在录入前会检查。</p>
-<p>删除符号是另一件麻烦事。一个宏可能被正文引用，也可能被符号库内部的其他定义引用，两边都要查。<code>symbols.py</code> 的选项 5 会统计引用情况，仍被引用的先警告再动手。</p>
-<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">唯一一处正文反过来改工具的地方</span></div><div class="env-body"><p>别的地方都是工具服务于正文。符号库是反的：正文里新用一个记号，回头就要改 <code>structure.sty</code>、改 cwl、改 14 份副本。所以新记号的引入要克制——每加一个，都是全库范围的改动。</p>
-</div></div>
-
-<h2 id="七、把-16-项菜单收进一个窗口"><a href="#七、把-16-项菜单收进一个窗口" class="headerlink" title="七、把 16 项菜单收进一个窗口"></a>七、把 16 项菜单收进一个窗口</h2><p>工具攒到 18 个目录，<code>launcher.py</code> 里的菜单是 16 项。命令行面板能用，但每次都要记参数：<code>--keep</code>、<code>--log auto</code>、<code>--with-pdf</code>、<code>--dpi 200</code>。记不住就等于没有。</p>
-<p>所以有了 <code>panel_qt.py</code>，一个 PySide6 窗口。左边竖排六组，右边是卡片，点开卡片是表单：选操作、填参数、点执行，结果显示在下方的结果区。不起控制台，也没有内嵌终端。</p>
-<p>关键设计只有一条：<strong>三套前端共用一份清单。</strong> <code>launcher.py</code>（命令行）、<code>panel_qt.py</code>（Qt）、<code>panel_gui.py</code>（没有 Qt 环境时的网页兜底）都从 <code>panel_core</code> 读同一份 <code>MENU</code>。这类工具最常见的死法就是清单漂移——加了一个工具，改了命令行面板，忘了图形面板，半年后两个入口能做的事不一样。</p>
-<p>打包用 PyInstaller 的 onedir：<code>LaTeX-Toolbox.exe</code> 1.9 MB，旁边一个 <code>_internal</code> 目录 95 MB。单文件模式每次启动要解包约 90 MB，慢得不能忍，只在需要单文件分发时用。</p>
-<div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span><span class="env-title">一个只在打包后才出现的问题</span></div><div class="env-body"><p>工具在源码状态下运行正常，打成 exe 之后，启动子进程会弹黑窗。</p>
-<p>原因是两层：Qt 的 <code>QProcess</code> 起子进程默认带 <code>CREATE_NO_WINDOW</code>，这一层没问题；但工具内部还会再开 <code>git</code>、<code>cmd</code>、<code>python</code>，这些孙进程由各脚本自己负责，漏了 <code>creationflags=CREATE_NO_WINDOW</code>。GUI 子系统程序启动控制台子程序时，Windows 会给它新分配一个控制台，于是黑窗一闪。</p>
-<p>这类问题在源码状态下永远不会出现，只有打包后才暴露。所以打包不是最后一步，是另一个测试阶段。</p>
-</div></div>
-
-<p>另外三件事也花了时间：单实例（第二个实例不抢端口，直接唤起已有的窗口）、切页保活（切走再切回来，表单内容还在）、高 DPI 适配（界面字号与间距一起缩放）。顺带修过一个端口串台的 bug：Windows 上 <code>SO_REUSEADDR</code> 允许在已监听的地址上再次 bind，两个实例可能同时监听同一端口，与「端口占用不接管」的承诺冲突。</p>
-<h2 id="八、工作台：拒绝给一个总完成率"><a href="#八、工作台：拒绝给一个总完成率" class="headerlink" title="八、工作台：拒绝给一个总完成率"></a>八、工作台：拒绝给一个总完成率</h2><p>面板解决的是「跑工具」。还有一件事它不解决：打开一本书，不知道今天该干哪一目、这一目做到哪一步了。</p>
-<p>于是有了 <code>progress</code>，28 个文件、6030 行，一个只监听本机回环地址的 HTTP 服务。默认只读；书要在白名单里；页面打开要确认。三样都不能省。写操作另有开关且默认关闭，用 TeXStudio 打开某一行的入口也单独授权。</p>
-<p>它按五个阶段记进度：正文整理、来源对照、数学审核、证明回填、总结导引。每个阶段有自己的一套状态，不是共用「完成 &#x2F; 未完成」——数学审核里有「有疑点」，证明回填里有「待补」和「不适用」。这些状态是按各阶段的实际形态定的，不是为了列表整齐。</p>
-<p>设计上有两条我比较在意。</p>
-<p>一条是<strong>不提供单一的总体完成率</strong>。五个阶段互相独立，把它们加权成一个百分比，等于把「不知道」压成「大概」。所以报告按阶段分列，缺依据的、过期的分开标，不合并成一个数。</p>
-<p>另一条是<strong>TeX 里有内容，不代表审核完成</strong>。这两件事在文件系统上完全看不出来：一个写满三百行的 <code>.tex</code> 和一个逐句核过的 <code>.tex</code>，字节数可能只差几行。审核状态必须由人显式记录，不能从「有没有正文」推断。工作台的缺省值是「未检查」，不是「未完成」——两回事，前者是没看，后者是看了没做完。</p>
-<p>实现上还有几个保守的选择：版本历史每书最多 16 份，超出只提示变化，不伪造新增与删除明细；权限缓存 2 秒，写操作始终实时核验；并发上限 16，超出直接 503，避免一次刷新把线程打满；关掉 <code>allow_reuse_address</code>，否则 Windows 上两个实例能同时监听同一端口，与「端口占用不接管」的承诺冲突。</p>
-<p>有一处至今没做好：PDF 的嵌入预览。独立标签页能用，嵌入 Blob 与直接 HTTP iframe 在部分环境里灰屏，根因没查出来。文档里写的是「部分可用」，不是「可用」。这两个词的区别，就是以后要不要回头查的问题。</p>
-<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span><span class="env-title">只读不是保守，是省事</span></div><div class="env-body"><p>最初想做可编辑的工作台：勾状态、写备注、直接改文件。后来退成只读，只留一条窄路能写。</p>
-<p>原因很实际。一旦能写，就要处理并发、冲突、版本检查、备份、误操作恢复，每一样都要测。而它要回答的问题只是「现在到哪儿了」。为一个看板承担编辑器的复杂度，不划算。</p>
-</div></div>
-
-<h2 id="九、给协作者写规矩"><a href="#九、给协作者写规矩" class="headerlink" title="九、给协作者写规矩"></a>九、给协作者写规矩</h2><p>这些工具大半不是我自己写的，是和模型一起写的。所以除了代码，还长出一层东西：<code>AGENTS.md</code>，24 KB。</p>
-<p>它分三层。第一层是机器事实：路径、编码（UTF-8 无 BOM、LF）、编译命令、<code>./structure</code> 的解析规则、<code>MAX_PATH</code> 的实际行为。第二层是通用纪律。第三层是这个项目的规范。</p>
-<p>其中最有用的是一条<strong>改动的四行契约</strong>。要改文件，先给出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">范围：&lt;文件&gt; 第 X–Y 行，共 N 处</span><br><span class="line">改什么：&lt;一条一句，逐条列&gt;</span><br><span class="line">不动什么：&lt;结构 / 顺序 / 记号体系 / 证明路线&gt;</span><br><span class="line">依据：&lt;图片第几页哪句&gt; 对 &lt;文中哪句&gt;</span><br></pre></td></tr></table></figure>
-
-<p>「差异」写不出来就是没改，直接说「现有写法成立，无需修改」。这一条挡住的是最常见的一种无效劳动：为了显得有产出，把成立的地方改写一遍。</p>
-<p>还有一条更硬的：<strong>不得自审。</strong> 每个数学结论必须带一个状态标签，三档——<code>自检</code>（同一会话里又看了一遍）、<code>独立复核</code>（另一次会话、换模型或换人）、<code>已认证</code>（独立复核通过且无未解决异议）。三档不许混用，编译通过不能当完成证据。</p>
-<p><code>reviews/</code> 下有一份实际的复核记录。被审的是 commit <code>07a0d98</code> 里两节共 11 个证明块；复核方式是另开一个会话，prompt 经 stdin 传入，<strong>未读 <code>reviews/</code> 里的既有结论，全程只读</strong>。结论是「有条件通过」：A 类问题 0 条、B 类 0 条，11 个证明块全部通过，唯一条件是某一行的 <code>+</code> 要明确为逐点乘法，该处经裁决不改。</p>
-<p>这份记录的价值不在于「通过了」，在于它写清了哪一档、按什么范围、依据原文第几页。半年后回头看，还知道当时到底检查了什么。</p>
-<p><code>failures/</code> 目录装失败的路线，一条路线一个文件，四栏：试了什么、确切障碍、状态、什么条件下重开才算新。状态只有三个：<code>待定</code>、<code>已驳倒</code>、<code>命题有误</code>。两条硬规矩——证明失败不等于命题错，做不出来的证明只能记 <code>待定</code>；怀疑有矛盾不等于已驳倒，猜到的矛盾也只能记 <code>待定</code>。</p>
-<div class="math-env env-example" id="env-example-2"><div class="env-head"><span class="env-name">例</span><span class="env-num">2</span><span class="env-title">一份 205 行的证明文件</span></div><div class="env-body"><p>有一条证明，内容先被抽成单文件（205 行），后来又被写回正文，最后单文件作废。来回搬了三趟。</p>
-<p>原因是同一批证明有了两份载体：正文一份、单文件一份。两份必然各自漂移，改了一处忘了另一处，最后谁也不知道哪份是真的。</p>
-<p>现在的规矩是：证明写在命题后面，用 <code>\begin{proof}</code>，不另立 <code>proof-*.tex</code>。同一份内容只允许一个载体。检查点也因此改成按范围命名（<code>检查点-C04-S02-N05-N06.md</code>），不按载体命名——载体一改（抽成单文件、并回正文、删掉），按载体命名的检查点立刻变成孤儿。</p>
-</div></div>
-
-<h2 id="十、插一章的代价"><a href="#十、插一章的代价" class="headerlink" title="十、插一章的代价"></a>十、插一章的代价</h2><p>2026 年 11 月 15 日，往集合论后面插了一章。原书这个位置本来就该有，之前漏了。</p>
-<p>插进去之后，原来的 C04–C13 全部后移为 C05–C14。听起来是改个数字，实际动了：20 个章目录、1422 份台账与标题、1152 处正文路径，还有 <code>main.tex</code>、<code>summaries.md</code> 和工具的状态文件。</p>
-<p>改完之后，验证发现 711 份 <code>record.md</code> 的 TeX 行还指向改名前的目录。这些行不是手写的，是之前批量生成的，生成脚本里没有「台账里的章路径」这一步。按存在性改写，最后动了 819 份、共 1422 处。迁移脚本补上了这一步，<code>verify</code> 也加了一条：台账里的 TeX 路径必须存在。</p>
-<p>这一轮之后添了三个工具：<code>new_chapter.py</code>（建章骨架）、<code>content_catalog.py</code>（从台账生成目录清单）、<code>renumber_chapters.py</code>（章号迁移）。<code>ALG_Content.md</code> 不再手写，改由台账生成——843 条绑定，其中 3 条是节级绑定，不伪造一个不存在的 <code>N01</code>。</p>
-<div class="math-env env-remark" id="env-remark-5"><div class="env-head"><span class="env-name">注记</span><span class="env-num">5</span><span class="env-title">手写的索引一定滞后</span></div><div class="env-body"><p>任何「手工维护的清单」都会在第三次改动时失效，而失效是静默的：清单还在，条目也齐，只是指向了不存在的东西。</p>
-<p>判据很简单：这个清单能不能从别处生成。能生成的就不要手写，生成不了的就加一个校验脚本。留着手写的清单，等于给自己留一个以后要排查的坑。</p>
-</div></div>
-
-<h2 id="十一、现在的流水线"><a href="#十一、现在的流水线" class="headerlink" title="十一、现在的流水线"></a>十一、现在的流水线</h2><p>一个目（Bourbaki 的一个编号小节，对应一个 <code>.tex</code> 文件）从原书到进库，走的是这样一条路：</p>
-<div class="math-env env-algorithm" id="env-algorithm-1"><div class="env-head"><span class="env-name">算法</span><span class="env-num">1</span><span class="env-title">一目的处理流程</span></div><div class="env-body"><ol>
-<li>固定依据的 PDF 版本，记下 PDF 页序号与印刷页码的偏移。</li>
-<li>在 <code>Materials/Cxx/Syy/Nzz/</code> 建目录，四样东西：<code>images/</code> 放原书页，<code>body.md</code> 放正文整理稿，<code>proof.md</code> 放证明，<code>record.md</code> 记台账。</li>
-<li>读原书页。有文本层先试文本层，符号不可信就识图。</li>
-<li>起草。输出存进该目的草稿，保留首次完整输出与最终采用稿两份。</li>
-<li>人工核对，先查覆盖（定义、假设、结论、注记、例子、承接文字有没有漏），再查数学。</li>
-<li>写进 TeX，分三份记：正文采用稿、待核对问题、后续补写事项。</li>
-<li>编译两遍，日志无行首 <code>!</code>，<code>main.pdf</code> 存在。</li>
-<li>提交，说明写清改了什么。</li>
-<li>另开一次会话做独立复核，结论落进 <code>reviews/</code>。</li>
-<li>更新对应的检查点。</li>
-</ol>
-</div></div>
-
-<p>第 2 步的台账是这个工程里最不起眼、又最要紧的文件。一个目的 <code>record.md</code> 只有六七行：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">- TeX：Content/1_.../1_signs_and_words.tex</span><br><span class="line">- PDF 页序号：57-58</span><br><span class="line">- 印刷页码：50-51</span><br><span class="line">- 证明位置与待补事项：未检查</span><br><span class="line">- 待核对问题：未检查</span><br><span class="line">- 章级来源：E 原C01；笔记C01</span><br><span class="line">- 来源PDF：英译本/集合论_英文版_N. Bourbaki.pdf</span><br><span class="line">- 来源定位层级：目级已对齐（页眉 §S.目 与印刷页码逐页核对，习题未入库）</span><br></pre></td></tr></table></figure>
-
-<p>两套页码并排记，是因为它们差一个前置部分的长度，引用时说不清是哪一套就会找不到。状态写「未检查」而不是留空，是因为留空可以解释成「没问题」，写「未检查」不能。</p>
-<p>845 份这样的台账，构成了工作台那五个阶段的数据源。它们不判断数学对错，只记录「谁看过、看到哪一步」。这也是为什么整章读完之后，我仍然不敢说代数卷「写完了」——台账上大半的格子还是「未检查」。</p>
-<p>第 3 步值得单说。这套书在本地有 59 个 PDF：52 个有文本层，7 个是纯扫描。有文本层不等于能用——实测三页 7700 个字符里，Unicode 数学符号是 0 个：<code>α</code> 读成 <code>IX</code>，<code>∈</code> 读成 <code>E</code>，<code>≤</code> 读成 <code>~</code>。文字能读，公式不能引。</p>
-<p>所以引用公式一律走识图：<code>pdf_page.py</code> 把单页渲染成 150 dpi 的图，交给视觉模型转成 LaTeX，公式密集的页用 200 dpi。破损处按数学含义给最可能的形式并标 <code>⟨?⟩</code>，实在辨认不出的写 <code>?</code>——宁可留一个记号，不要猜一个看起来合理的公式。</p>
-<div class="math-env env-remark" id="env-remark-6"><div class="env-head"><span class="env-name">注记</span><span class="env-num">6</span><span class="env-title">文本层是给检索用的</span></div><div class="env-body"><p><code>.pdf</code> 里的文本层是为搜索和复制服务的，不是为引用服务的。做文献工作时，可以用它定位「这句话在哪一页」，不能用它抄公式。</p>
-<p>这一条对扫描版更彻底：输出不足 200 字符就说明没有文本层，此时不能回答「文件里没有这部分内容」——那是读法的问题，不是文献的问题。</p>
-</div></div>
-
-<p>还有两样东西不在流程的编号里，却每节都要补：导引与小结。导引交代这一节要做什么、从哪儿接上；小结回收本节用到的定义、值得记的命题、留给后面的口子。它们不算正文，缺了读起来会断。</p>
-<p><code>note_tools.py</code> 里有一项「补导引与小结」：按建库时的规则，给选中的笔记补 <code>intro.tex</code> 与各级 <code>Summary/</code>，并把 <code>\input</code> 插进对应的 <code>index.tex</code>。<strong>只补缺，不覆盖</strong>，可以反复跑。</p>
-<p>各级 <code>index.tex</code> 里的 <code>\input</code> 默认是注释掉的，只在动手写的那一层临时打开。130 个 <code>index.tex</code> 都按这个规矩理过一遍。好处是编译出来的 PDF 只含真正写了的部分，不会因为 <code>\input</code> 了一个空文件而多出整页空白。</p>
-<h2 id="十二、还没做完的"><a href="#十二、还没做完的" class="headerlink" title="十二、还没做完的"></a>十二、还没做完的</h2><p>写这一节不是为了谦虚，是为了让下次开工知道从哪儿接。</p>
-<ul>
-<li>写作流程的规范文档自己标着「方向已定，尚未实施」。流程在跑，规范没跟上。</li>
-<li><code>ALG_Content.md</code> 抬头写着「所有审核仍未检查」。结构齐了，数学审核接近零：845 份台账里绝大多数格子还是「未检查」。</li>
-<li>独立复核只做到两轮，而且都在同一节（s05–s06 的 v1 与 v2）。<code>reviews/</code> 里就这两份。机制有了，覆盖率接近于零。</li>
-<li>习题整块没动。正文与习题在这个工程里是分开的，习题要另起一条线。</li>
-<li>证明滞后一章回填，这是设计，不是欠债。但滞后超过一章就该算欠债了。</li>
-<li>第 9、12、14 章还是空架，第 4 章刚插进来。</li>
-<li>检查点 20 多份散在 <code>.workbuddy/</code> 下，靠文件名认，没有索引。</li>
-<li>工作台的 PDF 嵌入预览只做到「部分可用」，灰屏的根因没查。</li>
-<li><code>项目规范.md</code> 有 71 KB，副本靠每周一 09:45 的定时任务比对。防呆是有的：原件为 0 字节、或不足副本的 50% 时拒绝同步——防的是「坏原件覆盖好副本」，那恰好会毁掉副本的意义。</li>
-</ul>
-<h2 id="十三、小结"><a href="#十三、小结" class="headerlink" title="十三、小结"></a>十三、小结</h2><p>这套东西可以分三层看。</p>
-<p><strong>正文层</strong>：14 章、1389 个 <code>.tex</code>，按 Bourbaki 的章、节、目组织，一章一个目录，一目一个文件。真正写起来的是第 5、6、7 章。</p>
-<p><strong>工具层</strong>：18 个目录、16 个菜单项、两万行。分成五类——编译与产物（<code>clean_aux</code>、<code>pdf_upright</code>）、版本与安全（<code>commit</code>、<code>check_sensitive</code>、<code>watch_notes</code>、<code>repo_check</code>）、内容维护（<code>symbols</code>、<code>note_tools</code>、<code>outline_tool</code>、<code>new_note</code>）、进度（工作台、<code>progress</code>）、入口（三套面板）。</p>
-<p><strong>规矩层</strong>：<code>AGENTS.md</code> 的四行契约、<code>failures/</code> 的三态、复核的三档、检查点的命名规则。这一层不产生功能，但它决定了前两层会不会在半年后互相拆台。</p>
-<p>几件值得单独记下的事：</p>
-<ul>
-<li>路径、编码、并发，这三样造成的错误都会伪装成别的东西。<code>File not found</code> 不一定是文件没了，编译「通过」不一定是写对了，检查「干净」不一定扫全了。</li>
-<li>检查脚本要输出「扫了什么」，不能只输出「没问题」。会静默失效的检查比没有检查更危险。</li>
-<li>工程判断值得写成可复查的形式。<code>--keep 20</code> 这条参数背后是一个两行的单调性论证，写下来之后就不用再想。</li>
-<li>清单能生成就不要手写。手写的一定滞后，而且滞后时不报警。</li>
-<li>同一份内容只留一个载体。两份必然漂移，漂移之后没有哪份是真的。</li>
-</ul>
-<p>这套工具现在能做的事：从原书页到入库，一条路走完；改一个宏，14 份副本都要跟着同步；插一章，章号、台账、正文路径一起迁移；提交前自动挡住本机路径。不能做的事也很清楚：它不判断数学对不对，那一步始终要另一个人、另一次会话、另一份记录。</p>
-]]></content>
-      <categories>
-        <category>VibeCoding</category>
-        <category>VibeMathing</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
-        <tag>工作流</tag>
-        <tag>LaTeX</tag>
-        <tag>Bourbaki</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>『格论』第 1 章读法：从杂例到保序映射</title>
     <url>/posts/priestley-lattices-1-1.html</url>
     <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 1 篇</span></div><p>Priestley 与 Davey 这本书的第 1 章讲有序集。五节，三十八个数号段落，带证明的结论只有三条，其中两条在讲画图。其余全是定义、例子和提醒。整章只做一件事：把一个日常词拆成能运算的结构，再把这个结构放回它出现的地方。</p>
@@ -822,6 +591,237 @@ $$</p>
         <tag>格论</tag>
         <tag>读书笔记</tag>
         <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>笔记之外：Bourbaki 工程的工具与工作流</title>
+    <url>/posts/bourbaki-notes-toolchain.html</url>
+    <content><![CDATA[<p>正文四万三千行，围着它长出来的工具两万六千行。这个比例不正常。</p>
+<p>写笔记的人本该把时间花在定义和证明上，不该花在路径长度和退出码上。但真正卡住进度的，一直是后一类事：一个超长的路径能让 XeLaTeX 报「文件不存在」，一次跑完的编译能让整章公式悄悄错位，一个「检查通过」的钩子可能扫错了仓库。每一条工具都是被某次具体的失败逼出来的，没有一条是为了自动化而自动化。</p>
+<p>这篇文章按失败的类型讲，不按工具的目录讲。</p>
+<span id="more"></span>
+
+<div class="ai-notice">本文完全由 AI 创作，本人只负责发布和提出修改意见。</div>
+
+<h2 id="一、先看规模"><a href="#一、先看规模" class="headerlink" title="一、先看规模"></a>一、先看规模</h2><p>代数卷现在是这样：</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>章</td>
+<td>14</td>
+</tr>
+<tr>
+<td><code>.tex</code> 文件</td>
+<td>1389</td>
+</tr>
+<tr>
+<td>正文行数</td>
+<td>约 4.3 万</td>
+</tr>
+<tr>
+<td><code>structure.sty</code> 里的宏与环境</td>
+<td>238</td>
+</tr>
+<tr>
+<td>目级台账 <code>record.md</code></td>
+<td>845</td>
+</tr>
+<tr>
+<td>原书页图片</td>
+<td>2523</td>
+</tr>
+<tr>
+<td>工具脚本</td>
+<td>20303 行</td>
+</tr>
+<tr>
+<td>面板</td>
+<td>6327 行</td>
+</tr>
+</tbody></table>
+<p>「14 章」是结构，不是进度。超过 2 KB 的 <code>.tex</code> 分布得很不均匀：第 5、6、7 章分别是 57、72、72 份，这三章是真正写起来的；第 1、2、3、8、10、11、13 章零散成篇；第 4 章是 11 月 15 日刚插进来的空架，24 个文件加起来 104 行；第 9、12、14 章连正文都没开始，167、238、119 个文件合计不到 1400 行。</p>
+<p>这个不均匀是有意的。流程不是按章顺序推进，而是正文主线向前、证明滞后一章回填。所以「第 9 章有 167 个文件」只能说明骨架搭好了，不能说明写了多少。</p>
+<h2 id="二、路径-260：第一个真正的钉子"><a href="#二、路径-260：第一个真正的钉子" class="headerlink" title="二、路径 260：第一个真正的钉子"></a>二、路径 260：第一个真正的钉子</h2><p>Windows 的 <code>MAX_PATH</code> 是 260 字符。本机的 <code>LongPathsEnabled</code> 已经是 1，照样超限就失败——因为 XeLaTeX 没有声明 <code>longPathAware</code>，系统不会替它放宽。</p>
+<p>失败的样子很有欺骗性：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">! LaTeX Error: File `...&#x27; not found.</span><br><span class="line">! Emergency stop.</span><br></pre></td></tr></table></figure>
+
+<p>看起来像文件丢了，实际是路径太长，编译器根本没走到打开文件那一步。我第一次遇到时去查了 <code>git status</code>、查了文件名拼写、查了 <code>\input</code> 的相对路径，全都没问题，最后才想到数一下字符数。</p>
+<p>现在的硬判据是<strong>任意 <code>.tex</code> 的绝对路径不超过 232 字符</strong>，留 28 给 <code>Summary/</code> 这类子目录。判据由 <code>path_budget.py</code> 执行，它按「书 &#x2F; 章 &#x2F; 节」分组，算出每组最长路径，以及压到 232 需要缩减多少字符。输出是一份最小改动清单，不是一句「有文件超了」。</p>
+<p>压长度时最容易犯的错是硬砍词。为此付过学费，实测出现过五个半截词：<code>algebr</code>、<code>Coxete</code>、<code>propert</code>、<code>matri</code>、<code>quaternioni</code>。砍到这种程度，文件名已经不能读了。现在有两条规矩：名字只保留完整单词，超长先压虚词（<code>of</code>、<code>the</code>、<code>in</code>、<code>and</code>、<code>with</code>）再缩写；单层名字不超过 55 字符。</p>
+<p>光有规矩不够，还得有检查。<code>name_vs_title.py</code> 把文件名与首行 <code>% English title</code> 比对，要求文件名是标题的前缀——这一条能同时抓住单复数错误和漏词。<code>spell_names.py</code> 扫全库低频词，给出形近候选。两个脚本都不判断「名字好不好」，只判断「名字和标题是不是同一件事」。</p>
+<p>还有一类同形的失败，出在编码上。在 Windows 上抓中文关键词，取到的可能是 <code>ç¾¤</code>、<code>å·®ç¾¤</code> 这样的乱码——UTF-8 字节被按 Latin-1 解读了。拿这串东西去搜，必然零命中，然后得出「全书没有定义 X」的结论。搜索前先看一眼取到的串是不是正常汉字，是乱码就换个入口重取。零命中不等于不存在。</p>
+<div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span><span class="env-title">报错的位置不是出错的位置</span></div><div class="env-body"><p><code>File not found</code> 有至少四种成因：路径超长、大小写不匹配、<code>\input</code> 的相对路径基准错了、文件真的不存在。前三种都不会在报错信息里留下痕迹。</p>
+<p>处理这类错误，先问「这个报错可能由几种原因产生」，再逐条排除，不要顺着报错指向的位置找。报错指向的位置，往往是系统发现问题的位置，不是问题发生的位置。</p>
+</div></div>
+
+<h2 id="三、编译：不要相信退出码"><a href="#三、编译：不要相信退出码" class="headerlink" title="三、编译：不要相信退出码"></a>三、编译：不要相信退出码</h2><p><code>main.tex</code> 第一行是 <code>\usepackage&#123;./structure&#125;</code>。<code>./</code> 按<strong>进程当前工作目录</strong>解析，不是按 <code>main.tex</code> 所在目录解析。所以编译前必须先 <code>cd</code> 进书目录，否则报 <code>File &#39;./structure.sty&#39; not found</code>——又一个伪装成「文件丢了」的错误。</p>
+<p>编译命令是两遍 XeLaTeX，输出目录隔离到 <code>tmp\build</code>：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\texlive\2025\bin\windows\xelatex.exe -interaction=nonstopmode ^</span><br><span class="line">  -output-directory=D:\LaTeX_Study\tmp\build main.tex</span><br></pre></td></tr></table></figure>
+
+<p>为什么要隔离输出，而不是老老实实在书目录里编译：旁边可能还有另一路在编译同一本书，两个进程写同一批 <code>.aux</code>、<code>.log</code>、<code>.toc</code>。实测过一次互相破坏，读到的是对方写坏的日志，报出 99 个 <code>l.1 ^^@^^@</code>——而仓库里一个 NUL 字节都没有。那不是文档的问题，是并发的问题。隔离之后，「日志里没有 <code>!</code>」判定的是我自己这一次。</p>
+<p>判定成功只看两件事：<code>main.log</code> 没有行首 <code>!</code>，且 <code>main.pdf</code> 存在。<strong>不看退出码。</strong></p>
+<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">退出码回答的是另一个问题</span></div><div class="env-body"><p>退出码说的是「进程有没有异常终止」，不是「产物对不对」。<code>-interaction=nonstopmode</code> 下，一个未定义命令、一个错位的 <code>\end</code>，都能让进程正常退出，产出一个缺页的 PDF。把退出码当成功判据，等于把「跑完了」当成「写对了」。</p>
+<p>这两件事在软件工程里早就分开了：编译通过不保证程序正确。排版也一样，日志干净不保证数学正确。后者还得另有人看。</p>
+</div></div>
+
+<p>还有两条容易忘的：禁用 pdfLaTeX；<code>latexmk</code> 必须显式 <code>-xelatex</code>，否则 <code>ctexbook</code> 会退回 <code>inputenc</code>&#x2F;<code>CJK</code>，出来的是错的，而且不报错。</p>
+<h2 id="四、Git：让每一节都留得住"><a href="#四、Git：让每一节都留得住" class="headerlink" title="四、Git：让每一节都留得住"></a>四、Git：让每一节都留得住</h2><p>规则只有一句：<strong>一节写完、两遍编译通过，立刻提交。</strong> 先提交后编译不算——中间那几分钟，错误已经进了历史。</p>
+<p>跨会话改正文之前，先确认工作区干净。没有干净的中间快照，就回退不到某一段。这条比「多提交几次」重要得多：提交的价值不在备份，在于「能回到写坏之前」。</p>
+<p>手工敲 <code>add</code>、<code>commit</code>、<code>push</code> 三个命令太啰嗦，于是有了 <code>commit.py</code>，400 行：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">python commit.py &quot;说明&quot; -y</span><br><span class="line">python commit.py &quot;说明;另一条&quot; --log config</span><br><span class="line">python commit.py &quot;说明&quot; --log auto</span><br><span class="line">python commit.py &quot;说明&quot; --dry-run</span><br></pre></td></tr></table></figure>
+
+<p><code>--log</code> 顺手把说明写进 <code>CHANGELOG.md</code> 的对应分节，<code>auto</code> 按关键词判断该进「tex 配置调整」还是「正文内容调整」。<code>--check</code> 是给 git 钩子用的模式：只扫描、不提交，命中就返回非零。</p>
+<p><code>check_sensitive.py</code> 是另一道闸门：提交前扫暂存区，找本机路径、用户名、专有词。词表从脚本目录向上合并，最多四级 <code>.sensitive-words.txt</code>，这样「本机专有词」不必写进脚本本身——脚本也要进仓库，写进脚本等于把泄露源一起提交了。</p>
+<p>这两道闸门都失效过一次，而且失效时都不出声。</p>
+<p>第一次：<code>--check</code> 在 <code>chdir</code> <strong>之后</strong>执行。脚本原本会切到 <code>Tools/commit/</code> 再干活，作为钩子触发时，工作目录已经变了，扫的是工具集仓库的暂存区，不是触发钩子的那个笔记仓库。防泄露机制看起来在跑，报告也是「干净」，但它检查的是另一个仓库。</p>
+<p>第二次：<code>git ls-files</code> 与 <code>git diff</code> 的 <code>core.quotepath</code> 默认开着，中文和希腊字母文件名被转义成八进制，脚本拼出来的路径不存在，于是<strong>静默跳过</strong>。实测 Algebra 仓库漏了 10 个正文文件。扫了 100 个文件报告「干净」，和扫了 90 个报告「干净」，输出一模一样。</p>
+<div class="math-env env-alarm" id="env-alarm-2"><div class="env-head"><span class="env-name">警示</span><span class="env-num">2</span><span class="env-title">会静默失效的检查，比没有检查更糟</span></div><div class="env-body"><p>没有检查，人还会自己看一眼。有一个显示「通过」的检查，人会放心不看。一旦这个检查因为工作目录、编码、路径转义悄悄少扫了一部分，风险就从「已知」变成了「以为已经处理」。</p>
+<p>写这类脚本时，要让它<strong>在扫不到东西的时候也出声</strong>：扫了几个文件、跳过几个、为什么跳过。宁可输出啰嗦，不可输出一句「干净」。</p>
+</div></div>
+
+<p>还有一个同类的：<code>clean_aux</code> 最早只按扩展名在整个工作区匹配，实测会把 <code>outputs/</code> 里的转录日志、<code>watch_notes/_logs/</code> 的运行日志一起删掉；带 <code>--with-pdf</code> 时更是把全工作区 2189 个 PDF 都算进去。现在的规则收窄了：产物所在目录必须有 <code>.tex</code> 源文件，PDF 只删与同目录某个 <code>.tex</code> 同名的。</p>
+<p>删东西的工具，默认值应该保守。要删得多，得让人多打一个参数。</p>
+<p>再说一下仓库的边界，这条不讲清楚会天天踩。工作区根目录<strong>不是</strong> git 仓库；<code>LaTeX_Notes/</code> 和 <code>Template/</code> 的上一层也<strong>不是</strong>。10 本笔记、4 个模板、<code>Tools/</code>，一共 15 个独立仓库，没有父仓库把它们串起来。所以在 <code>LaTeX_Notes/</code> 下跑 <code>git status</code> 会得到 <code>fatal: not a git repository</code>——这不是仓库坏了，是它本来就不存在。要查状态得遍历子仓库。</p>
+<p>分支也不统一：10 本笔记和 Beamer 模板走 <code>master</code>，另外三个模板和 <code>Tools/</code> 走 <code>main</code>。核验推送时不要想当然，<code>git ls-remote --heads origin</code> 看一眼实际分支。另一个隐形的坑是 <code>core.longpaths</code>——长路径仓库要先开，否则 <code>git add</code> 会报「文件名过长」，而文件本身完全正常。</p>
+<h2 id="五、watch-notes：把工程判断写成命题"><a href="#五、watch-notes：把工程判断写成命题" class="headerlink" title="五、watch_notes：把工程判断写成命题"></a>五、watch_notes：把工程判断写成命题</h2><p><code>watch_notes.py</code> 做两件事：定时检测笔记目录，有变化就提交并推送；按另一个间隔把历史裁剪到固定条数。</p>
+<p>第二件事的动机很朴素：这么多仓库，定时提交会让历史无限增长。最初的实现是「每次删掉最早一条」。写完之后发现不对劲——提交也在按同一个间隔产生，一次只删一条，净增长永远为正，历史只会变慢地涨下去。</p>
+<p>这件事值得写成一句可以复查的话。</p>
+<div class="math-env env-proposition" id="env-proposition-1"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span><span class="env-title">逐条裁剪不收敛</span></div><div class="env-body"><p>设每轮新增 $a$ 个提交、删除最早的 $1$ 个，$a\ge 1$，则提交数 $H_n$ 单调不减。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>每轮的变化量是 $H_{n+1}-H_n=a-1\ge 0$，故不减。若改为按上限 $K$ 裁剪，则 $H_{n+1}=\min(H_n+a,K)$，序列被夹在 $\min(H_0,K)$ 与 $K$ 之间，与 $a$ 无关。</p>
+</div></div>
+
+<p>所以现在的实现是 <code>--keep</code>，默认 20：超过就裁到 20 条，内容与提交信息都保留，只重写历史。这条结论一句话就能说完，写成命题的好处是改参数时不用再想一遍——哪里变了、结论还成不成立，对着式子看就行。</p>
+<p>同一轮里还修了一个更危险的问题：<code>--no-push</code> 原先仍然执行 <code>reflog expire</code> 与 <code>gc --prune=now</code>，也就是本地历史被改写了、却发现没推送成功，此时既回退不了，也和远程彻底分叉。现在只在推送成功之后才清理。</p>
+<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span><span class="env-title">命题的用处不是证明</span></div><div class="env-body"><p>上面那条命题，推到最后只有两行。它真正的价值是让「为什么不能一条一条删」变成一句有条件的判断，而不是一个人当时的直觉。</p>
+<p>工程里的这类判断很多，绝大多数没写下来，于是半年后同一个人会重犯。写下来的成本是几行，重犯的成本是几天。</p>
+</div></div>
+
+<h2 id="六、符号库：14-份副本与一份补全"><a href="#六、符号库：14-份副本与一份补全" class="headerlink" title="六、符号库：14 份副本与一份补全"></a>六、符号库：14 份副本与一份补全</h2><p><code>structure.sty</code> 在磁盘上有 14 份副本：10 本笔记各一份，4 个模板各一份。改一个宏，这 14 份都要改，而且不能改错顺序。</p>
+<p>工具 <code>symbols.py</code> 1818 行，做的就是把这件事变成一条命令：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">python symbols.py --all --write         # 提取 + 回填 + 刷新补全 + 分发</span><br><span class="line">python symbols.py --cwl --write         # 只刷新 TeXStudio 补全</span><br><span class="line">python symbols.py --drop NAME --write   # 删除指定符号</span><br></pre></td></tr></table></figure>
+
+<p>流程是：扫描各子文件夹，收集模板里没有的新符号，记进提取档案；回填时先写 <code>structure.sty</code>，再刷新 <code>custom.cwl</code>，最后分发到各子文件夹。TeXStudio 对项目自定义宏一律报「未知命令」，补全靠的就是这份 cwl——不刷新，编辑器里 <code>\Hom</code>、<code>\Mat</code>、<code>\coloneq</code> 全是红波浪线。</p>
+<p>这里也出过事故：录入新定义时没有拦未转义的 <code>%</code>，而 <code>%</code> 在 TeX 里是注释符，后面的整行被吞掉，所有笔记一起编译失败。现在录入前会检查。</p>
+<p>删除符号是另一件麻烦事。一个宏可能被正文引用，也可能被符号库内部的其他定义引用，两边都要查。<code>symbols.py</code> 的选项 5 会统计引用情况，仍被引用的先警告再动手。</p>
+<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">唯一一处正文反过来改工具的地方</span></div><div class="env-body"><p>别的地方都是工具服务于正文。符号库是反的：正文里新用一个记号，回头就要改 <code>structure.sty</code>、改 cwl、改 14 份副本。所以新记号的引入要克制——每加一个，都是全库范围的改动。</p>
+</div></div>
+
+<h2 id="七、把-16-项菜单收进一个窗口"><a href="#七、把-16-项菜单收进一个窗口" class="headerlink" title="七、把 16 项菜单收进一个窗口"></a>七、把 16 项菜单收进一个窗口</h2><p>工具攒到 18 个目录，<code>launcher.py</code> 里的菜单是 16 项。命令行面板能用，但每次都要记参数：<code>--keep</code>、<code>--log auto</code>、<code>--with-pdf</code>、<code>--dpi 200</code>。记不住就等于没有。</p>
+<p>所以有了 <code>panel_qt.py</code>，一个 PySide6 窗口。左边竖排六组，右边是卡片，点开卡片是表单：选操作、填参数、点执行，结果显示在下方的结果区。不起控制台，也没有内嵌终端。</p>
+<p>关键设计只有一条：<strong>三套前端共用一份清单。</strong> <code>launcher.py</code>（命令行）、<code>panel_qt.py</code>（Qt）、<code>panel_gui.py</code>（没有 Qt 环境时的网页兜底）都从 <code>panel_core</code> 读同一份 <code>MENU</code>。这类工具最常见的死法就是清单漂移——加了一个工具，改了命令行面板，忘了图形面板，半年后两个入口能做的事不一样。</p>
+<p>打包用 PyInstaller 的 onedir：<code>LaTeX-Toolbox.exe</code> 1.9 MB，旁边一个 <code>_internal</code> 目录 95 MB。单文件模式每次启动要解包约 90 MB，慢得不能忍，只在需要单文件分发时用。</p>
+<div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span><span class="env-title">一个只在打包后才出现的问题</span></div><div class="env-body"><p>工具在源码状态下运行正常，打成 exe 之后，启动子进程会弹黑窗。</p>
+<p>原因是两层：Qt 的 <code>QProcess</code> 起子进程默认带 <code>CREATE_NO_WINDOW</code>，这一层没问题；但工具内部还会再开 <code>git</code>、<code>cmd</code>、<code>python</code>，这些孙进程由各脚本自己负责，漏了 <code>creationflags=CREATE_NO_WINDOW</code>。GUI 子系统程序启动控制台子程序时，Windows 会给它新分配一个控制台，于是黑窗一闪。</p>
+<p>这类问题在源码状态下永远不会出现，只有打包后才暴露。所以打包不是最后一步，是另一个测试阶段。</p>
+</div></div>
+
+<p>另外三件事也花了时间：单实例（第二个实例不抢端口，直接唤起已有的窗口）、切页保活（切走再切回来，表单内容还在）、高 DPI 适配（界面字号与间距一起缩放）。顺带修过一个端口串台的 bug：Windows 上 <code>SO_REUSEADDR</code> 允许在已监听的地址上再次 bind，两个实例可能同时监听同一端口，与「端口占用不接管」的承诺冲突。</p>
+<h2 id="八、工作台：拒绝给一个总完成率"><a href="#八、工作台：拒绝给一个总完成率" class="headerlink" title="八、工作台：拒绝给一个总完成率"></a>八、工作台：拒绝给一个总完成率</h2><p>面板解决的是「跑工具」。还有一件事它不解决：打开一本书，不知道今天该干哪一目、这一目做到哪一步了。</p>
+<p>于是有了 <code>progress</code>，28 个文件、6030 行，一个只监听本机回环地址的 HTTP 服务。默认只读；书要在白名单里；页面打开要确认。三样都不能省。写操作另有开关且默认关闭，用 TeXStudio 打开某一行的入口也单独授权。</p>
+<p>它按五个阶段记进度：正文整理、来源对照、数学审核、证明回填、总结导引。每个阶段有自己的一套状态，不是共用「完成 &#x2F; 未完成」——数学审核里有「有疑点」，证明回填里有「待补」和「不适用」。这些状态是按各阶段的实际形态定的，不是为了列表整齐。</p>
+<p>设计上有两条我比较在意。</p>
+<p>一条是<strong>不提供单一的总体完成率</strong>。五个阶段互相独立，把它们加权成一个百分比，等于把「不知道」压成「大概」。所以报告按阶段分列，缺依据的、过期的分开标，不合并成一个数。</p>
+<p>另一条是<strong>TeX 里有内容，不代表审核完成</strong>。这两件事在文件系统上完全看不出来：一个写满三百行的 <code>.tex</code> 和一个逐句核过的 <code>.tex</code>，字节数可能只差几行。审核状态必须由人显式记录，不能从「有没有正文」推断。工作台的缺省值是「未检查」，不是「未完成」——两回事，前者是没看，后者是看了没做完。</p>
+<p>实现上还有几个保守的选择：版本历史每书最多 16 份，超出只提示变化，不伪造新增与删除明细；权限缓存 2 秒，写操作始终实时核验；并发上限 16，超出直接 503，避免一次刷新把线程打满；关掉 <code>allow_reuse_address</code>，否则 Windows 上两个实例能同时监听同一端口，与「端口占用不接管」的承诺冲突。</p>
+<p>有一处至今没做好：PDF 的嵌入预览。独立标签页能用，嵌入 Blob 与直接 HTTP iframe 在部分环境里灰屏，根因没查出来。文档里写的是「部分可用」，不是「可用」。这两个词的区别，就是以后要不要回头查的问题。</p>
+<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span><span class="env-title">只读不是保守，是省事</span></div><div class="env-body"><p>最初想做可编辑的工作台：勾状态、写备注、直接改文件。后来退成只读，只留一条窄路能写。</p>
+<p>原因很实际。一旦能写，就要处理并发、冲突、版本检查、备份、误操作恢复，每一样都要测。而它要回答的问题只是「现在到哪儿了」。为一个看板承担编辑器的复杂度，不划算。</p>
+</div></div>
+
+<h2 id="九、给协作者写规矩"><a href="#九、给协作者写规矩" class="headerlink" title="九、给协作者写规矩"></a>九、给协作者写规矩</h2><p>这些工具大半不是我自己写的，是和模型一起写的。所以除了代码，还长出一层东西：<code>AGENTS.md</code>，24 KB。</p>
+<p>它分三层。第一层是机器事实：路径、编码（UTF-8 无 BOM、LF）、编译命令、<code>./structure</code> 的解析规则、<code>MAX_PATH</code> 的实际行为。第二层是通用纪律。第三层是这个项目的规范。</p>
+<p>其中最有用的是一条<strong>改动的四行契约</strong>。要改文件，先给出：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">范围：&lt;文件&gt; 第 X–Y 行，共 N 处</span><br><span class="line">改什么：&lt;一条一句，逐条列&gt;</span><br><span class="line">不动什么：&lt;结构 / 顺序 / 记号体系 / 证明路线&gt;</span><br><span class="line">依据：&lt;图片第几页哪句&gt; 对 &lt;文中哪句&gt;</span><br></pre></td></tr></table></figure>
+
+<p>「差异」写不出来就是没改，直接说「现有写法成立，无需修改」。这一条挡住的是最常见的一种无效劳动：为了显得有产出，把成立的地方改写一遍。</p>
+<p>还有一条更硬的：<strong>不得自审。</strong> 每个数学结论必须带一个状态标签，三档——<code>自检</code>（同一会话里又看了一遍）、<code>独立复核</code>（另一次会话、换模型或换人）、<code>已认证</code>（独立复核通过且无未解决异议）。三档不许混用，编译通过不能当完成证据。</p>
+<p><code>reviews/</code> 下有一份实际的复核记录。被审的是 commit <code>07a0d98</code> 里两节共 11 个证明块；复核方式是另开一个会话，prompt 经 stdin 传入，<strong>未读 <code>reviews/</code> 里的既有结论，全程只读</strong>。结论是「有条件通过」：A 类问题 0 条、B 类 0 条，11 个证明块全部通过，唯一条件是某一行的 <code>+</code> 要明确为逐点乘法，该处经裁决不改。</p>
+<p>这份记录的价值不在于「通过了」，在于它写清了哪一档、按什么范围、依据原文第几页。半年后回头看，还知道当时到底检查了什么。</p>
+<p><code>failures/</code> 目录装失败的路线，一条路线一个文件，四栏：试了什么、确切障碍、状态、什么条件下重开才算新。状态只有三个：<code>待定</code>、<code>已驳倒</code>、<code>命题有误</code>。两条硬规矩——证明失败不等于命题错，做不出来的证明只能记 <code>待定</code>；怀疑有矛盾不等于已驳倒，猜到的矛盾也只能记 <code>待定</code>。</p>
+<div class="math-env env-example" id="env-example-2"><div class="env-head"><span class="env-name">例</span><span class="env-num">2</span><span class="env-title">一份 205 行的证明文件</span></div><div class="env-body"><p>有一条证明，内容先被抽成单文件（205 行），后来又被写回正文，最后单文件作废。来回搬了三趟。</p>
+<p>原因是同一批证明有了两份载体：正文一份、单文件一份。两份必然各自漂移，改了一处忘了另一处，最后谁也不知道哪份是真的。</p>
+<p>现在的规矩是：证明写在命题后面，用 <code>\begin{proof}</code>，不另立 <code>proof-*.tex</code>。同一份内容只允许一个载体。检查点也因此改成按范围命名（<code>检查点-C04-S02-N05-N06.md</code>），不按载体命名——载体一改（抽成单文件、并回正文、删掉），按载体命名的检查点立刻变成孤儿。</p>
+</div></div>
+
+<h2 id="十、插一章的代价"><a href="#十、插一章的代价" class="headerlink" title="十、插一章的代价"></a>十、插一章的代价</h2><p>2026 年 11 月 15 日，往集合论后面插了一章。原书这个位置本来就该有，之前漏了。</p>
+<p>插进去之后，原来的 C04–C13 全部后移为 C05–C14。听起来是改个数字，实际动了：20 个章目录、1422 份台账与标题、1152 处正文路径，还有 <code>main.tex</code>、<code>summaries.md</code> 和工具的状态文件。</p>
+<p>改完之后，验证发现 711 份 <code>record.md</code> 的 TeX 行还指向改名前的目录。这些行不是手写的，是之前批量生成的，生成脚本里没有「台账里的章路径」这一步。按存在性改写，最后动了 819 份、共 1422 处。迁移脚本补上了这一步，<code>verify</code> 也加了一条：台账里的 TeX 路径必须存在。</p>
+<p>这一轮之后添了三个工具：<code>new_chapter.py</code>（建章骨架）、<code>content_catalog.py</code>（从台账生成目录清单）、<code>renumber_chapters.py</code>（章号迁移）。<code>ALG_Content.md</code> 不再手写，改由台账生成——843 条绑定，其中 3 条是节级绑定，不伪造一个不存在的 <code>N01</code>。</p>
+<div class="math-env env-remark" id="env-remark-5"><div class="env-head"><span class="env-name">注记</span><span class="env-num">5</span><span class="env-title">手写的索引一定滞后</span></div><div class="env-body"><p>任何「手工维护的清单」都会在第三次改动时失效，而失效是静默的：清单还在，条目也齐，只是指向了不存在的东西。</p>
+<p>判据很简单：这个清单能不能从别处生成。能生成的就不要手写，生成不了的就加一个校验脚本。留着手写的清单，等于给自己留一个以后要排查的坑。</p>
+</div></div>
+
+<h2 id="十一、现在的流水线"><a href="#十一、现在的流水线" class="headerlink" title="十一、现在的流水线"></a>十一、现在的流水线</h2><p>一个目（Bourbaki 的一个编号小节，对应一个 <code>.tex</code> 文件）从原书到进库，走的是这样一条路：</p>
+<div class="math-env env-algorithm" id="env-algorithm-1"><div class="env-head"><span class="env-name">算法</span><span class="env-num">1</span><span class="env-title">一目的处理流程</span></div><div class="env-body"><ol>
+<li>固定依据的 PDF 版本，记下 PDF 页序号与印刷页码的偏移。</li>
+<li>在 <code>Materials/Cxx/Syy/Nzz/</code> 建目录，四样东西：<code>images/</code> 放原书页，<code>body.md</code> 放正文整理稿，<code>proof.md</code> 放证明，<code>record.md</code> 记台账。</li>
+<li>读原书页。有文本层先试文本层，符号不可信就识图。</li>
+<li>起草。输出存进该目的草稿，保留首次完整输出与最终采用稿两份。</li>
+<li>人工核对，先查覆盖（定义、假设、结论、注记、例子、承接文字有没有漏），再查数学。</li>
+<li>写进 TeX，分三份记：正文采用稿、待核对问题、后续补写事项。</li>
+<li>编译两遍，日志无行首 <code>!</code>，<code>main.pdf</code> 存在。</li>
+<li>提交，说明写清改了什么。</li>
+<li>另开一次会话做独立复核，结论落进 <code>reviews/</code>。</li>
+<li>更新对应的检查点。</li>
+</ol>
+</div></div>
+
+<p>第 2 步的台账是这个工程里最不起眼、又最要紧的文件。一个目的 <code>record.md</code> 只有六七行：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">- TeX：Content/1_.../1_signs_and_words.tex</span><br><span class="line">- PDF 页序号：57-58</span><br><span class="line">- 印刷页码：50-51</span><br><span class="line">- 证明位置与待补事项：未检查</span><br><span class="line">- 待核对问题：未检查</span><br><span class="line">- 章级来源：E 原C01；笔记C01</span><br><span class="line">- 来源PDF：英译本/集合论_英文版_N. Bourbaki.pdf</span><br><span class="line">- 来源定位层级：目级已对齐（页眉 §S.目 与印刷页码逐页核对，习题未入库）</span><br></pre></td></tr></table></figure>
+
+<p>两套页码并排记，是因为它们差一个前置部分的长度，引用时说不清是哪一套就会找不到。状态写「未检查」而不是留空，是因为留空可以解释成「没问题」，写「未检查」不能。</p>
+<p>845 份这样的台账，构成了工作台那五个阶段的数据源。它们不判断数学对错，只记录「谁看过、看到哪一步」。这也是为什么整章读完之后，我仍然不敢说代数卷「写完了」——台账上大半的格子还是「未检查」。</p>
+<p>第 3 步值得单说。这套书在本地有 59 个 PDF：52 个有文本层，7 个是纯扫描。有文本层不等于能用——实测三页 7700 个字符里，Unicode 数学符号是 0 个：<code>α</code> 读成 <code>IX</code>，<code>∈</code> 读成 <code>E</code>，<code>≤</code> 读成 <code>~</code>。文字能读，公式不能引。</p>
+<p>所以引用公式一律走识图：<code>pdf_page.py</code> 把单页渲染成 150 dpi 的图，交给视觉模型转成 LaTeX，公式密集的页用 200 dpi。破损处按数学含义给最可能的形式并标 <code>⟨?⟩</code>，实在辨认不出的写 <code>?</code>——宁可留一个记号，不要猜一个看起来合理的公式。</p>
+<div class="math-env env-remark" id="env-remark-6"><div class="env-head"><span class="env-name">注记</span><span class="env-num">6</span><span class="env-title">文本层是给检索用的</span></div><div class="env-body"><p><code>.pdf</code> 里的文本层是为搜索和复制服务的，不是为引用服务的。做文献工作时，可以用它定位「这句话在哪一页」，不能用它抄公式。</p>
+<p>这一条对扫描版更彻底：输出不足 200 字符就说明没有文本层，此时不能回答「文件里没有这部分内容」——那是读法的问题，不是文献的问题。</p>
+</div></div>
+
+<p>还有两样东西不在流程的编号里，却每节都要补：导引与小结。导引交代这一节要做什么、从哪儿接上；小结回收本节用到的定义、值得记的命题、留给后面的口子。它们不算正文，缺了读起来会断。</p>
+<p><code>note_tools.py</code> 里有一项「补导引与小结」：按建库时的规则，给选中的笔记补 <code>intro.tex</code> 与各级 <code>Summary/</code>，并把 <code>\input</code> 插进对应的 <code>index.tex</code>。<strong>只补缺，不覆盖</strong>，可以反复跑。</p>
+<p>各级 <code>index.tex</code> 里的 <code>\input</code> 默认是注释掉的，只在动手写的那一层临时打开。130 个 <code>index.tex</code> 都按这个规矩理过一遍。好处是编译出来的 PDF 只含真正写了的部分，不会因为 <code>\input</code> 了一个空文件而多出整页空白。</p>
+<h2 id="十二、还没做完的"><a href="#十二、还没做完的" class="headerlink" title="十二、还没做完的"></a>十二、还没做完的</h2><p>写这一节不是为了谦虚，是为了让下次开工知道从哪儿接。</p>
+<ul>
+<li>写作流程的规范文档自己标着「方向已定，尚未实施」。流程在跑，规范没跟上。</li>
+<li><code>ALG_Content.md</code> 抬头写着「所有审核仍未检查」。结构齐了，数学审核接近零：845 份台账里绝大多数格子还是「未检查」。</li>
+<li>独立复核只做到两轮，而且都在同一节（s05–s06 的 v1 与 v2）。<code>reviews/</code> 里就这两份。机制有了，覆盖率接近于零。</li>
+<li>习题整块没动。正文与习题在这个工程里是分开的，习题要另起一条线。</li>
+<li>证明滞后一章回填，这是设计，不是欠债。但滞后超过一章就该算欠债了。</li>
+<li>第 9、12、14 章还是空架，第 4 章刚插进来。</li>
+<li>检查点 20 多份散在 <code>.workbuddy/</code> 下，靠文件名认，没有索引。</li>
+<li>工作台的 PDF 嵌入预览只做到「部分可用」，灰屏的根因没查。</li>
+<li><code>项目规范.md</code> 有 71 KB，副本靠每周一 09:45 的定时任务比对。防呆是有的：原件为 0 字节、或不足副本的 50% 时拒绝同步——防的是「坏原件覆盖好副本」，那恰好会毁掉副本的意义。</li>
+</ul>
+<h2 id="十三、小结"><a href="#十三、小结" class="headerlink" title="十三、小结"></a>十三、小结</h2><p>这套东西可以分三层看。</p>
+<p><strong>正文层</strong>：14 章、1389 个 <code>.tex</code>，按 Bourbaki 的章、节、目组织，一章一个目录，一目一个文件。真正写起来的是第 5、6、7 章。</p>
+<p><strong>工具层</strong>：18 个目录、16 个菜单项、两万行。分成五类——编译与产物（<code>clean_aux</code>、<code>pdf_upright</code>）、版本与安全（<code>commit</code>、<code>check_sensitive</code>、<code>watch_notes</code>、<code>repo_check</code>）、内容维护（<code>symbols</code>、<code>note_tools</code>、<code>outline_tool</code>、<code>new_note</code>）、进度（工作台、<code>progress</code>）、入口（三套面板）。</p>
+<p><strong>规矩层</strong>：<code>AGENTS.md</code> 的四行契约、<code>failures/</code> 的三态、复核的三档、检查点的命名规则。这一层不产生功能，但它决定了前两层会不会在半年后互相拆台。</p>
+<p>几件值得单独记下的事：</p>
+<ul>
+<li>路径、编码、并发，这三样造成的错误都会伪装成别的东西。<code>File not found</code> 不一定是文件没了，编译「通过」不一定是写对了，检查「干净」不一定扫全了。</li>
+<li>检查脚本要输出「扫了什么」，不能只输出「没问题」。会静默失效的检查比没有检查更危险。</li>
+<li>工程判断值得写成可复查的形式。<code>--keep 20</code> 这条参数背后是一个两行的单调性论证，写下来之后就不用再想。</li>
+<li>清单能生成就不要手写。手写的一定滞后，而且滞后时不报警。</li>
+<li>同一份内容只留一个载体。两份必然漂移，漂移之后没有哪份是真的。</li>
+</ul>
+<p>这套工具现在能做的事：从原书页到入库，一条路走完；改一个宏，14 份副本都要跟着同步；插一章，章号、台账、正文路径一起迁移；提交前自动挡住本机路径。不能做的事也很清楚：它不判断数学对不对，那一步始终要另一个人、另一次会话、另一份记录。</p>
+]]></content>
+      <categories>
+        <category>VibeCoding</category>
+        <category>VibeMathing</category>
+      </categories>
+      <tags>
+        <tag>工具链</tag>
+        <tag>工作流</tag>
+        <tag>LaTeX</tag>
+        <tag>Bourbaki</tag>
       </tags>
   </entry>
   <entry>

@@ -203,10 +203,23 @@ window.MathJax = {
     });
   }
 
+  // 首页自己不排版，但预取组件：访客点开的第一篇多半是公式文章，
+  // 提前下载能把「点进去先看到一片 $」的窗口压到一次排版的时间。
+  function prefetch() {
+    if (location.pathname !== '/') return;
+    if (document.querySelector('link[data-mjx-prefetch]')) return;
+    var l = document.createElement('link');
+    l.rel = 'prefetch';
+    l.as = 'script';
+    l.href = BUNDLE;
+    l.setAttribute('data-mjx-prefetch', '');
+    document.head.appendChild(l);
+  }
+
   function boot() {
     if (state === 'loading') return;        // 组件就绪后 startup 会排当前 DOM
     if (state === 'ready') { typeset(); return; }
-    if (!hasMath()) return;
+    if (!hasMath()) { prefetch(); return; }
 
     state = 'loading';
     var s = document.createElement('script');
