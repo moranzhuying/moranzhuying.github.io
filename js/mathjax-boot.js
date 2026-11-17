@@ -234,21 +234,50 @@ window.MathJax = {
     }
   }
 
-  // 首页自己不排版，但把组件拉下来：访客点开的第一篇多半是公式文章。
+  // 首页自己不排版，但提前把组件备好：访客点开的第一篇多半是公式文章。
   //
-  // 用 preload 而不是 prefetch —— 实测 prefetch 是最低优先级，浏览器要等
-  // 页面闲下来才动手，等访客点进文章时往往还没下完，那一次跳转仍要
-  // 重新等 974 KB（PJAX 首跳实测 2.8 秒）。preload 立刻按脚本优先级取，
-  // 点进去时通常已在缓存里。代价是没点文章的访客也下载一次（gzip 后约 280 KB）。
+  // 两步，缺一不可：
+  //   1. preload 先把 974 KB 取下来。用 preload 而不是 prefetch ——
+  //      prefetch 是最低优先级，浏览器要等页面闲下来才动手，往往还没下完
+  //      访客就点进去了。
+  //   2. 再在空闲时真正执行组件。只下载不执行的话，点进文章仍要现场解析
+  //      那 974 KB（实测 PJAX 首跳 2.8 秒），解析才是大头，不是下载。
+  //      首页没有公式，startup.typeset 已关，执行完不会排版，只是把引擎备着。
+  // 代价是没点文章的访客也付一次下载与解析（gzip 后约 280 KB）。
   function prefetch() {
     if (location.pathname !== '/') return;
     if (document.querySelector('link[data-mjx-prefetch]')) return;
+
     var l = document.createElement('link');
     l.rel = 'preload';
     l.as = 'script';
     l.href = BUNDLE;
     l.setAttribute('data-mjx-prefetch', '');
     document.head.appendChild(l);
+
+    var warm = function () {
+      if (state !== 'idle') return;
+      state = 'loading';
+      var s = document.createElement('script');
+      s.src = BUNDLE;
+      s.async = true;
+      s.onload = function () { state = 'ready'; };   // 不排版，交给 PJAX 后的 run()
+      s.onerror = function () { state = 'idle'; };
+      document.head.appendChild(s);
+    };
+    // 等页面自身加载完再预热，别跟首屏抢主线程
+    var schedule = function () {
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(warm, { timeout: 1200 });
+      } else {
+        setTimeout(warm, 300);
+      }
+    };
+    if (document.readyState === 'complete') {
+      setTimeout(schedule, 300);
+    } else {
+      window.addEventListener('load', function () { setTimeout(schedule, 300); });
+    }
   }
 
   // 等 startup 就绪再排，避免和组件的初始化抢时序
