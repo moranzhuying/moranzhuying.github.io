@@ -1,599 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>『格论』第 1 章读法：从杂例到保序映射</title>
-    <url>/posts/priestley-lattices-1-1.html</url>
-    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 1 篇</span></div><p>Priestley 与 Davey 这本书的第 1 章讲有序集。五节，三十八个数号段落，带证明的结论只有三条，其中两条在讲画图。其余全是定义、例子和提醒。整章只做一件事：把一个日常词拆成能运算的结构，再把这个结构放回它出现的地方。</p>
-<span id="more"></span>
-
-<div class="ai-notice">本文完全由 AI 创作，本人只负责发布和提出修改意见。</div>
-
-<h2 id="一、她从哪里起手"><a href="#一、她从哪里起手" class="headerlink" title="一、她从哪里起手"></a>一、她从哪里起手</h2><p>开篇列了六个句子，彼此毫无关联：</p>
-<ol>
-<li>$0&lt;1$，且 $1&lt;10^{23}$。</li>
-<li>两个表亲有共同的祖父。</li>
-<li>$22/7$ 是比 $3.141592654$ 更差的 $\pi$ 的近似。</li>
-<li>按距日由近及远排列行星：水星、金星、地球、火星、木星、土星、天王星、海王星、冥王星。</li>
-<li>$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，但 $\{1,2,3,4,5\}$ 同时包含二者。</li>
-<li>任给两个不同的实数 $a,b$，要么 $a&gt;b$，要么 $b&gt;a$。</li>
-</ol>
-<p>然后她问：这些陈述有什么共同之处？</p>
-<p>问题提得平常，选例却不平常。第 1、6 条是线性的比大小；第 5 条讲的包含关系只给出偏序，两个集合可以互不可比；第 2 条根本不是序，它是「关系」这个词的用法，用来提醒读者后面要处理的对象有多宽；第 3 条是一次具体的数值比较，落在一个序上，但不属于某个结构；第 4 条是一条链，顺序由外部规则指定。</p>
-<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">先给例子，再给公理</span></div><div class="env-body"><p>这是归纳式的引入：先让读者承认自己早就在用「序」，再告诉他这件事有多杂，最后才收网。</p>
-<p>代价是公理的动机被推迟了。读者读到定义时，已经积累了六种直觉，却还不清楚这三条公理为什么恰好是这三条、少一条会怎样。这一节后半段补上了这个缺口，但补充的位置在定义之后。</p>
-</div></div>
-
-<p>有一点值得先记住：第 6 条并不是普遍性质。她把它摆在例子里，等到 1.3 才正式命名——那是链，是偏序的一个特例，不是序的常态。先混在例子里，后拆开，这个顺序让读者不至于一开始就把「序」等同于「大小」。</p>
-<h2 id="二、抽公理"><a href="#二、抽公理" class="headerlink" title="二、抽公理"></a>二、抽公理</h2><p>从这堆句子里能拣出的共同性质只有三条。</p>
-<div class="math-env env-definition" id="def-poset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">偏序，偏序集</span></div><div class="env-body"><p>设 $P$ 是集合，$\leq$ 是 $P$ 上的二元关系。若对任意 $x,y,z\in P$ 都有</p>
-<ul>
-<li>（R）自反：$x\leq x$；</li>
-<li>（A）反对称：$x\leq y$ 且 $y\leq x$，则 $x=y$；</li>
-<li>（T）传递：$x\leq y$ 且 $y\leq z$，则 $x\leq z$，</li>
-</ul>
-<p>则称 $\leq$ 为 $P$ 上的<strong>偏序</strong>，$(P,\leq)$ 为<strong>偏序集</strong>，简称 poset。</p>
-</div></div>
-
-<p>三条里，自反与传递是几乎任何「比较」都要的；反对称反而容易被当成多余的。它的作用是把「互相不大于」压回相等：若两个元素彼此可达，它们就是同一个东西，不允许出现两个不同的元素在一个偏序里互相「小于等于」。</p>
-<p>这里有个容易忽略的细节：书上按自反、反对称、传递排列，多数教材写成自反、传递、反对称。差别不大，但先摆反对称有个好处——读者从第一行就知道「互相可达要压成相等」，后面证单射、证唯一性时不会漏掉它。这一章后面好几处证明靠的就是这一条。</p>
-<div class="math-env env-convention" id="env-convention-1"><div class="env-head"><span class="env-name">约定</span><span class="env-num">1</span><span class="env-title">记号</span></div><div class="env-body"><p>此后用 $(P,\leq)$ 而不是 $\langle P,\leq\rangle$ 表示偏序集。两种写法在文献中都通行，本文统一用前者。</p>
-<p>记号 $x&lt;y$ 表示 $x\leq y$ 且 $x\neq y$，即把偏序分解成严格部分。若 $x\leq y$ 与 $y\leq x$ 都不成立，记 $x\parallel y$，读作不可比。</p>
-</div></div>
-
-<p>不可比这个记号要到 1.3 谈链与反链时才真正用上，但得先摆出来：偏序与全序的区别，全靠 $\parallel$ 这个符号才说得干净。</p>
-<h2 id="三、例子回填"><a href="#三、例子回填" class="headerlink" title="三、例子回填"></a>三、例子回填</h2><p>定义给完，她马上把之前的句子逐一认领回去。</p>
-<div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span><span class="env-title">幂集的包含</span></div><div class="env-body"><p>设 $X$ 为集合，$\mathcal{P}(X)$ 为其幂集，$\subseteq$ 为包含关系。则 $(\mathcal{P}(X),\subseteq)$ 是偏序集。</p>
-<p>自反与传递是集合论的常识。反对称就是外延公理：若 $A\subseteq B$ 且 $B\subseteq A$，则 $A=B$。</p>
-<p>这个例子的价值在于它不线性：$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，这正是第 5 条的位置。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-2"><div class="env-head"><span class="env-name">例</span><span class="env-num">2</span><span class="env-title">整除</span></div><div class="env-body"><p>在 $\mathbb{Z}_{&gt;0}$ 上定义 $a\mid b$ 当且仅当存在 $c\in\mathbb{Z}_{&gt;0}$ 使 $b=ac$。则 $(\mathbb{Z}_{&gt;0},\mid)$ 是偏序集。</p>
-<p>反对称只用一个事实：若 $a\mid b$ 且 $b\mid a$，则 $a=b$。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-3"><div class="env-head"><span class="env-name">例</span><span class="env-num">3</span><span class="env-title">实数与全序</span></div><div class="env-body"><p>$(\mathbb{R},\leq)$ 是偏序集，并且任意两个元素可比，这是第 6 条的位置。这类偏序叫全序或线性序。</p>
-</div></div>
-
-<p>三个例子分别落在三种位置上：幂集是典型的非全序，整除是非全序且带算术内容，实数是最熟悉的线性序。这样选，覆盖了读者可能有的全部直觉。</p>
-<p>到这一步，例子还只管「什么东西构成偏序集」。但偏序集之间可以互相比较形状，形状的两个极端值得单独命名。</p>
-<div class="math-env env-definition" id="def-chain"><div class="env-head"><span class="env-name">定义</span><span class="env-num">2</span><span class="env-title">链与反链</span></div><div class="env-body"><p>设 $P$ 为偏序集。</p>
-<ul>
-<li>若任意 $x,y\in P$ 都有 $x\leq y$ 或 $y\leq x$，称 $P$ 为<strong>链</strong>，亦称线性序集、全序集。</li>
-<li>若 $x\leq y$ 在 $P$ 中成立仅当 $x=y$，称 $P$ 为<strong>反链</strong>。</li>
-</ul>
-<p>记 $\mathbf{n}$ 为 $n$ 元链 $\{0,1,\dots,n-1\}$，顺序为 $0&lt;1&lt;\cdots&lt;n-1$；记 $\overline{\mathbf{n}}$ 为同一集合配上离散序，即 $n$ 元反链。任意集合 $S$ 配离散序，都成为反链 $\overline{S}$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span><span class="env-title">两个极端</span></div><div class="env-body"><p>链与反链是两个极端，夹在中间的才是序论的主要对象。极端情形的用处是当坐标和当反例：$\mathbf{2}$ 是最小的非平凡偏序集，后面会拿它当值域；反链则是一次性把「不可比」推到极限，凡是要检验某条性质是否依赖可比性，拿反链试一遍最省事。</p>
-<p>书上还点了一句：链的子集是链，反链的子集是反链。这是诱导序的第一个好处——性质向下遗传。这句话很短，但它保证了「取子集」这个动作不会破坏结构，后面用得非常随便。</p>
-</div></div>
-
-<h2 id="四、数系与集合族"><a href="#四、数系与集合族" class="headerlink" title="四、数系与集合族"></a>四、数系与集合族</h2><p>抽象的定义立住之后，她回到数学内部找例子。这一段的作用是提醒读者：偏序不只在应用里出现，数系和代数结构本身就带着它。</p>
-<div class="math-env env-example" id="env-example-4"><div class="env-head"><span class="env-name">例</span><span class="env-num">4</span><span class="env-title">数系</span></div><div class="env-body"><p>$\mathbb{R}$、$\mathbb{Q}$、$\mathbb{Z}$、$\mathbb{N}$ 按通常的大小关系都是链，而且这个序与算术相容：两个严格大于零的元素，其和与积也严格大于零。</p>
-<p>令 $\mathbb{N}_0=\mathbb{N}\cup\{0\}$，赋以 $0&lt;1&lt;2&lt;\cdots$，得到集合论中的链 $\omega$。它与 $\mathbb{N}$ 序同构，同构映射是后继 $n\mapsto n+1$。</p>
-<p>同一个 $\mathbb{N}_0$ 上还能定义另一个序：$m\preccurlyeq n$ 当且仅当存在 $k\in\mathbb{N}_0$ 使 $km=n$，即整除。$(\mathbb{N}_0,\mid)$ 不是链。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">同构不看元素</span></div><div class="env-body"><p>$\omega$ 与 $\mathbb{N}$ 的元素并不相同：一个含 $0$，一个不含。作为偏序集它们没有区别。这正是 1.4 要定义的「序同构」的第一个例子，只是书上把它埋在例子里，没有点明。</p>
-<p>顺便补一句书上没写的：$\mathbb{N}_0$ 上的整除序里，$1$ 是底，因为 $1$ 整除一切；$0$ 是顶，因为一切整除 $0$。这个序的底和顶都不是「大小」意义上的极端，而是算术意义上的。第一次见到会愣一下，习惯就好。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-5"><div class="env-head"><span class="env-name">例</span><span class="env-num">5</span><span class="env-title">代数结构的子集族</span></div><div class="env-body"><p>设 $G$ 为群。全体子群按包含构成偏序集，记 $\mathrm{Sub}\,G$；全体正规子群同样按包含构成偏序集，记 $\mathcal{N}\text{-}\mathrm{Sub}\,G$。设 $V$ 为向量空间，全体子空间按包含构成偏序集 $\mathrm{Sub}\,V$。设 $R$ 为环，全体子环、全体理想按包含都是偏序集。</p>
-<p>设 $(X,\mathcal{T})$ 为拓扑空间，开集族、闭集族、既开又闭的集族，按包含都是偏序集。</p>
-</div></div>
-
-<p>这些族后来大多会成为格，但这一章只用到偏序。列在这里是为了说明一件事：序不是附加结构，只要一个集合族按包含排列，序就自动出现了。</p>
-<div class="math-env env-example" id="env-example-6"><div class="env-head"><span class="env-name">例</span><span class="env-num">6</span><span class="env-title">谓词</span></div><div class="env-body"><p>设 $X$ 为集合。$X$ 上的<strong>谓词</strong>是取值 $T$ 或 $F$ 的映射 $p:X\to\{T,F\}$。记全体谓词为 $P(X)$，在其上定义</p>
-<p>$$
-
-p\leq q \iff \{x\in X\mid p(x)=T\}\subseteq\{x\in X\mid q(x)=T\}.
-
-$$</p>
-<p>令 $\varphi(p)=\{x\in X\mid p(x)=T\}$，则 $\varphi:P(X)\to\mathcal{P}(X)$ 是序同构。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span><span class="env-title">同一个序集的两种说法</span></div><div class="env-body"><p>谓词与子集是同一件事的两种写法：一个谓词由它的真值集决定，一个子集由它的特征谓词决定。$\varphi$ 把这个对应写成映射，并且保持序，所以两个偏序集是同一个。</p>
-<p>这是全章第一次出现「换一种表示」的动作。到第五章讲有限分配格的表示、第十一章讲 Priestley 表示，这个动作会成为主题。这里只是热身，但它埋得很深：后面所有表示定理，骨架都是「对象 $\leftrightarrow$ 某种集合族，且保持序」。</p>
-</div></div>
-
-<p>最后一个构造短得容易漏掉，但全书都在用。</p>
-<div class="math-env env-definition" id="env-definition-3"><div class="env-head"><span class="env-name">定义</span><span class="env-num">3</span><span class="env-title">诱导序</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。在 $Q$ 上定义 $x\leq_Q y$ 当且仅当 $x\leq_P y$，称 $\leq_Q$ 为 $P$ 诱导到 $Q$ 上的序。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-5"><div class="env-head"><span class="env-name">注记</span><span class="env-num">5</span><span class="env-title">子集继承了什么</span></div><div class="env-body"><p>子集继承的不只是元素，还有全部可比性。取子集只会减少元素，不会改变剩下元素之间的关系：链的子集仍是链，反链的子集仍是反链。这是诱导序的第一个好处——性质向下遗传。</p>
-<p>但要注意哪些「子族」真的是诱导序。$\mathcal{P}(X)$ 的任意子族按包含都是诱导序。$\mathrm{Sub}\,G$ 是 $\mathcal{P}(G)$ 的子族，但不是任意子族，它是被「对群运算封闭」这个条件筛出来的：序仍然来自包含，但「是子群」不是序性质。这个区分后面会反复用到。</p>
-</div></div>
-
-<h2 id="五、弱化与强化"><a href="#五、弱化与强化" class="headerlink" title="五、弱化与强化"></a>五、弱化与强化</h2><p>偏序的三条公理可以拆开重组，得到两种常用变体。</p>
-<div class="math-env env-definition" id="env-definition-4"><div class="env-head"><span class="env-name">定义</span><span class="env-num">4</span><span class="env-title">准序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $\preceq$ 为<strong>准序</strong>（quasi-order，亦称预序），若它满足自反与传递，不要求反对称。</p>
-</div></div>
-
-<div class="math-env env-definition" id="env-definition-5"><div class="env-head"><span class="env-name">定义</span><span class="env-num">5</span><span class="env-title">严格序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $&lt;$ 为<strong>严格序</strong>，若它满足</p>
-<ul>
-<li>（Ir）反自反：$x&lt;x$ 恒不成立；</li>
-<li>（T）传递：$x&lt;y$ 且 $y&lt;z$，则 $x&lt;z$。</li>
-</ul>
-</div></div>
-
-<p>这两条定义各自只删掉一条公理，删的方向相反：准序删反对称，严格序删自反并改写成反自反。后果完全不同——准序是偏序的宽松版，严格序则是偏序去掉对角线后的样子。</p>
-<div class="math-env env-proposition" id="prop-strict"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span><span class="env-title">严格序与偏序互相决定</span></div><div class="env-body"><p>设 $&lt;$ 是 $P$ 上满足反自反与传递的关系。定义</p>
-<p>$$
-
-x\leq y \iff x&lt;y \ \text{或}\ x=y,
-
-$$</p>
-<p>则 $\leq$ 是 $P$ 上的偏序。反之，若 $\leq$ 是偏序，定义 $x&lt;y\iff x\leq y \land x\neq y$，则 $&lt;$ 反自反且传递。两个构造互逆。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>先证 $\leq$ 是偏序。</p>
-<p>自反：取 $x=y$，由定义即得 $x\leq x$。</p>
-<p>传递：设 $x\leq y$、$y\leq z$。若其中至少一个等号成立，直接代入即得；若两个都是严格不等，用 $&lt;$ 的传递性得 $x&lt;z$，故 $x\leq z$。</p>
-<p>反对称：设 $x\leq y$ 且 $y\leq x$。若 $x\neq y$，则两个关系都必须是严格的，即 $x&lt;y$ 且 $y&lt;x$，由 $&lt;$ 的传递性得 $x&lt;x$，与反自反矛盾。故 $x=y$。</p>
-<p>再证逆构造。</p>
-<p>反自反：若 $x&lt;x$，则 $x\leq x$ 且 $x\neq x$，矛盾。</p>
-<p>传递：设 $x&lt;y$、$y&lt;z$，则 $x\leq y\leq z$，由 $\leq$ 的传递性得 $x\leq z$；又 $x\neq z$，否则由 $x\leq y\leq x$ 与反对称性得 $x=y$，与 $x&lt;y$ 矛盾。故 $x&lt;z$。</p>
-<p>互逆：由 $&lt;$ 造出的 $\leq$ 再取严格部分，恰好还原 $&lt;$，因为 $x\leq y\land x\neq y$ 等价于 $x&lt;y$。反方向同理。</p>
-</div></div>
-
-<div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span><span class="env-title">别把两种序混用</span></div><div class="env-body"><p>如果把严格序和偏序用同一个符号 $\leq$ 表示，上面这条命题就退化成恒等式，看起来什么都没说。反过来，如果在一段论证里既用 $x\leq y$ 又用 $x&lt;y$，必须先确认后者是前者的严格部分，而不是另一条独立的关系。</p>
-<p>混用的后果通常不是立刻报错，而是在某一步悄悄用掉了反对称或自反性，事后无法追溯。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-6"><div class="env-head"><span class="env-name">注记</span><span class="env-num">6</span><span class="env-title">准序为什么值得单独留名</span></div><div class="env-body"><p>准序（自反 + 传递）加上反对称就是偏序，加上对称就是等价关系。换言之，偏序与等价关系都是准序的特例，区别只在于补哪一条。</p>
-<p>这个视角在构造商结构时好用：先给一个准序，再把「互相可达」的元素粘成等价类，商集上自然落下一个偏序。这一步本节没有展开，但它是后面把准序化成偏序的标准手法。</p>
-</div></div>
-
-<p>书上把严格序的处理放进练习 1.1，正文只说「三条公理可以用 $&lt;$ 重述」。我把它写全，因为 1.17 的引理要用严格序说话，那里若手里只有一个模糊的「$&lt;$」，证明读起来会卡。</p>
-<p>定义放在例子之后，最大的隐患是读者以为三条公理是从例子里「归纳」出来的。归纳不出公理，只能归纳出候选，公理是刻画。她用一个练习把这个疑问摊开。</p>
-<div class="math-env env-exercise" id="exo-independent"><div class="env-head"><span class="env-name">练习</span><span class="env-num">1</span><span class="env-title">三公理的独立性</span></div><div class="env-body"><p>逐条验证三条公理彼此不能推出：</p>
-<ol>
-<li>去掉自反：在 $\{1,2\}$ 上取关系 $\{(1,2)\}$。它传递且反对称，但 $1\not\leq 1$。</li>
-<li>去掉传递：在 $\{1,2,3\}$ 上取 $\{(1,1),(2,2),(3,3),(1,2),(2,3)\}$。自反、反对称，但 $1\leq 2$ 且 $2\leq 3$ 而 $1\not\leq 3$。</li>
-<li>去掉反对称：在 $\mathbb{Z}$ 上定义 $x\preceq y\iff |x|\leq|y|$。自反、传递，但 $1\preceq-1$ 且 $-1\preceq 1$，而 $1\neq-1$。</li>
-</ol>
-</div></div>
-
-<p>三个反例都很小，小到可以当场验算。选小反例是有讲究的：反例一旦大了，读者就得先信任构造，反而证明不了公理的必要性。</p>
-<h2 id="六、保持结构"><a href="#六、保持结构" class="headerlink" title="六、保持结构"></a>六、保持结构</h2><p>两个偏序集什么时候算「一样」？这是本节最后一个问题，也是全章后续所有构造的判据。</p>
-<div class="math-env env-definition" id="def-iso"><div class="env-head"><span class="env-name">定义</span><span class="env-num">6</span><span class="env-title">序同构</span></div><div class="env-body"><p>设 $(P,\leq_P)$ 与 $(Q,\leq_Q)$ 为偏序集。称映射 $\varphi:P\to Q$ 为<strong>序同构</strong>，若 $\varphi$ 是满射，且对任意 $x,y\in P$ 有</p>
-<p>$$
-
-x\leq_P y \iff \varphi(x)\leq_Q \varphi(y).
-
-$$</p>
-<p>两个偏序集称为序同构的，记 $P\cong Q$，若它们之间存在序同构。</p>
-</div></div>
-
-<p>这里刻意只要求满射，不要求单射。单射是结论，不是条件。</p>
-<div class="math-env env-proposition" id="prop-iso"><div class="env-head"><span class="env-name">命题</span><span class="env-num">2</span><span class="env-title">序同构必为双射</span></div><div class="env-body"><p>若 $\varphi:P\to Q$ 是序同构，则 $\varphi$ 是单射，从而是双射。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi(x)=\varphi(y)$。由 $(Q,\leq_Q)$ 的自反性，$\varphi(x)\leq_Q\varphi(y)$ 且 $\varphi(y)\leq_Q\varphi(x)$。由同构条件反向读，得 $x\leq_P y$ 且 $y\leq_P x$。再由 $(P,\leq_P)$ 的反对称性得 $x=y$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-7"><div class="env-head"><span class="env-name">注记</span><span class="env-num">7</span><span class="env-title">为什么这个证明值得记</span></div><div class="env-body"><p>三步全部落在公理上：自反性提供前提，同构条件负责搬运，反对称性负责收口。三个条件各用一次，不多不少。</p>
-<p>这也是反对称性第一次显出不可替代的作用——它保证「互相不小于」这件事足以判定相等。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-7"><div class="env-head"><span class="env-name">例</span><span class="env-num">7</span><span class="env-title">双射未必同构</span></div><div class="env-body"><p>取 $P=Q=\mathbf{2}=\{0,1\}$，定义 $\varphi(0)=1$，$\varphi(1)=0$。这是双射，但 $0&lt;1$ 而 $\varphi(0)&gt;\varphi(1)$，所以它不是序同构。</p>
-</div></div>
-
-<p>这个例子小得几乎没内容，但它的位置很要紧：它把「双射」和「同构」切开。同构要求的是关系被完整搬运，不是元素个数相等。后面 1.34 会把这条界线再拉宽一次——保序、嵌入、同构三档，本质区别都在这条线上。</p>
-<h2 id="七、序从哪儿来"><a href="#七、序从哪儿来" class="headerlink" title="七、序从哪儿来"></a>七、序从哪儿来</h2><p>第二节到第六节都在数学内部打转。第七节整节换方向：不讲定理，只讲序在哪些地方出现。作者在开头就把话说白了——这一节的目的只是给一点动机，其中大部分内容后面不会直接用到。</p>
-<p>这句坦白值得记。多数教材的「应用」章是装饰，读者也当装饰读；这本书承认它是装饰，却仍然写，因为序论的问题确实从这些地方来。</p>
-<p>第一组例子来自社会科学与人文。</p>
-<p><strong>区间序。</strong> 集合 $X$ 上的序称为区间序，若存在映射 $\varphi$ 把 $X$ 的点送到 $\mathbb{R}$ 的子区间，使得 $x&lt;y$ 时 $\varphi(x)$ 的右端点小于 $\varphi(y)$ 的左端点。考古地层里陶器样式的出现时段、物种的存续时间，都是这种序。还有一个变体要求所有区间等长，对应的是测量本身不精确的情形。</p>
-<p><strong>社会选择。</strong> 有 $m$ 个对象、$n$ 个人，每人给出一个链（自己的排序）。如何合成一个链，使它最好地反映集体偏好？把 $n$ 元排序组映成一个排序的函数叫社会选择函数。Arrow 定理说：有一组非常自然的准则，彼此互不相容。这个悖论式的结论引出了整片社会选择理论。</p>
-<p><strong>调度。</strong> 装配汽车时某些工序必须先于另一些，会议排程里某些报告必须先讲。这类问题的计算复杂度，关键取决于描述优先约束的那个序关系。</p>
-<p><strong>分类。</strong> 浅的一层是行星按距日排列这样的列表；深的一层是概念分析——给定对象集与属性集，造出一个序集，把层级、分组、依赖都显出来。第三章讲这个。</p>
-<div class="math-env env-remark" id="env-remark-8"><div class="env-head"><span class="env-name">注记</span><span class="env-num">8</span><span class="env-title">应用制造问题，不提供工具</span></div><div class="env-body"><p>这四个例子的共同点不是「都用了格论」。它们各自逼出了一种特殊的序：区间序、偏好聚合、优先序、概念格。这些特殊类型后来都成了序论自己的研究对象。</p>
-<p>所以应用与理论的关系，大概不是「理论给应用提供工具」，而是反过来：应用不断制造新的结构，理论被迫去描述它们。这本书把这一节放在定义之后、图之前，位置选得很准——读者刚学会定义，正需要知道定义管什么用；但若放在最前面，又会被当成动机空话。</p>
-</div></div>
-
-<p>第二组例子来自计算机科学。这一组的统一说法是「信息序」：关系 $\geq$ 表达的是「至少和……一样有信息」，具体含义随语境变。</p>
-<p>先把计算这件事说清楚。程序取输入、给输出；输入输出来自各种数据类型；<strong>状态</strong>是对程序变量的取值指派。程序终止，就是把执行前的状态变成执行后的状态。计算往往一步步进行，每一步多得到一点信息；不终止，就是只输出有限的信息。若从同一初始状态出发每次都停在同一个终态，程序是确定性的；若规范允许多个合法解，就会出现非确定性——比如求满足 $y^2=x$ 的整数 $y$，从 $x=9$ 出发可以停在 $y=3$，也可以停在 $y=-3$。</p>
-<div class="math-env env-example" id="env-example-8"><div class="env-head"><span class="env-name">例</span><span class="env-num">8</span><span class="env-title">二进制串</span></div><div class="env-body"><p>设 $\Sigma^{*}$ 为全体有限二进制串（含空串），$\Sigma^{**}$ 为再加上无限串之后的全体。定义</p>
-<p>$$
-
-u\leq v \iff u=v \text{ 或 } u \text{ 是 } v \text{ 的有限前缀}.
-
-$$</p>
-<p>则 $(\Sigma^{**},\leq)$ 是偏序集。例如</p>
-<p>$$
-
-0100&lt;010011,\qquad 010\parallel 100,\qquad 10101&lt;101010\cdots
-
-$$</p>
-<p>最后一个是无限交替串。</p>
-<p>串可以看作二进制编码的信息：越长，信息越多。给定 $v$，满足 $u&lt;v$ 的 $u$ 是 $v$ 的近似。任一无限串都是它的有限前缀的极限——「极限」这个词这里只是说法，要到第八章才有确切含义。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-9"><div class="env-head"><span class="env-name">例</span><span class="env-num">9</span><span class="env-title">偏映射</span></div><div class="env-body"><p>设 $X,Y$ 非空。从 $X$ 到 $Y$ 的<strong>偏映射</strong>是映射 $\sigma:S\to Y$，其中 $S=\operatorname{dom}\sigma\subseteq X$，允许 $S=\varnothing$。全体偏映射记为 $(X\rightharpoonup Y)$。定义</p>
-<p>$$
-
-\sigma\leq\tau \iff \operatorname{dom}\sigma\subseteq\operatorname{dom}\tau
-\ \text{且}\ \sigma(x)=\tau(x)\ (\forall x\in\operatorname{dom}\sigma),
-
-$$</p>
-<p>等价地，$\operatorname{graph}\sigma\subseteq\operatorname{graph}\tau$。</p>
-<p>若 $\operatorname{dom}\sigma=X$，称 $\sigma$ 为全映射。子集 $F\subseteq(X\rightharpoonup Y)$ 称为<strong>一致的</strong>，若对任意有限 $G\subseteq F$，都存在 $\rho\in(X\rightharpoonup Y)$（不必属于 $F$）使 $\sigma\leq\rho$ 对所有 $\sigma\in G$ 成立。只要 $F$ 一致，就存在全映射 $f:X\to Y$ 使 $\sigma\leq f$ 对所有 $\sigma\in F$ 成立。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-9"><div class="env-head"><span class="env-name">注记</span><span class="env-num">9</span><span class="env-title">一致性是一条紧致性</span></div><div class="env-body"><p>「任意有限子族相容，则整族相容」——这个形状后面会一再出现。它在这里是显然的：逐个 $x$ 看，所有覆盖 $x$ 的 $\sigma$ 必须给出同一个值，否则取两个这样的 $\sigma$ 就构成不相容的有限子族。</p>
-<p>第九章会把它抬到 domain 的层面，那时它不再是显然的，而是一条要证的性质。这一节只把它记下来。</p>
-</div></div>
-
-<p>有了偏映射的序，就能比较程序。设 $P,Q$ 从同一初始状态集出发、终态集相同，都是确定性但未必终止的程序，对应偏映射 $\sigma_P,\sigma_Q$。若 $\sigma_P\leq\sigma_Q$，则 $P$ 能终止的输入 $Q$ 都能终止，且终态相同；此外 $Q$ 还可能在 $P$ 不终止的输入上终止。也就是说 $Q$ 至少做到了 $P$ 做到的。非确定性程序也照此定义，称 $Q$ <strong>精化</strong> $P$，记 $P\sqsubseteq Q$。精化的典型场景是 while 循环逐步展开，展开可能把非确定性程序变成确定性程序，也可能让原本不终止的程序多终止一些。</p>
-<div class="math-env env-example" id="env-example-10"><div class="env-head"><span class="env-name">例</span><span class="env-num">10</span><span class="env-title">实数区间</span></div><div class="env-body"><p>把某个量算到小数点后两位等于 $1.35$，这句话可以改写成「该量落在某个区间里」。于是可以把全体区间</p>
-<p>$$
-
-P=\{[\underline{x},\overline{x}]\mid -\infty\leq\underline{x}\leq\overline{x}\leq\infty\}
-
-$$</p>
-<p>当作实数近似的集合，区间越小，界越紧，信息越多。定义</p>
-<p>$$
-
-x\leq y \iff \underline{x}\leq\underline{y}\ \text{且}\ \overline{y}\leq\overline{x},
-
-$$</p>
-<p>即 $y$ 作为区间包含在 $x$ 里。单点区间 $\underline{x}=\overline{x}$ 对应精确值。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-10"><div class="env-head"><span class="env-name">注记</span><span class="env-num">10</span><span class="env-title">三个例子的统一</span></div><div class="env-body"><p>1.9 到 1.11 的序都在说同一件事：$x\leq y$ 表示 $y$ 比 $x$ 更确定、更完全。每个例子里都有「全对象」——无限串、全映射、单点区间。全对象都是偏对象的极限，而偏对象中有一类可以称为有限的：有限串、定义域有限的偏映射、端点有理的区间。</p>
-<p>「有限对象编码有限信息」这句话，看起来是同义反复，其实是后面 domain 理论的入口。</p>
-</div></div>
-
-<div class="math-env env-alarm" id="env-alarm-2"><div class="env-head"><span class="env-name">警示</span><span class="env-num">2</span><span class="env-title">这里的「上」不是「多」</span></div><div class="env-body"><p>信息序里 $\perp$ 在底，表示没有信息；越往上信息越多；$\top$ 表示信息过度确定，即矛盾。这和「大 &#x3D; 好」的直觉一致，但和「大 &#x3D; 多」不一致：这里「大」是「更确定」。</p>
-<p>读后面章节时，看到 $x\leq y$，先问一句这是哪一种序。若把信息序当大小序读，$\perp$ 会被当成最小元而不是「未知」，所有关于极限的论证都会反过来。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-11"><div class="env-head"><span class="env-name">注记</span><span class="env-num">11</span><span class="env-title">语义域</span></div><div class="env-body"><p>计算机科学里贯穿这些例子的概念是<strong>语义域</strong>：一个数学结构，用来描述、分析、推理数据类型、程序、规范的行为。这个词在这里用得宽；到第九章，「domain」会变成有确切定义的一类特殊偏序集——其中某些元素视为部分的、未完全确定的，每个元素都要求是一族指定为「有限」的元素的极限。1.9 与 1.10 的序集都是这种意义下的 domain，1.11 是同类但更一般的结构。</p>
-<p>还可以换一个角度看：domain 的元素由关于它们的断言决定，用信息 token 的集合来建模。这个视角通向信息系统的表述。</p>
-<p>程序语义有两条路。操作语义把程序看成它在（理想化的）机器上执行的动作；指称语义只关心程序做什么，不关心怎么执行，程序用函数或关系表示，可以脱离实现细节来研究。第八、九章讲的不动点与 domain，主要是为指称语义服务：递归定义（如 $\mathrm{fact}(k)=k\cdot\mathrm{fact}(k-1)$，$\mathrm{fact}(0)=1$）要在某个数学框架里保证有解，这个框架就是带序的 domain 加不动点定理。</p>
-</div></div>
-
-<h2 id="八、把序画出来"><a href="#八、把序画出来" class="headerlink" title="八、把序画出来"></a>八、把序画出来</h2><p>前面七节全是文字。这一节把偏序集变成图。作者的说法是，图是这本书的性格所在——有限情形下序可以「画出来」，而画得好不好，直接决定读者能不能看出定理。</p>
-<p>要画图，先要知道哪些关系非画不可。</p>
-<div class="math-env env-definition" id="def-cover"><div class="env-head"><span class="env-name">定义</span><span class="env-num">7</span><span class="env-title">覆盖</span></div><div class="env-body"><p>设 $P$ 为偏序集，$x,y\in P$。称 $x$ 被 $y$ <strong>覆盖</strong>（或 $y$ 覆盖 $x$），记 $x\prec y$，若 $x&lt;y$ 且不存在 $z\in P$ 使 $x&lt;z&lt;y$。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-11"><div class="env-head"><span class="env-name">例</span><span class="env-num">11</span><span class="env-title">三处覆盖关系</span></div><div class="env-body"><ul>
-<li>在链 $\mathbb{N}$ 中，$m\prec n$ 当且仅当 $n=m+1$。</li>
-<li>在 $\mathbb{R}$ 中没有任何覆盖对：任给 $x&lt;y$，中点 $(x+y)/2$ 严格夹在中间。</li>
-<li>在 $\mathcal{P}(X)$ 中，$A\prec B$ 当且仅当 $B=A\cup\{b\}$，其中 $b\in X\setminus A$。</li>
-</ul>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-12"><div class="env-head"><span class="env-name">注记</span><span class="env-num">12</span><span class="env-title">有限与无限的分界</span></div><div class="env-body"><p>$P$ 有限时，$x&lt;y$ 当且仅当存在覆盖链 $x=x_0\prec x_1\prec\cdots\prec x_n=y$。所以有限情形下，覆盖关系完全决定序关系。</p>
-<p>无限情形不成立。$\mathbb{R}$ 的覆盖关系是空的，空关系什么也没决定。这句话解释了为什么下一段的画图法只对有限集定义：不是图不够大，是覆盖关系本身没信息。</p>
-</div></div>
-
-<div class="math-env env-algorithm" id="env-algorithm-1"><div class="env-head"><span class="env-name">算法</span><span class="env-num">1</span><span class="env-title">画 Hasse 图</span></div><div class="env-body"><p>设 $P$ 为有限偏序集。</p>
-<ol>
-<li>给每个 $x\in P$ 指定平面一点 $p(x)$，在该点画一个小圆圈。</li>
-<li>对每个覆盖对 $x\prec y$，在 $p(x)$ 与 $p(y)$ 的圆圈之间连一条线段。</li>
-<li>上述指定要满足：<ul>
-<li>（a）若 $x\prec y$，则 $p(x)$ 比 $p(y)$ 低（第二坐标严格更小）；</li>
-<li>（b）若 $z\neq x$ 且 $z\neq y$，则 $p(z)$ 处的圆圈不与连接 $x,y$ 的线段相交。</li>
-</ul>
-</li>
-</ol>
-<p>满足三条的图形称为 $P$ 的<strong>图</strong>（Hasse 图）。条件（3）可以对 $|P|$ 归纳证明总能做到。</p>
-</div></div>
-
-<div class="math-env env-alarm" id="env-alarm-3"><div class="env-head"><span class="env-name">警示</span><span class="env-num">3</span><span class="env-title">两种不合法的图</span></div><div class="env-body"><p>图 1.1(ii) 给了两个反例。第一个把 $a&lt;c$ 画成 $a$ 在上，违反（a）；第二个让线段穿过第三个点的圆圈，违反（b）。</p>
-<p>这两种错误的共同点是：图看上去仍然像图，只是读出来的序不对。（a）被违反时，读者会把 $x&lt;y$ 读成 $y&lt;x$；（b）被违反时，读者会读出一个不存在的覆盖关系，进而读出不存在的序关系。图画错了不会报错，只会让人得出错误结论。</p>
-</div></div>
-
-<p>图上判序的规则只有一条：$x&lt;y$ 当且仅当从 $x$ 出发，沿线段一路向上能走到 $y$。这条规则之所以成立，靠的是覆盖链能把任何 $x&lt;y$ 串起来——又是有限性。</p>
-<div class="math-env env-lemma" id="lem-cover"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span><span class="env-title">双射保持覆盖即同构</span></div><div class="env-body"><p>设 $P,Q$ 为有限偏序集，$\varphi:P\to Q$ 为双射。则以下三条等价：</p>
-<ol>
-<li>$\varphi$ 是序同构；</li>
-<li>$x&lt;y$ 在 $P$ 中成立当且仅当 $\varphi(x)&lt;\varphi(y)$ 在 $Q$ 中成立；</li>
-<li>$x\prec y$ 在 $P$ 中成立当且仅当 $\varphi(x)\prec\varphi(y)$ 在 $Q$ 中成立。</li>
-</ol>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）与（2）的等价直接来自定义。</p>
-<p>设（2）成立，取 $x\prec y$。则 $x&lt;y$，故 $\varphi(x)&lt;\varphi(y)$。若存在 $w\in Q$ 使 $\varphi(x)&lt;w&lt;\varphi(y)$，由 $\varphi$ 满，取 $u\in P$ 使 $w=\varphi(u)$；由（2）反向读得 $x&lt;u&lt;y$，与 $x\prec y$ 矛盾。故 $\varphi(x)\prec\varphi(y)$。反方向同理，故（3）成立。</p>
-<p>设（3）成立，取 $x&lt;y$。由有限性，存在覆盖链 $x=x_0\prec x_1\prec\cdots\prec x_n=y$。由（3），$\varphi(x)=\varphi(x_0)\prec\varphi(x_1)\prec\cdots\prec\varphi(x_n)=\varphi(y)$，故 $\varphi(x)&lt;\varphi(y)$。反方向同理，用 $\varphi$ 满把 $Q$ 中的覆盖链拉回 $P$。故（2）成立。</p>
-</div></div>
-
-<div class="math-env env-proposition" id="prop-diagram"><div class="env-head"><span class="env-name">命题</span><span class="env-num">3</span><span class="env-title">同构即同图</span></div><div class="env-body"><p>两个有限偏序集 $P,Q$ 序同构，当且仅当它们能画成同一张图。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi:P\to Q$ 为序同构。图由覆盖关系决定，而由上面的引理（1）$\Rightarrow$（3），$\varphi$ 保持覆盖关系，故同一张图可以同时表示 $P$ 和 $Q$。</p>
-<p>反之，设 $P,Q$ 都能用图 $D$ 表示，即有双射 $f:P\to D$、$g:Q\to D$（这里 $D$ 指图的点集）。则 $\varphi=g^{-1}\circ f$ 是双射，且保持覆盖关系，由引理（3）$\Rightarrow$（1）知 $\varphi$ 是序同构。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-13"><div class="env-head"><span class="env-name">注记</span><span class="env-num">13</span><span class="env-title">我在这一节停了一下</span></div><div class="env-body"><p>引理的（2）$\Rightarrow$（3）只用了 $\varphi$ 满，（3）$\Rightarrow$（2）用了有限性：把 $x&lt;y$ 拆成覆盖链。这一步不能省。取 $P=Q=\mathbb{R}$，覆盖关系是空的，任何双射都满足（3），但显然不必是同构——例如把 $0$ 与 $1$ 互换、其余不动的那个双射。</p>
-<p>所以「有限」不是技术性假设，而是这条引理成立的前提。书上只说 finite ordered sets，没解释为什么；我读到这里把反例补上了，才算真信。</p>
-<p>这张图还解释了另一件事：图的合法性之所以能当证明用，全靠在 $P$ 到 $Q$ 之间架一座覆盖关系的桥。没有这个命题，「两个图画得一样所以两个序集同构」只是一句观察，不构成论证。</p>
-</div></div>
-
-<h2 id="九、造与拆"><a href="#九、造与拆" class="headerlink" title="九、造与拆"></a>九、造与拆</h2><p>这一节是工具箱：从已有的偏序集造新的。反过来说，也用这些构造把复杂的偏序集拆成简单部件。作者在开头就说明，凡提到图，都默认有限。</p>
-<p>第一个构造最简单：把序翻过来。</p>
-<div class="math-env env-definition" id="def-dual"><div class="env-head"><span class="env-name">定义</span><span class="env-num">8</span><span class="env-title">对偶</span></div><div class="env-body"><p>设 $P$ 为偏序集。在同一个集合上定义 $x\leq y$ 在 $P^{\partial}$ 中成立当且仅当 $y\leq x$ 在 $P$ 中成立，称 $P^{\partial}$ 为 $P$ 的<strong>对偶</strong>。$P$ 有限时，$P^{\partial}$ 的图由 $P$ 的图上下翻转得到。</p>
-</div></div>
-
-<div class="math-env env-metatheorem" id="meta-dual"><div class="env-head"><span class="env-name">元定理</span><span class="env-num">1</span><span class="env-title">对偶原理</span></div><div class="env-body"><p>设 $\Phi$ 是关于偏序集的陈述，且 $\Phi$ 在所有偏序集中成立。把 $\Phi$ 中每个 $\leq$ 换成 $\geq$（相应地 $\geq$ 换成 $\leq$）得到对偶陈述 $\Phi^{\partial}$，则 $\Phi^{\partial}$ 也在所有偏序集中成立。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-14"><div class="env-head"><span class="env-name">注记</span><span class="env-num">14</span><span class="env-title">一个定理两个版本</span></div><div class="env-body"><p>证明是平凡的：把 $\Phi$ 用在 $P^{\partial}$ 上，读回来就是 $\Phi^{\partial}$ 在 $P$ 上成立。但用处不小——底与顶、极大与极小、下集与上集、$\prec$ 与 $\succ$，全都是成对出现的概念，证了一半就等于证了另一半。</p>
-<p>要注意的是，$\Phi^{\partial}$ 必须是把所有序符号一起翻转得到的句子。只翻一半的句子没有对偶版本，比如「$x\leq y$ 且 $x\neq y$」这种混着等号的表述，翻转后要重新核一遍。</p>
-</div></div>
-
-<div class="math-env env-definition" id="def-bot"><div class="env-head"><span class="env-name">定义</span><span class="env-num">9</span><span class="env-title">底与顶</span></div><div class="env-body"><p>设 $P$ 为偏序集。若存在 $\perp\in P$ 使 $\perp\leq x$ 对一切 $x\in P$ 成立，称 $\perp$ 为 $P$ 的<strong>底</strong>。对偶地，若存在 $\top\in P$ 使 $x\leq\top$ 对一切 $x\in P$ 成立，称 $\top$ 为 $P$ 的<strong>顶</strong>。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-12"><div class="env-head"><span class="env-name">例</span><span class="env-num">12</span><span class="env-title">底与顶的存在性</span></div><div class="env-body"><ul>
-<li>在 $\mathcal{P}(X)$ 中，$\perp=\varnothing$，$\top=X$。</li>
-<li>有限链有底有顶；无限链未必。$\mathbb{N}$ 有底 $1$，无顶；$\mathbb{Z}$ 既无底也无顶。</li>
-<li>多于一个元素的反链，既无底也无顶。</li>
-</ul>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-15"><div class="env-head"><span class="env-name">注记</span><span class="env-num">15</span><span class="env-title">信息序里的底与顶</span></div><div class="env-body"><p>在信息序里，$\perp$ 表示「没有信息」，$\top$ 表示信息过度确定，即矛盾。1.9 到 1.11 的序集都没有顶（唯一的例外是 $X$ 只有一个元素时的 $(X\rightharpoonup Y)$），但都有底：空串、定义域为空的偏映射、$[-\infty,\infty]$。</p>
-<p>书上有一句话说得直白：计算机科学家通常选择有底、无顶的模型。底用来表示不终止，顶表示矛盾，程序语义里两样都要能说，但只有前者需要存在。</p>
-</div></div>
-
-<div class="math-env env-definition" id="def-lift"><div class="env-head"><span class="env-name">定义</span><span class="env-num">10</span><span class="env-title">提升</span></div><div class="env-body"><p>设 $P$ 为偏序集。取 $0\notin P$，令 $P_{\perp}=P\cup\{0\}$，定义</p>
-<p>$$
-
-x\leq y \iff x=0 \ \text{或}\ x\leq y\ \text{在 } P \text{ 中成立}.
-
-$$</p>
-<p>称 $P_{\perp}$ 为 $P$ 的<strong>提升</strong>。把集合 $S$ 先配成反链 $\overline{S}$ 再提升，所得偏序集称为<strong>平坦</strong>的。</p>
-</div></div>
-
-<p>提升就是给任意偏序集加一个底，集合内部原有的关系一条不动。后面第八、九章几乎所有的结果都要求有底，这个构造因此常用。</p>
-<div class="math-env env-definition" id="def-max"><div class="env-head"><span class="env-name">定义</span><span class="env-num">11</span><span class="env-title">极大与极小</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。称 $a\in Q$ 为 $Q$ 的<strong>极大元</strong>，若 $a\leq x$ 且 $x\in Q$ 蕴含 $a=x$。$Q$ 的极大元全体记为 $\operatorname{Max}Q$。</p>
-<p>若 $Q$ 有顶 $\top_Q$，则 $\operatorname{Max}Q=\{\top_Q\}$，此时称 $\top_Q$ 为 $Q$ 的<strong>最大元</strong>，记 $\max Q$。极小元、最小元 $\min Q$ 对偶定义。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-16"><div class="env-head"><span class="env-name">注记</span><span class="env-num">16</span><span class="env-title">极大不是最大</span></div><div class="env-body"><p>$P_1$ 有三个极大元 $a_1,a_2,a_3$，没有最大元；$P_2$ 有最大元 $a$。区别在于：极大是「没有谁比我大」，最大是「我比谁都大」。前者是局部性质，后者是全局性质。</p>
-<p>几个边界例子值得记住。有限偏序集的任一非空子集必有极大元，且对每个 $x\in P$ 都存在 $y\in\operatorname{Max}P$ 使 $x\leq y$。$\mathbb{N}$ 的子集有极大元当且仅当它有限且非空。$\mathcal{P}(\mathbb{N})$ 中挖掉 $\mathbb{N}$ 本身的子族没有顶，但每个 $\mathbb{N}\setminus\{n\}$ 都是极大元。$\mathbb{N}$ 的全体有限子集构成的子族没有极大元。</p>
-<p>最后那个例子说明：极大元的存在性不是免费的。Zorn 引理在第十章处理它。</p>
-</div></div>
-
-<p>接下来两个构造把两个偏序集拼成一个。</p>
-<div class="math-env env-definition" id="def-sum"><div class="env-head"><span class="env-name">定义</span><span class="env-num">12</span><span class="env-title">和</span></div><div class="env-body"><p>设 $P,Q$ 不交。</p>
-<p><strong>不交并</strong> $P\dot{\cup} Q$：在 $P\cup Q$ 上定义 $x\leq y$ 当且仅当「$x,y\in P$ 且 $x\leq_P y$」或「$x,y\in Q$ 且 $x\leq_Q y$」。图中两个分量并排。</p>
-<p><strong>线性序和</strong> $P\oplus Q$：在 $P\cup Q$ 上定义 $x\leq y$ 当且仅当</p>
-<p>$$
-
-\text{「}x,y\in P,\ x\leq_P y\text{」或「}x,y\in Q,\ x\leq_Q y\text{」或「}x\in P,\ y\in Q\text{」}.
-
-$$</p>
-<p>图中 $P$ 的图放在 $Q$ 的图正下方，再从 $P$ 的每个极大元向 $Q$ 的每个极小元连线段。</p>
-</div></div>
-
-<p>两种运算都满足结合律，因此可以不加括号地写迭代。记 $M_n=\mathbf{1}\oplus\overline{\mathbf{n}}\oplus\mathbf{1}$，即菱形：底、$n$ 个互不可比的中间元、顶。</p>
-<p>提升是线性序和的特例：$P_{\perp}=\mathbf{1}\oplus P$。同理 $P\oplus\mathbf{1}$ 是给 $P$ 加一个新顶。</p>
-<div class="math-env env-definition" id="def-prod"><div class="env-head"><span class="env-name">定义</span><span class="env-num">13</span><span class="env-title">积</span></div><div class="env-body"><p>设 $P_1,\dots,P_n$ 为偏序集。笛卡尔积 $P_1\times\cdots\times P_n$ 上定义<strong>逐坐标序</strong>：</p>
-<p>$$
-
-(x_1,\dots,x_n)\leq(y_1,\dots,y_n)\iff (\forall i)\ x_i\leq y_i.
-
-$$</p>
-<p>$P^n$ 表示 $n$ 重积。另有<strong>字典序</strong>：$(x_1,x_2)\leq(y_1,y_2)$ 当且仅当 $x_1&lt;y_1$，或 $x_1=y_1$ 且 $x_2\leq y_2$。未加说明时，积一律指逐坐标序。</p>
-</div></div>
-
-<div class="math-env env-proposition" id="prop-cube"><div class="env-head"><span class="env-name">命题</span><span class="env-num">4</span><span class="env-title">幂集是立方体</span></div><div class="env-body"><p>设 $X=\{1,\dots,n\}$，定义 $\varphi:\mathcal{P}(X)\to\mathbf{2}^n$ 为 $\varphi(A)=(\varepsilon_1,\dots,\varepsilon_n)$，其中</p>
-<p>$$
-
-\varepsilon_i=\begin{cases}1,&amp; i\in A,\\ 0,&amp; i\notin A.\end{cases}
-
-$$</p>
-<p>则 $\varphi$ 是序同构。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi(A)=(\varepsilon_i)$，$\varphi(B)=(\delta_i)$。则</p>
-<p>$$
-
-A\subseteq B \iff (\forall i)\ (i\in A\Rightarrow i\in B)
-\iff (\forall i)\ (\varepsilon_i=1\Rightarrow\delta_i=1)
-\iff (\forall i)\ \varepsilon_i\leq\delta_i,
-
-$$</p>
-<p>最后一步用到 $\mathbf{2}$ 中 $0&lt;1$。故 $\varphi$ 保持序且反向也成立。满射：任给 $(\varepsilon_i)\in\mathbf{2}^n$，取 $A=\{i\mid\varepsilon_i=1\}$ 即有 $\varphi(A)=(\varepsilon_i)$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-17"><div class="env-head"><span class="env-name">注记</span><span class="env-num">17</span><span class="env-title">逐坐标还是字典</span></div><div class="env-body"><p>两个偏序集都是链时，逐坐标积一般不再是链：$\mathbf{2}\times\mathbf{2}$ 中 $(0,1)$ 与 $(1,0)$ 不可比。改成字典序，积就是链。</p>
-<p>书上默认逐坐标，字典序只在括号里提一句，练习里才展开。这个取舍有后果：逐坐标积保留了「每个方向各自比较」的信息，是后面分配格、布尔代数的标准构造；字典序把它压成一个方向，只适合当链用。选哪个不是趣味问题，取决于你想让积记住什么。</p>
-</div></div>
-
-<h2 id="十、下集与上集"><a href="#十、下集与上集" class="headerlink" title="十、下集与上集"></a>十、下集与上集</h2><p>这一节引入两个集合族。作者说它们在后面的表示论里居中心地位。读到第五章、第十一章会明白这句话的分量：那里所有对象都要被「下集族」重新表示一遍。</p>
-<div class="math-env env-definition" id="def-down"><div class="env-head"><span class="env-name">定义</span><span class="env-num">14</span><span class="env-title">下集与上集</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。</p>
-<ul>
-<li>若 $x\in Q$、$y\in P$、$y\leq x$ 蕴含 $y\in Q$，称 $Q$ 为<strong>下集</strong>（亦称递减集、序理想）。</li>
-<li>对偶地，若 $x\in Q$、$y\in P$、$y\geq x$ 蕴含 $y\in Q$，称 $Q$ 为<strong>上集</strong>（亦称递增集、序滤子）。</li>
-</ul>
-<p>对任意 $Q\subseteq P$ 与 $x\in P$，定义</p>
-<p>$$
-
-{\downarrow}Q=\{y\in P\mid (\exists x\in Q)\ y\leq x\},\qquad
-{\downarrow}x=\{y\in P\mid y\leq x\},
-
-$$</p>
-<p>以及 ${\uparrow}Q$、${\uparrow}x$ 的对偶定义。形如 ${\downarrow}x$ 的下集称为<strong>主下集</strong>。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-18"><div class="env-head"><span class="env-name">注记</span><span class="env-num">18</span><span class="env-title">术语与最小性</span></div><div class="env-body"><p>下集就是「向下封闭」的集合：进来一个元素，它下面的一律跟着进来。${\downarrow}Q$ 是包含 $Q$ 的最小下集，且 $Q$ 是下集当且仅当 $Q={\downarrow}Q$。</p>
-<p>术语不统一：decreasing set、order ideal、down-set 三种说法都有人用，上集那边同样。读文献时先看定义再对名字，别靠名字猜。</p>
-</div></div>
-
-<div class="math-env env-definition" id="def-OP"><div class="env-head"><span class="env-name">定义</span><span class="env-num">15</span><span class="env-title">下集族 O(P)</span></div><div class="env-body"><p>设 $P$ 为偏序集。全体下集构成的族记为 $O(P)$，按包含关系成为一个偏序集。字母 $O$ 来自 order ideal。</p>
-<p>$P$ 有限时，每个非空下集 $Q$ 都可以写成</p>
-<p>$$
-
-Q=\bigcup_{x\in\operatorname{Max}Q}{\downarrow}x,
-
-$$</p>
-<p>其中 $\operatorname{Max}Q$ 是反链。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-13"><div class="env-head"><span class="env-name">例</span><span class="env-num">13</span><span class="env-title">几组下集</span></div><div class="env-body"><p>取图 1.1(iii) 中的偏序集（元素 $a,b,c,d,e,f,g$，$a$ 在底，$f,g$ 在顶）。</p>
-<ul>
-<li>$\{c\}$、$\{a,b,c,d,e\}$、$\{a,b,d,f\}$ 都是下集。</li>
-<li>$\{b,d,e\}$ 不是下集，因为 $e$ 下面还有 $c$；实际上 ${\downarrow}\{b,d,e\}=\{a,b,c,d,e\}$。</li>
-<li>$\{e,f,g\}$ 是上集，$\{a,b,d,f\}$ 不是上集。</li>
-</ul>
-<p>三类特殊情形：</p>
-<ul>
-<li>$P$ 是反链时，$O(P)=\mathcal{P}(P)$，因为任何子集都向下封闭。</li>
-<li>$P$ 是链 $\mathbf{n}$ 时，$O(P)$ 由 $\varnothing,{\downarrow}0,\dots,{\downarrow}(n-1)$ 组成，是 $n+1$ 元链。</li>
-<li>$P$ 是有理数链 $\mathbb{Q}$ 时，$O(P)$ 除 $\varnothing$、$\mathbb{Q}$、各 ${\downarrow}x$ 外，还含 ${\downarrow}x\setminus\{x\}$（$x\in\mathbb{Q}$）与 $\{y\in\mathbb{Q}\mid y&lt;a\}$（$a\in\mathbb{R}\setminus\mathbb{Q}$）。最后这一族说明：下集可以没有最大元，因此不能都写成主下集。</li>
-</ul>
-</div></div>
-
-<div class="math-env env-lemma" id="lem-down"><div class="env-head"><span class="env-name">引理</span><span class="env-num">2</span><span class="env-title">序编码进下集族</span></div><div class="env-body"><p>设 $P$ 为偏序集，$x,y\in P$。则以下三条等价：</p>
-<ol>
-<li>$x\leq y$；</li>
-<li>${\downarrow}x\subseteq{\downarrow}y$；</li>
-<li>对每个 $Q\in O(P)$，$y\in Q$ 蕴含 $x\in Q$。</li>
-</ol>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）$\Rightarrow$（2）：设 $z\in{\downarrow}x$，则 $z\leq x\leq y$，故 $z\in{\downarrow}y$。</p>
-<p>（2）$\Rightarrow$（3）：设 $Q$ 为下集且 $y\in Q$。由（2）与 $x\in{\downarrow}x$ 得 $x\in{\downarrow}y$，即 $x\leq y$；再由 $Q$ 向下封闭得 $x\in Q$。</p>
-<p>（3）$\Rightarrow$（1）：取 $Q={\downarrow}y$。它显然是下集，且 $y\in{\downarrow}y$，故由（3）得 $x\in{\downarrow}y$，即 $x\leq y$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-19"><div class="env-head"><span class="env-name">注记</span><span class="env-num">19</span><span class="env-title">表示论的第一个动作</span></div><div class="env-body"><p>这条引理把「元素之间的序」翻译成「下集之间的包含」，又把后者翻译成「所有下集对两个元素的判定一致」。三层是同一件事。</p>
-<p>翻译完成之后，$P$ 的每个元素都可以用 ${\downarrow}x$ 代替，而 ${\downarrow}x$ 是 $O(P)$ 的元素。于是 $P$ 被塞进了 $O(P)$，塞法是 $x\mapsto{\downarrow}x$。1.35 会把这个映射正式命名为序嵌入。</p>
-<p>后面第五章说有限分配格同构于某个 $O(P)$，第十一章说一般分配格同构于某个 Priestley 空间的紧开下集族——都是这条引理的后代。</p>
-</div></div>
-
-<div class="math-env env-proposition" id="prop-comp"><div class="env-head"><span class="env-name">命题</span><span class="env-num">5</span><span class="env-title">补集与对偶</span></div><div class="env-body"><p>设 $P$ 为偏序集。</p>
-<ol>
-<li>$Q$ 是 $P$ 的下集，当且仅当 $P\setminus Q$ 是 $P$ 的上集，也当且仅当 $P\setminus Q$ 是 $P^{\partial}$ 的下集。</li>
-<li>$O(P)^{\partial}\cong O(P^{\partial})$，同构由补映射给出。</li>
-</ol>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>第一条直接由定义对偶读出。第二条：对子集 $A,B\subseteq P$，$A\subseteq B$ 当且仅当 $P\setminus A\supseteq P\setminus B$，故补映射把包含序反过来，且把 $O(P)$ 双射到 $O(P^{\partial})$，因而是序同构。</p>
-</div></div>
-
-<div class="math-env env-proposition" id="prop-O-sum"><div class="env-head"><span class="env-name">命题</span><span class="env-num">6</span><span class="env-title">O 与和、积</span></div><div class="env-body"><p>设 $P,P_1,P_2$ 为偏序集。则</p>
-<ol>
-<li>$O(P\oplus\mathbf{1})\cong O(P)\oplus\mathbf{1}$，且 $O(\mathbf{1}\oplus P)\cong\mathbf{1}\oplus O(P)$；</li>
-<li>$O(P_1\dot{\cup} P_2)\cong O(P_1)\times O(P_2)$。</li>
-</ol>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）$P\oplus\mathbf{1}$ 的下集，要么是 $P$ 的下集，要么是 $P\oplus\mathbf{1}$ 全体；在 $O(P)\oplus\mathbf{1}$ 中，前者恰好是下层，后者是新顶。$\mathbf{1}\oplus P$ 的下集，要么是空集，要么是 $P$ 的某个下集并上新加的最小元；这恰好对应 $\mathbf{1}\oplus O(P)$。</p>
-<p>（2）映射 $U\mapsto(U\cap P_1,U\cap P_2)$ 从 $O(P_1\dot{\cup} P_2)$ 到 $O(P_1)\times O(P_2)$。它是双射：逆映射把 $(U_1,U_2)$ 送到 $U_1\cup U_2$，而下集在不交并里的限制仍是下集。两个方向都保持序，故为序同构。</p>
-</div></div>
-
-<div class="math-env env-exercise" id="exo-363"><div class="env-head"><span class="env-name">练习</span><span class="env-num">2</span><span class="env-title">算一个下集族的阶</span></div><div class="env-body"><p>设 $P=\mathbf{1}\oplus(\overline{\mathbf{2}}\dot{\cup}\overline{\mathbf{3}})\oplus\mathbf{1}$。用上面的两条命题求 $O(P)$ 的同构型，并算出 $|O(P)|$。</p>
-</div></div>
-
-<div class="math-env env-answer" id="env-answer-1"><div class="env-head"><span class="env-name">回答</span><span class="env-num">1</span></div><div class="env-body"><p>记 $Q=\overline{\mathbf{2}}\dot{\cup}\overline{\mathbf{3}}$。由命题（2），$O(Q)\cong O(\overline{\mathbf{2}})\times O(\overline{\mathbf{3}})=\mathbf{2}^2\times\mathbf{2}^3=\mathbf{2}^5$，共 $32$ 元。</p>
-<p>由命题（1），$O(\mathbf{1}\oplus Q)\cong\mathbf{1}\oplus O(Q)=\mathbf{1}\oplus\mathbf{2}^5$。再用一次（1），</p>
-<p>$$
-
-O(P)=O\bigl((\mathbf{1}\oplus Q)\oplus\mathbf{1}\bigr)\cong O(\mathbf{1}\oplus Q)\oplus\mathbf{1}\cong\mathbf{1}\oplus\mathbf{2}^5\oplus\mathbf{1},
-
-$$</p>
-<p>故 $|O(P)|=1+32+1=34$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-20"><div class="env-head"><span class="env-name">注记</span><span class="env-num">20</span><span class="env-title">结构对应比枚举值钱</span></div><div class="env-body"><p>两个命题都在说同一件事：$O$ 把「和」翻译成「和与积」，并且挪动底与顶的位置。有了这套翻译，书上 1.33 那个 363 不必画图、不必枚举，几步就能算出来。</p>
-<p>这就是表示论的基本手法——不去数对象，去数对象的构造。第五章会把这条思路推到「有限分配格都是某个 $O(P)$」，那时本节的所有命题都会变成定理的零件。</p>
-</div></div>
-
-<h2 id="十一、保序映射"><a href="#十一、保序映射" class="headerlink" title="十一、保序映射"></a>十一、保序映射</h2><p>前面只用了同构这一种映射。这一节放宽要求，最后落到一句范畴论式的总结。</p>
-<div class="math-env env-definition" id="def-mono"><div class="env-head"><span class="env-name">定义</span><span class="env-num">16</span><span class="env-title">保序映射、嵌入、同构</span></div><div class="env-body"><p>设 $P,Q$ 为偏序集，$\varphi:P\to Q$ 为映射。</p>
-<ol>
-<li>若 $x\leq y$ 在 $P$ 中成立蕴含 $\varphi(x)\leq\varphi(y)$ 在 $Q$ 中成立，称 $\varphi$ <strong>保序</strong>（亦称单调）。</li>
-<li>若 $x\leq y$ 在 $P$ 中成立当且仅当 $\varphi(x)\leq\varphi(y)$ 在 $Q$ 中成立，称 $\varphi$ 为<strong>序嵌入</strong>，记 $\varphi:P\rightarrowtail Q$。</li>
-<li>若 $\varphi$ 是序嵌入且满射，称 $\varphi$ 为<strong>序同构</strong>。</li>
-</ol>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-21"><div class="env-head"><span class="env-name">注记</span><span class="env-num">21</span><span class="env-title">差别只在反向</span></div><div class="env-body"><p>保序只要求单向：$x\leq y$ 推出 $\varphi(x)\leq\varphi(y)$。嵌入要求双向，因此嵌入不会把不可比变成可比，也不会把严格不等压成相等。</p>
-<p>常值映射是最好的反例：它保序，但把所有元素压成一点，$x&lt;y$ 变成 $\varphi(x)=\varphi(y)$，反向不成立。所以保序映射可以丢信息，嵌入不能。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-14"><div class="env-head"><span class="env-name">例</span><span class="env-num">14</span><span class="env-title">六个映射的谱系</span></div><div class="env-body"><p>图 1.11 给了六个映射。$\varphi_1$ 不保序：它把一条上升的边映成了下降的边。$\varphi_2$ 到 $\varphi_5$ 都保序，但都把至少一对不同的点压成同一点，因此不是嵌入。$\varphi_6$ 是嵌入，但不满，因此不是同构。</p>
-<p>这六个映射排成一条谱系：不保序、保序非嵌入、嵌入非满。再加一档同构，就齐了。每一档只比前一档多一个条件，而每一档都有实例。</p>
-</div></div>
-
-<div class="math-env env-proposition" id="prop-emb"><div class="env-head"><span class="env-name">命题</span><span class="env-num">7</span><span class="env-title">嵌入的像</span></div><div class="env-body"><p>设 $\varphi:P\rightarrowtail Q$ 为序嵌入，$\varphi(P)$ 配上从 $Q$ 诱导的序。则 $\varphi(P)\cong P$。</p>
-</div></div>
-
-<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>把 $\varphi$ 看成到像上的映射 $\varphi:P\to\varphi(P)$，它满射，且嵌入条件 $x\leq y\iff\varphi(x)\leq\varphi(y)$ 原样成立，故为序同构。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-22"><div class="env-head"><span class="env-name">注记</span><span class="env-num">22</span><span class="env-title">三条容易漏的</span></div><div class="env-body"><p>嵌入自动是单射，论证与 1.4 完全相同：若 $\varphi(x)=\varphi(y)$，由 $Q$ 的自反性得 $\varphi(x)\leq\varphi(y)$ 且反向，用嵌入条件读回 $x\leq y$ 且 $y\leq x$，再用 $P$ 的反对称性。</p>
-<p>保序映射的复合保序。有限多个保序映射的复合，只要定义得起来，就保序。</p>
-<p>$P\cong Q$ 当且仅当存在保序映射 $\varphi:P\to Q$ 与 $\psi:Q\to P$，使 $\varphi\circ\psi=\mathrm{id}_Q$、$\psi\circ\varphi=\mathrm{id}_P$。这一条把「同构」翻译成「有互逆的保序映射」，也就是序范畴里的同构。</p>
-</div></div>
-
-<div class="math-env env-example" id="env-example-15"><div class="env-head"><span class="env-name">例</span><span class="env-num">15</span><span class="env-title">点式序</span></div><div class="env-body"><p>在初等分析里，「$\sin x\leq|x|$ 在 $\mathbb{R}$ 上成立」这句话用到了一个序，只是从来没人写出来：函数之间逐点比较。对 $f,g:\mathbb{R}\to\mathbb{R}$，$f\leq g$ 意为 $f(x)\leq g(x)$ 对一切 $x$ 成立。</p>
-<p>推广：设 $X$ 为任意集合，$Y$ 为偏序集，在全体映射 $Y^X$ 上定义</p>
-<p>$$
-
-f\leq g \iff f(x)\leq g(x)\ (\forall x\in X).
-
-$$</p>
-<p>$X$ 为 $n$ 元集时，$Y^X$ 就是 $Y^n$。$Y^X$ 的任意子集继承点式序；当 $X$ 本身是偏序集时，可以取子集为全体保序映射，所得的偏序集记 $Y^{(X)}$，也写 $(X\to Y)$。</p>
-</div></div>
-
-<div class="math-env env-exercise" id="exo-hom2"><div class="env-head"><span class="env-name">练习</span><span class="env-num">3</span><span class="env-title">从 X 到 2 的保序映射</span></div><div class="env-body"><p>证明 $(X\to\mathbf{2})\cong O(X)^{\partial}$。</p>
-</div></div>
-
-<div class="math-env env-answer" id="env-answer-2"><div class="env-head"><span class="env-name">回答</span><span class="env-num">2</span></div><div class="env-body"><p>设 $f:X\to\mathbf{2}$ 保序。令 $U_f=f^{-1}(1)$。若 $x\in U_f$、$y\geq x$，则 $f(y)\geq f(x)=1$，故 $f(y)=1$，即 $y\in U_f$。所以 $U_f$ 是上集。</p>
-<p>反之，设 $U$ 为上集，令 $f=\chi_U$。若 $x\leq y$ 而 $f(x)=1$，则 $x\in U$，由上集性质 $y\in U$，故 $f(y)=1$；若 $f(x)=0$ 则无须论证。所以 $\chi_U$ 保序。</p>
-<p>两个构造互逆。又 $f\leq g$ 逐点成立当且仅当 $U_f\subseteq U_g$。故 $(X\to\mathbf{2})$ 与上集族按包含同构，再由补映射（补集与对偶）得上集族同构于 $O(X)^{\partial}$。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-23"><div class="env-head"><span class="env-name">注记</span><span class="env-num">23</span><span class="env-title">用最小的序集编码整个下集族</span></div><div class="env-body"><p>$\mathbf{2}$ 是最小的非平凡偏序集，只有两个元素。可它偏偏能把 $X$ 的全部上集编码出来：一个保序映射就是一个上集，逐点序就是包含序。</p>
-<p>这类「把结构保持映射收集起来，得到一个序集，它又同构于某个集合族」的结论，在范畴论里有更一般的表述（函子与自然变换），这里不必展开。等到第五章、第十一章讲 Stone 表示与 Priestley 表示，$\mathbf{2}$ 会再次出现，那时它不只是编码工具，而是整个表示定理的骨架。</p>
-</div></div>
-
-<div class="math-env env-remark" id="env-remark-24"><div class="env-head"><span class="env-name">注记</span><span class="env-num">24</span><span class="env-title">范畴论的一句话</span></div><div class="env-body"><p>现代数学里，一类结构很少单独出现，跟着它的总有一类保持结构的映射：群与同态、向量空间与线性映射、拓扑空间与连续映射，后面还会有格与格同态、CPO 与连续映射。把「对象 + 态射」当作一个整体来研究，就是范畴论。</p>
-<p>作者在这里明确说，本书没有引入范畴论形式系统的需要，只是承认它的影响。这种节制值得学：该用的地方用它，不该用的地方不搬术语。</p>
-</div></div>
-
-<h2 id="十二、章末小结"><a href="#十二、章末小结" class="headerlink" title="十二、章末小结"></a>十二、章末小结</h2><h3 id="全章的框架"><a href="#全章的框架" class="headerlink" title="全章的框架"></a>全章的框架</h3><p>$$
-
-\text{杂例}
-\to\text{公理}
-\to\text{链与反链}
-\to\text{数系与集合族}
-\to\text{信息序}
-\to\text{图}
-\to\text{构造}
-\to\text{下集}
-\to\text{保序映射}
-
-$$</p>
-<p>这条链不是线性的。图用覆盖，覆盖用严格序，严格序用偏序；下集用偏序，映射用下集。每一节都在回用前面的东西，而最后一节把这些回用收成一句话：偏序集与保序映射构成一个范畴。</p>
-<p>若按「引入方式」看，全章走的是一条固定的路：先给一堆杂例，抽公理，立刻回填例子，再给变体与构造，最后用一个保结构的概念收口。1.1 到 1.4 是这个套路的小规模演练，1.7 到 1.13 换到应用语境重演一次，1.14 到 1.18 用图把套路视觉化。整章没有一处是先给定理再给例子。</p>
-<h3 id="值得注意的五处"><a href="#值得注意的五处" class="headerlink" title="值得注意的五处"></a>值得注意的五处</h3><p><strong>定义。</strong> <a class="env-ref" href="#def-poset">定义 1</a> 是全部语言的基础；<a class="env-ref" href="#def-chain">定义 2</a> 把「可比」推到极端；<a class="env-ref" href="#def-cover">定义 7</a> 是画图的依据；<a class="env-ref" href="#def-down">定义 14</a> 与 <a class="env-ref" href="#def-OP">定义 15</a> 是表示论的入口；<a class="env-ref" href="#def-mono">定义 16</a> 把「保持结构」分成三档，此后不再混用。</p>
-<p><strong>命题。</strong> <a class="env-ref" href="#prop-iso">命题 2</a> 与 <a class="env-ref" href="#prop-strict">命题 1</a> 都不难，用到的技术不同：前者靠公理三次收口，后者是双向构造并验证互逆。<a class="env-ref" href="#prop-diagram">命题 3</a> 把「图可以当证明」变成合法动作。<a class="env-ref" href="#prop-cube">命题 4</a> 把幂集写成积，是全书第一次真正的「表示」。<a class="env-ref" href="#prop-O-sum">命题 6</a> 说明 $O$ 如何翻译构造。</p>
-<p><strong>注记。</strong> 对偶原理让一个定理当两个用；$\perp$ 与 $\top$ 在信息序里的解释决定了后面 domain 的走向；极大与最大的区别是本章最容易糊的地方；$O(P)$ 从「例子」变成「工具」，是第五章的伏笔。</p>
-<p><strong>警示。</strong> 图的两个条件缺一不可，画错的图不报错，只误导；无限集不能用覆盖关系判定同构，$\mathbb{R}$ 是反例；$\oplus$ 与 $\dot{\cup}$ 的图画法不同，混了会把序读错。</p>
-<p><strong>方法。</strong> 全章真正的方法只有一个：把结构翻译成集合族，再让集合族之间的包含关系替结构说话。谓词之于幂集、下集之于偏序集、保序映射之于 $\mathbf{2}$，都是这同一个动作。</p>
-<h3 id="读完这一章该能做什么"><a href="#读完这一章该能做什么" class="headerlink" title="读完这一章该能做什么"></a>读完这一章该能做什么</h3><ul>
-<li>判定一个给定关系是不是偏序，缺了哪一条，并给出三条公理各自独立的实例；</li>
-<li>由严格序造偏序，反向也做一遍，说明两个构造互逆；</li>
-<li>给一个有限偏序集画 Hasse 图，并判断两张图是否表示同构的偏序集；</li>
-<li>用对偶原理把一条命题翻成另一条，说明哪些句子没有对偶版本；</li>
-<li>把给定的偏序集拆成 $\mathbf{1}$、$\overline{\mathbf{n}}$、$\mathbf{n}$ 的和与积（拆得动的时候），再用 $O$ 的翻译算 $|O(P)|$；</li>
-<li>说明保序、嵌入、同构的差别，并各举一个例子。</li>
-</ul>
-<p>下一章讲格，会把这一章缺的那件事补上：任意两元的上确界与下确界。到那时 $O(P)$ 会重新出现，不再是例子，而是主要工具。</p>
-]]></content>
-      <tags>
-        <tag>格论</tag>
-        <tag>读书笔记</tag>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>笔记之外：Bourbaki 工程的工具与工作流</title>
     <url>/posts/bourbaki-notes-toolchain.html</url>
     <content><![CDATA[<p>正文四万三千行，围着它长出来的工具两万六千行。这个比例不正常。</p>
@@ -1374,9 +781,602 @@ $$</p>
 $$</p>
 ]]></content>
       <tags>
-        <tag>笔记</tag>
         <tag>数学杂谈</tag>
+        <tag>笔记</tag>
         <tag>教学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>『格论』第 1 章读法：从杂例到保序映射</title>
+    <url>/posts/priestley-lattices-1-1.html</url>
+    <content><![CDATA[<div class="series-banner"><span class="series-banner__label">合集</span><a class="series-banner__name" href="/notes/#algebra">代数随想</a><span class="series-banner__progress">第 1 篇 / 共 1 篇</span></div><p>Priestley 与 Davey 这本书的第 1 章讲有序集。五节，三十八个数号段落，带证明的结论只有三条，其中两条在讲画图。其余全是定义、例子和提醒。整章只做一件事：把一个日常词拆成能运算的结构，再把这个结构放回它出现的地方。</p>
+<span id="more"></span>
+
+<div class="ai-notice">本文完全由 AI 创作，本人只负责发布和提出修改意见。</div>
+
+<h2 id="一、她从哪里起手"><a href="#一、她从哪里起手" class="headerlink" title="一、她从哪里起手"></a>一、她从哪里起手</h2><p>开篇列了六个句子，彼此毫无关联：</p>
+<ol>
+<li>$0&lt;1$，且 $1&lt;10^{23}$。</li>
+<li>两个表亲有共同的祖父。</li>
+<li>$22/7$ 是比 $3.141592654$ 更差的 $\pi$ 的近似。</li>
+<li>按距日由近及远排列行星：水星、金星、地球、火星、木星、土星、天王星、海王星、冥王星。</li>
+<li>$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，但 $\{1,2,3,4,5\}$ 同时包含二者。</li>
+<li>任给两个不同的实数 $a,b$，要么 $a&gt;b$，要么 $b&gt;a$。</li>
+</ol>
+<p>然后她问：这些陈述有什么共同之处？</p>
+<p>问题提得平常，选例却不平常。第 1、6 条是线性的比大小；第 5 条讲的包含关系只给出偏序，两个集合可以互不可比；第 2 条根本不是序，它是「关系」这个词的用法，用来提醒读者后面要处理的对象有多宽；第 3 条是一次具体的数值比较，落在一个序上，但不属于某个结构；第 4 条是一条链，顺序由外部规则指定。</p>
+<div class="math-env env-remark" id="env-remark-1"><div class="env-head"><span class="env-name">注记</span><span class="env-num">1</span><span class="env-title">先给例子，再给公理</span></div><div class="env-body"><p>这是归纳式的引入：先让读者承认自己早就在用「序」，再告诉他这件事有多杂，最后才收网。</p>
+<p>代价是公理的动机被推迟了。读者读到定义时，已经积累了六种直觉，却还不清楚这三条公理为什么恰好是这三条、少一条会怎样。这一节后半段补上了这个缺口，但补充的位置在定义之后。</p>
+</div></div>
+
+<p>有一点值得先记住：第 6 条并不是普遍性质。她把它摆在例子里，等到 1.3 才正式命名——那是链，是偏序的一个特例，不是序的常态。先混在例子里，后拆开，这个顺序让读者不至于一开始就把「序」等同于「大小」。</p>
+<h2 id="二、抽公理"><a href="#二、抽公理" class="headerlink" title="二、抽公理"></a>二、抽公理</h2><p>从这堆句子里能拣出的共同性质只有三条。</p>
+<div class="math-env env-definition" id="def-poset"><div class="env-head"><span class="env-name">定义</span><span class="env-num">1</span><span class="env-title">偏序，偏序集</span></div><div class="env-body"><p>设 $P$ 是集合，$\leq$ 是 $P$ 上的二元关系。若对任意 $x,y,z\in P$ 都有</p>
+<ul>
+<li>（R）自反：$x\leq x$；</li>
+<li>（A）反对称：$x\leq y$ 且 $y\leq x$，则 $x=y$；</li>
+<li>（T）传递：$x\leq y$ 且 $y\leq z$，则 $x\leq z$，</li>
+</ul>
+<p>则称 $\leq$ 为 $P$ 上的<strong>偏序</strong>，$(P,\leq)$ 为<strong>偏序集</strong>，简称 poset。</p>
+</div></div>
+
+<p>三条里，自反与传递是几乎任何「比较」都要的；反对称反而容易被当成多余的。它的作用是把「互相不大于」压回相等：若两个元素彼此可达，它们就是同一个东西，不允许出现两个不同的元素在一个偏序里互相「小于等于」。</p>
+<p>这里有个容易忽略的细节：书上按自反、反对称、传递排列，多数教材写成自反、传递、反对称。差别不大，但先摆反对称有个好处——读者从第一行就知道「互相可达要压成相等」，后面证单射、证唯一性时不会漏掉它。这一章后面好几处证明靠的就是这一条。</p>
+<div class="math-env env-convention" id="env-convention-1"><div class="env-head"><span class="env-name">约定</span><span class="env-num">1</span><span class="env-title">记号</span></div><div class="env-body"><p>此后用 $(P,\leq)$ 而不是 $\langle P,\leq\rangle$ 表示偏序集。两种写法在文献中都通行，本文统一用前者。</p>
+<p>记号 $x&lt;y$ 表示 $x\leq y$ 且 $x\neq y$，即把偏序分解成严格部分。若 $x\leq y$ 与 $y\leq x$ 都不成立，记 $x\parallel y$，读作不可比。</p>
+</div></div>
+
+<p>不可比这个记号要到 1.3 谈链与反链时才真正用上，但得先摆出来：偏序与全序的区别，全靠 $\parallel$ 这个符号才说得干净。</p>
+<h2 id="三、例子回填"><a href="#三、例子回填" class="headerlink" title="三、例子回填"></a>三、例子回填</h2><p>定义给完，她马上把之前的句子逐一认领回去。</p>
+<div class="math-env env-example" id="env-example-1"><div class="env-head"><span class="env-name">例</span><span class="env-num">1</span><span class="env-title">幂集的包含</span></div><div class="env-body"><p>设 $X$ 为集合，$\mathcal{P}(X)$ 为其幂集，$\subseteq$ 为包含关系。则 $(\mathcal{P}(X),\subseteq)$ 是偏序集。</p>
+<p>自反与传递是集合论的常识。反对称就是外延公理：若 $A\subseteq B$ 且 $B\subseteq A$，则 $A=B$。</p>
+<p>这个例子的价值在于它不线性：$\{1,2,4\}$ 与 $\{2,3,5\}$ 互不包含，这正是第 5 条的位置。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-2"><div class="env-head"><span class="env-name">例</span><span class="env-num">2</span><span class="env-title">整除</span></div><div class="env-body"><p>在 $\mathbb{Z}_{&gt;0}$ 上定义 $a\mid b$ 当且仅当存在 $c\in\mathbb{Z}_{&gt;0}$ 使 $b=ac$。则 $(\mathbb{Z}_{&gt;0},\mid)$ 是偏序集。</p>
+<p>反对称只用一个事实：若 $a\mid b$ 且 $b\mid a$，则 $a=b$。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-3"><div class="env-head"><span class="env-name">例</span><span class="env-num">3</span><span class="env-title">实数与全序</span></div><div class="env-body"><p>$(\mathbb{R},\leq)$ 是偏序集，并且任意两个元素可比，这是第 6 条的位置。这类偏序叫全序或线性序。</p>
+</div></div>
+
+<p>三个例子分别落在三种位置上：幂集是典型的非全序，整除是非全序且带算术内容，实数是最熟悉的线性序。这样选，覆盖了读者可能有的全部直觉。</p>
+<p>到这一步，例子还只管「什么东西构成偏序集」。但偏序集之间可以互相比较形状，形状的两个极端值得单独命名。</p>
+<div class="math-env env-definition" id="def-chain"><div class="env-head"><span class="env-name">定义</span><span class="env-num">2</span><span class="env-title">链与反链</span></div><div class="env-body"><p>设 $P$ 为偏序集。</p>
+<ul>
+<li>若任意 $x,y\in P$ 都有 $x\leq y$ 或 $y\leq x$，称 $P$ 为<strong>链</strong>，亦称线性序集、全序集。</li>
+<li>若 $x\leq y$ 在 $P$ 中成立仅当 $x=y$，称 $P$ 为<strong>反链</strong>。</li>
+</ul>
+<p>记 $\mathbf{n}$ 为 $n$ 元链 $\{0,1,\dots,n-1\}$，顺序为 $0&lt;1&lt;\cdots&lt;n-1$；记 $\overline{\mathbf{n}}$ 为同一集合配上离散序，即 $n$ 元反链。任意集合 $S$ 配离散序，都成为反链 $\overline{S}$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-2"><div class="env-head"><span class="env-name">注记</span><span class="env-num">2</span><span class="env-title">两个极端</span></div><div class="env-body"><p>链与反链是两个极端，夹在中间的才是序论的主要对象。极端情形的用处是当坐标和当反例：$\mathbf{2}$ 是最小的非平凡偏序集，后面会拿它当值域；反链则是一次性把「不可比」推到极限，凡是要检验某条性质是否依赖可比性，拿反链试一遍最省事。</p>
+<p>书上还点了一句：链的子集是链，反链的子集是反链。这是诱导序的第一个好处——性质向下遗传。这句话很短，但它保证了「取子集」这个动作不会破坏结构，后面用得非常随便。</p>
+</div></div>
+
+<h2 id="四、数系与集合族"><a href="#四、数系与集合族" class="headerlink" title="四、数系与集合族"></a>四、数系与集合族</h2><p>抽象的定义立住之后，她回到数学内部找例子。这一段的作用是提醒读者：偏序不只在应用里出现，数系和代数结构本身就带着它。</p>
+<div class="math-env env-example" id="env-example-4"><div class="env-head"><span class="env-name">例</span><span class="env-num">4</span><span class="env-title">数系</span></div><div class="env-body"><p>$\mathbb{R}$、$\mathbb{Q}$、$\mathbb{Z}$、$\mathbb{N}$ 按通常的大小关系都是链，而且这个序与算术相容：两个严格大于零的元素，其和与积也严格大于零。</p>
+<p>令 $\mathbb{N}_0=\mathbb{N}\cup\{0\}$，赋以 $0&lt;1&lt;2&lt;\cdots$，得到集合论中的链 $\omega$。它与 $\mathbb{N}$ 序同构，同构映射是后继 $n\mapsto n+1$。</p>
+<p>同一个 $\mathbb{N}_0$ 上还能定义另一个序：$m\preccurlyeq n$ 当且仅当存在 $k\in\mathbb{N}_0$ 使 $km=n$，即整除。$(\mathbb{N}_0,\mid)$ 不是链。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-3"><div class="env-head"><span class="env-name">注记</span><span class="env-num">3</span><span class="env-title">同构不看元素</span></div><div class="env-body"><p>$\omega$ 与 $\mathbb{N}$ 的元素并不相同：一个含 $0$，一个不含。作为偏序集它们没有区别。这正是 1.4 要定义的「序同构」的第一个例子，只是书上把它埋在例子里，没有点明。</p>
+<p>顺便补一句书上没写的：$\mathbb{N}_0$ 上的整除序里，$1$ 是底，因为 $1$ 整除一切；$0$ 是顶，因为一切整除 $0$。这个序的底和顶都不是「大小」意义上的极端，而是算术意义上的。第一次见到会愣一下，习惯就好。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-5"><div class="env-head"><span class="env-name">例</span><span class="env-num">5</span><span class="env-title">代数结构的子集族</span></div><div class="env-body"><p>设 $G$ 为群。全体子群按包含构成偏序集，记 $\mathrm{Sub}\,G$；全体正规子群同样按包含构成偏序集，记 $\mathcal{N}\text{-}\mathrm{Sub}\,G$。设 $V$ 为向量空间，全体子空间按包含构成偏序集 $\mathrm{Sub}\,V$。设 $R$ 为环，全体子环、全体理想按包含都是偏序集。</p>
+<p>设 $(X,\mathcal{T})$ 为拓扑空间，开集族、闭集族、既开又闭的集族，按包含都是偏序集。</p>
+</div></div>
+
+<p>这些族后来大多会成为格，但这一章只用到偏序。列在这里是为了说明一件事：序不是附加结构，只要一个集合族按包含排列，序就自动出现了。</p>
+<div class="math-env env-example" id="env-example-6"><div class="env-head"><span class="env-name">例</span><span class="env-num">6</span><span class="env-title">谓词</span></div><div class="env-body"><p>设 $X$ 为集合。$X$ 上的<strong>谓词</strong>是取值 $T$ 或 $F$ 的映射 $p:X\to\{T,F\}$。记全体谓词为 $P(X)$，在其上定义</p>
+<p>$$
+
+p\leq q \iff \{x\in X\mid p(x)=T\}\subseteq\{x\in X\mid q(x)=T\}.
+
+$$</p>
+<p>令 $\varphi(p)=\{x\in X\mid p(x)=T\}$，则 $\varphi:P(X)\to\mathcal{P}(X)$ 是序同构。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-4"><div class="env-head"><span class="env-name">注记</span><span class="env-num">4</span><span class="env-title">同一个序集的两种说法</span></div><div class="env-body"><p>谓词与子集是同一件事的两种写法：一个谓词由它的真值集决定，一个子集由它的特征谓词决定。$\varphi$ 把这个对应写成映射，并且保持序，所以两个偏序集是同一个。</p>
+<p>这是全章第一次出现「换一种表示」的动作。到第五章讲有限分配格的表示、第十一章讲 Priestley 表示，这个动作会成为主题。这里只是热身，但它埋得很深：后面所有表示定理，骨架都是「对象 $\leftrightarrow$ 某种集合族，且保持序」。</p>
+</div></div>
+
+<p>最后一个构造短得容易漏掉，但全书都在用。</p>
+<div class="math-env env-definition" id="env-definition-3"><div class="env-head"><span class="env-name">定义</span><span class="env-num">3</span><span class="env-title">诱导序</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。在 $Q$ 上定义 $x\leq_Q y$ 当且仅当 $x\leq_P y$，称 $\leq_Q$ 为 $P$ 诱导到 $Q$ 上的序。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-5"><div class="env-head"><span class="env-name">注记</span><span class="env-num">5</span><span class="env-title">子集继承了什么</span></div><div class="env-body"><p>子集继承的不只是元素，还有全部可比性。取子集只会减少元素，不会改变剩下元素之间的关系：链的子集仍是链，反链的子集仍是反链。这是诱导序的第一个好处——性质向下遗传。</p>
+<p>但要注意哪些「子族」真的是诱导序。$\mathcal{P}(X)$ 的任意子族按包含都是诱导序。$\mathrm{Sub}\,G$ 是 $\mathcal{P}(G)$ 的子族，但不是任意子族，它是被「对群运算封闭」这个条件筛出来的：序仍然来自包含，但「是子群」不是序性质。这个区分后面会反复用到。</p>
+</div></div>
+
+<h2 id="五、弱化与强化"><a href="#五、弱化与强化" class="headerlink" title="五、弱化与强化"></a>五、弱化与强化</h2><p>偏序的三条公理可以拆开重组，得到两种常用变体。</p>
+<div class="math-env env-definition" id="env-definition-4"><div class="env-head"><span class="env-name">定义</span><span class="env-num">4</span><span class="env-title">准序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $\preceq$ 为<strong>准序</strong>（quasi-order，亦称预序），若它满足自反与传递，不要求反对称。</p>
+</div></div>
+
+<div class="math-env env-definition" id="env-definition-5"><div class="env-head"><span class="env-name">定义</span><span class="env-num">5</span><span class="env-title">严格序</span></div><div class="env-body"><p>称 $P$ 上的二元关系 $&lt;$ 为<strong>严格序</strong>，若它满足</p>
+<ul>
+<li>（Ir）反自反：$x&lt;x$ 恒不成立；</li>
+<li>（T）传递：$x&lt;y$ 且 $y&lt;z$，则 $x&lt;z$。</li>
+</ul>
+</div></div>
+
+<p>这两条定义各自只删掉一条公理，删的方向相反：准序删反对称，严格序删自反并改写成反自反。后果完全不同——准序是偏序的宽松版，严格序则是偏序去掉对角线后的样子。</p>
+<div class="math-env env-proposition" id="prop-strict"><div class="env-head"><span class="env-name">命题</span><span class="env-num">1</span><span class="env-title">严格序与偏序互相决定</span></div><div class="env-body"><p>设 $&lt;$ 是 $P$ 上满足反自反与传递的关系。定义</p>
+<p>$$
+
+x\leq y \iff x&lt;y \ \text{或}\ x=y,
+
+$$</p>
+<p>则 $\leq$ 是 $P$ 上的偏序。反之，若 $\leq$ 是偏序，定义 $x&lt;y\iff x\leq y \land x\neq y$，则 $&lt;$ 反自反且传递。两个构造互逆。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>先证 $\leq$ 是偏序。</p>
+<p>自反：取 $x=y$，由定义即得 $x\leq x$。</p>
+<p>传递：设 $x\leq y$、$y\leq z$。若其中至少一个等号成立，直接代入即得；若两个都是严格不等，用 $&lt;$ 的传递性得 $x&lt;z$，故 $x\leq z$。</p>
+<p>反对称：设 $x\leq y$ 且 $y\leq x$。若 $x\neq y$，则两个关系都必须是严格的，即 $x&lt;y$ 且 $y&lt;x$，由 $&lt;$ 的传递性得 $x&lt;x$，与反自反矛盾。故 $x=y$。</p>
+<p>再证逆构造。</p>
+<p>反自反：若 $x&lt;x$，则 $x\leq x$ 且 $x\neq x$，矛盾。</p>
+<p>传递：设 $x&lt;y$、$y&lt;z$，则 $x\leq y\leq z$，由 $\leq$ 的传递性得 $x\leq z$；又 $x\neq z$，否则由 $x\leq y\leq x$ 与反对称性得 $x=y$，与 $x&lt;y$ 矛盾。故 $x&lt;z$。</p>
+<p>互逆：由 $&lt;$ 造出的 $\leq$ 再取严格部分，恰好还原 $&lt;$，因为 $x\leq y\land x\neq y$ 等价于 $x&lt;y$。反方向同理。</p>
+</div></div>
+
+<div class="math-env env-alarm" id="env-alarm-1"><div class="env-head"><span class="env-name">警示</span><span class="env-num">1</span><span class="env-title">别把两种序混用</span></div><div class="env-body"><p>如果把严格序和偏序用同一个符号 $\leq$ 表示，上面这条命题就退化成恒等式，看起来什么都没说。反过来，如果在一段论证里既用 $x\leq y$ 又用 $x&lt;y$，必须先确认后者是前者的严格部分，而不是另一条独立的关系。</p>
+<p>混用的后果通常不是立刻报错，而是在某一步悄悄用掉了反对称或自反性，事后无法追溯。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-6"><div class="env-head"><span class="env-name">注记</span><span class="env-num">6</span><span class="env-title">准序为什么值得单独留名</span></div><div class="env-body"><p>准序（自反 + 传递）加上反对称就是偏序，加上对称就是等价关系。换言之，偏序与等价关系都是准序的特例，区别只在于补哪一条。</p>
+<p>这个视角在构造商结构时好用：先给一个准序，再把「互相可达」的元素粘成等价类，商集上自然落下一个偏序。这一步本节没有展开，但它是后面把准序化成偏序的标准手法。</p>
+</div></div>
+
+<p>书上把严格序的处理放进练习 1.1，正文只说「三条公理可以用 $&lt;$ 重述」。我把它写全，因为 1.17 的引理要用严格序说话，那里若手里只有一个模糊的「$&lt;$」，证明读起来会卡。</p>
+<p>定义放在例子之后，最大的隐患是读者以为三条公理是从例子里「归纳」出来的。归纳不出公理，只能归纳出候选，公理是刻画。她用一个练习把这个疑问摊开。</p>
+<div class="math-env env-exercise" id="exo-independent"><div class="env-head"><span class="env-name">练习</span><span class="env-num">1</span><span class="env-title">三公理的独立性</span></div><div class="env-body"><p>逐条验证三条公理彼此不能推出：</p>
+<ol>
+<li>去掉自反：在 $\{1,2\}$ 上取关系 $\{(1,2)\}$。它传递且反对称，但 $1\not\leq 1$。</li>
+<li>去掉传递：在 $\{1,2,3\}$ 上取 $\{(1,1),(2,2),(3,3),(1,2),(2,3)\}$。自反、反对称，但 $1\leq 2$ 且 $2\leq 3$ 而 $1\not\leq 3$。</li>
+<li>去掉反对称：在 $\mathbb{Z}$ 上定义 $x\preceq y\iff |x|\leq|y|$。自反、传递，但 $1\preceq-1$ 且 $-1\preceq 1$，而 $1\neq-1$。</li>
+</ol>
+</div></div>
+
+<p>三个反例都很小，小到可以当场验算。选小反例是有讲究的：反例一旦大了，读者就得先信任构造，反而证明不了公理的必要性。</p>
+<h2 id="六、保持结构"><a href="#六、保持结构" class="headerlink" title="六、保持结构"></a>六、保持结构</h2><p>两个偏序集什么时候算「一样」？这是本节最后一个问题，也是全章后续所有构造的判据。</p>
+<div class="math-env env-definition" id="def-iso"><div class="env-head"><span class="env-name">定义</span><span class="env-num">6</span><span class="env-title">序同构</span></div><div class="env-body"><p>设 $(P,\leq_P)$ 与 $(Q,\leq_Q)$ 为偏序集。称映射 $\varphi:P\to Q$ 为<strong>序同构</strong>，若 $\varphi$ 是满射，且对任意 $x,y\in P$ 有</p>
+<p>$$
+
+x\leq_P y \iff \varphi(x)\leq_Q \varphi(y).
+
+$$</p>
+<p>两个偏序集称为序同构的，记 $P\cong Q$，若它们之间存在序同构。</p>
+</div></div>
+
+<p>这里刻意只要求满射，不要求单射。单射是结论，不是条件。</p>
+<div class="math-env env-proposition" id="prop-iso"><div class="env-head"><span class="env-name">命题</span><span class="env-num">2</span><span class="env-title">序同构必为双射</span></div><div class="env-body"><p>若 $\varphi:P\to Q$ 是序同构，则 $\varphi$ 是单射，从而是双射。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi(x)=\varphi(y)$。由 $(Q,\leq_Q)$ 的自反性，$\varphi(x)\leq_Q\varphi(y)$ 且 $\varphi(y)\leq_Q\varphi(x)$。由同构条件反向读，得 $x\leq_P y$ 且 $y\leq_P x$。再由 $(P,\leq_P)$ 的反对称性得 $x=y$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-7"><div class="env-head"><span class="env-name">注记</span><span class="env-num">7</span><span class="env-title">为什么这个证明值得记</span></div><div class="env-body"><p>三步全部落在公理上：自反性提供前提，同构条件负责搬运，反对称性负责收口。三个条件各用一次，不多不少。</p>
+<p>这也是反对称性第一次显出不可替代的作用——它保证「互相不小于」这件事足以判定相等。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-7"><div class="env-head"><span class="env-name">例</span><span class="env-num">7</span><span class="env-title">双射未必同构</span></div><div class="env-body"><p>取 $P=Q=\mathbf{2}=\{0,1\}$，定义 $\varphi(0)=1$，$\varphi(1)=0$。这是双射，但 $0&lt;1$ 而 $\varphi(0)&gt;\varphi(1)$，所以它不是序同构。</p>
+</div></div>
+
+<p>这个例子小得几乎没内容，但它的位置很要紧：它把「双射」和「同构」切开。同构要求的是关系被完整搬运，不是元素个数相等。后面 1.34 会把这条界线再拉宽一次——保序、嵌入、同构三档，本质区别都在这条线上。</p>
+<h2 id="七、序从哪儿来"><a href="#七、序从哪儿来" class="headerlink" title="七、序从哪儿来"></a>七、序从哪儿来</h2><p>第二节到第六节都在数学内部打转。第七节整节换方向：不讲定理，只讲序在哪些地方出现。作者在开头就把话说白了——这一节的目的只是给一点动机，其中大部分内容后面不会直接用到。</p>
+<p>这句坦白值得记。多数教材的「应用」章是装饰，读者也当装饰读；这本书承认它是装饰，却仍然写，因为序论的问题确实从这些地方来。</p>
+<p>第一组例子来自社会科学与人文。</p>
+<p><strong>区间序。</strong> 集合 $X$ 上的序称为区间序，若存在映射 $\varphi$ 把 $X$ 的点送到 $\mathbb{R}$ 的子区间，使得 $x&lt;y$ 时 $\varphi(x)$ 的右端点小于 $\varphi(y)$ 的左端点。考古地层里陶器样式的出现时段、物种的存续时间，都是这种序。还有一个变体要求所有区间等长，对应的是测量本身不精确的情形。</p>
+<p><strong>社会选择。</strong> 有 $m$ 个对象、$n$ 个人，每人给出一个链（自己的排序）。如何合成一个链，使它最好地反映集体偏好？把 $n$ 元排序组映成一个排序的函数叫社会选择函数。Arrow 定理说：有一组非常自然的准则，彼此互不相容。这个悖论式的结论引出了整片社会选择理论。</p>
+<p><strong>调度。</strong> 装配汽车时某些工序必须先于另一些，会议排程里某些报告必须先讲。这类问题的计算复杂度，关键取决于描述优先约束的那个序关系。</p>
+<p><strong>分类。</strong> 浅的一层是行星按距日排列这样的列表；深的一层是概念分析——给定对象集与属性集，造出一个序集，把层级、分组、依赖都显出来。第三章讲这个。</p>
+<div class="math-env env-remark" id="env-remark-8"><div class="env-head"><span class="env-name">注记</span><span class="env-num">8</span><span class="env-title">应用制造问题，不提供工具</span></div><div class="env-body"><p>这四个例子的共同点不是「都用了格论」。它们各自逼出了一种特殊的序：区间序、偏好聚合、优先序、概念格。这些特殊类型后来都成了序论自己的研究对象。</p>
+<p>所以应用与理论的关系，大概不是「理论给应用提供工具」，而是反过来：应用不断制造新的结构，理论被迫去描述它们。这本书把这一节放在定义之后、图之前，位置选得很准——读者刚学会定义，正需要知道定义管什么用；但若放在最前面，又会被当成动机空话。</p>
+</div></div>
+
+<p>第二组例子来自计算机科学。这一组的统一说法是「信息序」：关系 $\geq$ 表达的是「至少和……一样有信息」，具体含义随语境变。</p>
+<p>先把计算这件事说清楚。程序取输入、给输出；输入输出来自各种数据类型；<strong>状态</strong>是对程序变量的取值指派。程序终止，就是把执行前的状态变成执行后的状态。计算往往一步步进行，每一步多得到一点信息；不终止，就是只输出有限的信息。若从同一初始状态出发每次都停在同一个终态，程序是确定性的；若规范允许多个合法解，就会出现非确定性——比如求满足 $y^2=x$ 的整数 $y$，从 $x=9$ 出发可以停在 $y=3$，也可以停在 $y=-3$。</p>
+<div class="math-env env-example" id="env-example-8"><div class="env-head"><span class="env-name">例</span><span class="env-num">8</span><span class="env-title">二进制串</span></div><div class="env-body"><p>设 $\Sigma^{*}$ 为全体有限二进制串（含空串），$\Sigma^{**}$ 为再加上无限串之后的全体。定义</p>
+<p>$$
+
+u\leq v \iff u=v \text{ 或 } u \text{ 是 } v \text{ 的有限前缀}.
+
+$$</p>
+<p>则 $(\Sigma^{**},\leq)$ 是偏序集。例如</p>
+<p>$$
+
+0100&lt;010011,\qquad 010\parallel 100,\qquad 10101&lt;101010\cdots
+
+$$</p>
+<p>最后一个是无限交替串。</p>
+<p>串可以看作二进制编码的信息：越长，信息越多。给定 $v$，满足 $u&lt;v$ 的 $u$ 是 $v$ 的近似。任一无限串都是它的有限前缀的极限——「极限」这个词这里只是说法，要到第八章才有确切含义。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-9"><div class="env-head"><span class="env-name">例</span><span class="env-num">9</span><span class="env-title">偏映射</span></div><div class="env-body"><p>设 $X,Y$ 非空。从 $X$ 到 $Y$ 的<strong>偏映射</strong>是映射 $\sigma:S\to Y$，其中 $S=\operatorname{dom}\sigma\subseteq X$，允许 $S=\varnothing$。全体偏映射记为 $(X\rightharpoonup Y)$。定义</p>
+<p>$$
+
+\sigma\leq\tau \iff \operatorname{dom}\sigma\subseteq\operatorname{dom}\tau
+\ \text{且}\ \sigma(x)=\tau(x)\ (\forall x\in\operatorname{dom}\sigma),
+
+$$</p>
+<p>等价地，$\operatorname{graph}\sigma\subseteq\operatorname{graph}\tau$。</p>
+<p>若 $\operatorname{dom}\sigma=X$，称 $\sigma$ 为全映射。子集 $F\subseteq(X\rightharpoonup Y)$ 称为<strong>一致的</strong>，若对任意有限 $G\subseteq F$，都存在 $\rho\in(X\rightharpoonup Y)$（不必属于 $F$）使 $\sigma\leq\rho$ 对所有 $\sigma\in G$ 成立。只要 $F$ 一致，就存在全映射 $f:X\to Y$ 使 $\sigma\leq f$ 对所有 $\sigma\in F$ 成立。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-9"><div class="env-head"><span class="env-name">注记</span><span class="env-num">9</span><span class="env-title">一致性是一条紧致性</span></div><div class="env-body"><p>「任意有限子族相容，则整族相容」——这个形状后面会一再出现。它在这里是显然的：逐个 $x$ 看，所有覆盖 $x$ 的 $\sigma$ 必须给出同一个值，否则取两个这样的 $\sigma$ 就构成不相容的有限子族。</p>
+<p>第九章会把它抬到 domain 的层面，那时它不再是显然的，而是一条要证的性质。这一节只把它记下来。</p>
+</div></div>
+
+<p>有了偏映射的序，就能比较程序。设 $P,Q$ 从同一初始状态集出发、终态集相同，都是确定性但未必终止的程序，对应偏映射 $\sigma_P,\sigma_Q$。若 $\sigma_P\leq\sigma_Q$，则 $P$ 能终止的输入 $Q$ 都能终止，且终态相同；此外 $Q$ 还可能在 $P$ 不终止的输入上终止。也就是说 $Q$ 至少做到了 $P$ 做到的。非确定性程序也照此定义，称 $Q$ <strong>精化</strong> $P$，记 $P\sqsubseteq Q$。精化的典型场景是 while 循环逐步展开，展开可能把非确定性程序变成确定性程序，也可能让原本不终止的程序多终止一些。</p>
+<div class="math-env env-example" id="env-example-10"><div class="env-head"><span class="env-name">例</span><span class="env-num">10</span><span class="env-title">实数区间</span></div><div class="env-body"><p>把某个量算到小数点后两位等于 $1.35$，这句话可以改写成「该量落在某个区间里」。于是可以把全体区间</p>
+<p>$$
+
+P=\{[\underline{x},\overline{x}]\mid -\infty\leq\underline{x}\leq\overline{x}\leq\infty\}
+
+$$</p>
+<p>当作实数近似的集合，区间越小，界越紧，信息越多。定义</p>
+<p>$$
+
+x\leq y \iff \underline{x}\leq\underline{y}\ \text{且}\ \overline{y}\leq\overline{x},
+
+$$</p>
+<p>即 $y$ 作为区间包含在 $x$ 里。单点区间 $\underline{x}=\overline{x}$ 对应精确值。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-10"><div class="env-head"><span class="env-name">注记</span><span class="env-num">10</span><span class="env-title">三个例子的统一</span></div><div class="env-body"><p>1.9 到 1.11 的序都在说同一件事：$x\leq y$ 表示 $y$ 比 $x$ 更确定、更完全。每个例子里都有「全对象」——无限串、全映射、单点区间。全对象都是偏对象的极限，而偏对象中有一类可以称为有限的：有限串、定义域有限的偏映射、端点有理的区间。</p>
+<p>「有限对象编码有限信息」这句话，看起来是同义反复，其实是后面 domain 理论的入口。</p>
+</div></div>
+
+<div class="math-env env-alarm" id="env-alarm-2"><div class="env-head"><span class="env-name">警示</span><span class="env-num">2</span><span class="env-title">这里的「上」不是「多」</span></div><div class="env-body"><p>信息序里 $\perp$ 在底，表示没有信息；越往上信息越多；$\top$ 表示信息过度确定，即矛盾。这和「大 &#x3D; 好」的直觉一致，但和「大 &#x3D; 多」不一致：这里「大」是「更确定」。</p>
+<p>读后面章节时，看到 $x\leq y$，先问一句这是哪一种序。若把信息序当大小序读，$\perp$ 会被当成最小元而不是「未知」，所有关于极限的论证都会反过来。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-11"><div class="env-head"><span class="env-name">注记</span><span class="env-num">11</span><span class="env-title">语义域</span></div><div class="env-body"><p>计算机科学里贯穿这些例子的概念是<strong>语义域</strong>：一个数学结构，用来描述、分析、推理数据类型、程序、规范的行为。这个词在这里用得宽；到第九章，「domain」会变成有确切定义的一类特殊偏序集——其中某些元素视为部分的、未完全确定的，每个元素都要求是一族指定为「有限」的元素的极限。1.9 与 1.10 的序集都是这种意义下的 domain，1.11 是同类但更一般的结构。</p>
+<p>还可以换一个角度看：domain 的元素由关于它们的断言决定，用信息 token 的集合来建模。这个视角通向信息系统的表述。</p>
+<p>程序语义有两条路。操作语义把程序看成它在（理想化的）机器上执行的动作；指称语义只关心程序做什么，不关心怎么执行，程序用函数或关系表示，可以脱离实现细节来研究。第八、九章讲的不动点与 domain，主要是为指称语义服务：递归定义（如 $\mathrm{fact}(k)=k\cdot\mathrm{fact}(k-1)$，$\mathrm{fact}(0)=1$）要在某个数学框架里保证有解，这个框架就是带序的 domain 加不动点定理。</p>
+</div></div>
+
+<h2 id="八、把序画出来"><a href="#八、把序画出来" class="headerlink" title="八、把序画出来"></a>八、把序画出来</h2><p>前面七节全是文字。这一节把偏序集变成图。作者的说法是，图是这本书的性格所在——有限情形下序可以「画出来」，而画得好不好，直接决定读者能不能看出定理。</p>
+<p>要画图，先要知道哪些关系非画不可。</p>
+<div class="math-env env-definition" id="def-cover"><div class="env-head"><span class="env-name">定义</span><span class="env-num">7</span><span class="env-title">覆盖</span></div><div class="env-body"><p>设 $P$ 为偏序集，$x,y\in P$。称 $x$ 被 $y$ <strong>覆盖</strong>（或 $y$ 覆盖 $x$），记 $x\prec y$，若 $x&lt;y$ 且不存在 $z\in P$ 使 $x&lt;z&lt;y$。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-11"><div class="env-head"><span class="env-name">例</span><span class="env-num">11</span><span class="env-title">三处覆盖关系</span></div><div class="env-body"><ul>
+<li>在链 $\mathbb{N}$ 中，$m\prec n$ 当且仅当 $n=m+1$。</li>
+<li>在 $\mathbb{R}$ 中没有任何覆盖对：任给 $x&lt;y$，中点 $(x+y)/2$ 严格夹在中间。</li>
+<li>在 $\mathcal{P}(X)$ 中，$A\prec B$ 当且仅当 $B=A\cup\{b\}$，其中 $b\in X\setminus A$。</li>
+</ul>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-12"><div class="env-head"><span class="env-name">注记</span><span class="env-num">12</span><span class="env-title">有限与无限的分界</span></div><div class="env-body"><p>$P$ 有限时，$x&lt;y$ 当且仅当存在覆盖链 $x=x_0\prec x_1\prec\cdots\prec x_n=y$。所以有限情形下，覆盖关系完全决定序关系。</p>
+<p>无限情形不成立。$\mathbb{R}$ 的覆盖关系是空的，空关系什么也没决定。这句话解释了为什么下一段的画图法只对有限集定义：不是图不够大，是覆盖关系本身没信息。</p>
+</div></div>
+
+<div class="math-env env-algorithm" id="env-algorithm-1"><div class="env-head"><span class="env-name">算法</span><span class="env-num">1</span><span class="env-title">画 Hasse 图</span></div><div class="env-body"><p>设 $P$ 为有限偏序集。</p>
+<ol>
+<li>给每个 $x\in P$ 指定平面一点 $p(x)$，在该点画一个小圆圈。</li>
+<li>对每个覆盖对 $x\prec y$，在 $p(x)$ 与 $p(y)$ 的圆圈之间连一条线段。</li>
+<li>上述指定要满足：<ul>
+<li>（a）若 $x\prec y$，则 $p(x)$ 比 $p(y)$ 低（第二坐标严格更小）；</li>
+<li>（b）若 $z\neq x$ 且 $z\neq y$，则 $p(z)$ 处的圆圈不与连接 $x,y$ 的线段相交。</li>
+</ul>
+</li>
+</ol>
+<p>满足三条的图形称为 $P$ 的<strong>图</strong>（Hasse 图）。条件（3）可以对 $|P|$ 归纳证明总能做到。</p>
+</div></div>
+
+<div class="math-env env-alarm" id="env-alarm-3"><div class="env-head"><span class="env-name">警示</span><span class="env-num">3</span><span class="env-title">两种不合法的图</span></div><div class="env-body"><p>图 1.1(ii) 给了两个反例。第一个把 $a&lt;c$ 画成 $a$ 在上，违反（a）；第二个让线段穿过第三个点的圆圈，违反（b）。</p>
+<p>这两种错误的共同点是：图看上去仍然像图，只是读出来的序不对。（a）被违反时，读者会把 $x&lt;y$ 读成 $y&lt;x$；（b）被违反时，读者会读出一个不存在的覆盖关系，进而读出不存在的序关系。图画错了不会报错，只会让人得出错误结论。</p>
+</div></div>
+
+<p>图上判序的规则只有一条：$x&lt;y$ 当且仅当从 $x$ 出发，沿线段一路向上能走到 $y$。这条规则之所以成立，靠的是覆盖链能把任何 $x&lt;y$ 串起来——又是有限性。</p>
+<div class="math-env env-lemma" id="lem-cover"><div class="env-head"><span class="env-name">引理</span><span class="env-num">1</span><span class="env-title">双射保持覆盖即同构</span></div><div class="env-body"><p>设 $P,Q$ 为有限偏序集，$\varphi:P\to Q$ 为双射。则以下三条等价：</p>
+<ol>
+<li>$\varphi$ 是序同构；</li>
+<li>$x&lt;y$ 在 $P$ 中成立当且仅当 $\varphi(x)&lt;\varphi(y)$ 在 $Q$ 中成立；</li>
+<li>$x\prec y$ 在 $P$ 中成立当且仅当 $\varphi(x)\prec\varphi(y)$ 在 $Q$ 中成立。</li>
+</ol>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）与（2）的等价直接来自定义。</p>
+<p>设（2）成立，取 $x\prec y$。则 $x&lt;y$，故 $\varphi(x)&lt;\varphi(y)$。若存在 $w\in Q$ 使 $\varphi(x)&lt;w&lt;\varphi(y)$，由 $\varphi$ 满，取 $u\in P$ 使 $w=\varphi(u)$；由（2）反向读得 $x&lt;u&lt;y$，与 $x\prec y$ 矛盾。故 $\varphi(x)\prec\varphi(y)$。反方向同理，故（3）成立。</p>
+<p>设（3）成立，取 $x&lt;y$。由有限性，存在覆盖链 $x=x_0\prec x_1\prec\cdots\prec x_n=y$。由（3），$\varphi(x)=\varphi(x_0)\prec\varphi(x_1)\prec\cdots\prec\varphi(x_n)=\varphi(y)$，故 $\varphi(x)&lt;\varphi(y)$。反方向同理，用 $\varphi$ 满把 $Q$ 中的覆盖链拉回 $P$。故（2）成立。</p>
+</div></div>
+
+<div class="math-env env-proposition" id="prop-diagram"><div class="env-head"><span class="env-name">命题</span><span class="env-num">3</span><span class="env-title">同构即同图</span></div><div class="env-body"><p>两个有限偏序集 $P,Q$ 序同构，当且仅当它们能画成同一张图。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi:P\to Q$ 为序同构。图由覆盖关系决定，而由上面的引理（1）$\Rightarrow$（3），$\varphi$ 保持覆盖关系，故同一张图可以同时表示 $P$ 和 $Q$。</p>
+<p>反之，设 $P,Q$ 都能用图 $D$ 表示，即有双射 $f:P\to D$、$g:Q\to D$（这里 $D$ 指图的点集）。则 $\varphi=g^{-1}\circ f$ 是双射，且保持覆盖关系，由引理（3）$\Rightarrow$（1）知 $\varphi$ 是序同构。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-13"><div class="env-head"><span class="env-name">注记</span><span class="env-num">13</span><span class="env-title">我在这一节停了一下</span></div><div class="env-body"><p>引理的（2）$\Rightarrow$（3）只用了 $\varphi$ 满，（3）$\Rightarrow$（2）用了有限性：把 $x&lt;y$ 拆成覆盖链。这一步不能省。取 $P=Q=\mathbb{R}$，覆盖关系是空的，任何双射都满足（3），但显然不必是同构——例如把 $0$ 与 $1$ 互换、其余不动的那个双射。</p>
+<p>所以「有限」不是技术性假设，而是这条引理成立的前提。书上只说 finite ordered sets，没解释为什么；我读到这里把反例补上了，才算真信。</p>
+<p>这张图还解释了另一件事：图的合法性之所以能当证明用，全靠在 $P$ 到 $Q$ 之间架一座覆盖关系的桥。没有这个命题，「两个图画得一样所以两个序集同构」只是一句观察，不构成论证。</p>
+</div></div>
+
+<h2 id="九、造与拆"><a href="#九、造与拆" class="headerlink" title="九、造与拆"></a>九、造与拆</h2><p>这一节是工具箱：从已有的偏序集造新的。反过来说，也用这些构造把复杂的偏序集拆成简单部件。作者在开头就说明，凡提到图，都默认有限。</p>
+<p>第一个构造最简单：把序翻过来。</p>
+<div class="math-env env-definition" id="def-dual"><div class="env-head"><span class="env-name">定义</span><span class="env-num">8</span><span class="env-title">对偶</span></div><div class="env-body"><p>设 $P$ 为偏序集。在同一个集合上定义 $x\leq y$ 在 $P^{\partial}$ 中成立当且仅当 $y\leq x$ 在 $P$ 中成立，称 $P^{\partial}$ 为 $P$ 的<strong>对偶</strong>。$P$ 有限时，$P^{\partial}$ 的图由 $P$ 的图上下翻转得到。</p>
+</div></div>
+
+<div class="math-env env-metatheorem" id="meta-dual"><div class="env-head"><span class="env-name">元定理</span><span class="env-num">1</span><span class="env-title">对偶原理</span></div><div class="env-body"><p>设 $\Phi$ 是关于偏序集的陈述，且 $\Phi$ 在所有偏序集中成立。把 $\Phi$ 中每个 $\leq$ 换成 $\geq$（相应地 $\geq$ 换成 $\leq$）得到对偶陈述 $\Phi^{\partial}$，则 $\Phi^{\partial}$ 也在所有偏序集中成立。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-14"><div class="env-head"><span class="env-name">注记</span><span class="env-num">14</span><span class="env-title">一个定理两个版本</span></div><div class="env-body"><p>证明是平凡的：把 $\Phi$ 用在 $P^{\partial}$ 上，读回来就是 $\Phi^{\partial}$ 在 $P$ 上成立。但用处不小——底与顶、极大与极小、下集与上集、$\prec$ 与 $\succ$，全都是成对出现的概念，证了一半就等于证了另一半。</p>
+<p>要注意的是，$\Phi^{\partial}$ 必须是把所有序符号一起翻转得到的句子。只翻一半的句子没有对偶版本，比如「$x\leq y$ 且 $x\neq y$」这种混着等号的表述，翻转后要重新核一遍。</p>
+</div></div>
+
+<div class="math-env env-definition" id="def-bot"><div class="env-head"><span class="env-name">定义</span><span class="env-num">9</span><span class="env-title">底与顶</span></div><div class="env-body"><p>设 $P$ 为偏序集。若存在 $\perp\in P$ 使 $\perp\leq x$ 对一切 $x\in P$ 成立，称 $\perp$ 为 $P$ 的<strong>底</strong>。对偶地，若存在 $\top\in P$ 使 $x\leq\top$ 对一切 $x\in P$ 成立，称 $\top$ 为 $P$ 的<strong>顶</strong>。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-12"><div class="env-head"><span class="env-name">例</span><span class="env-num">12</span><span class="env-title">底与顶的存在性</span></div><div class="env-body"><ul>
+<li>在 $\mathcal{P}(X)$ 中，$\perp=\varnothing$，$\top=X$。</li>
+<li>有限链有底有顶；无限链未必。$\mathbb{N}$ 有底 $1$，无顶；$\mathbb{Z}$ 既无底也无顶。</li>
+<li>多于一个元素的反链，既无底也无顶。</li>
+</ul>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-15"><div class="env-head"><span class="env-name">注记</span><span class="env-num">15</span><span class="env-title">信息序里的底与顶</span></div><div class="env-body"><p>在信息序里，$\perp$ 表示「没有信息」，$\top$ 表示信息过度确定，即矛盾。1.9 到 1.11 的序集都没有顶（唯一的例外是 $X$ 只有一个元素时的 $(X\rightharpoonup Y)$），但都有底：空串、定义域为空的偏映射、$[-\infty,\infty]$。</p>
+<p>书上有一句话说得直白：计算机科学家通常选择有底、无顶的模型。底用来表示不终止，顶表示矛盾，程序语义里两样都要能说，但只有前者需要存在。</p>
+</div></div>
+
+<div class="math-env env-definition" id="def-lift"><div class="env-head"><span class="env-name">定义</span><span class="env-num">10</span><span class="env-title">提升</span></div><div class="env-body"><p>设 $P$ 为偏序集。取 $0\notin P$，令 $P_{\perp}=P\cup\{0\}$，定义</p>
+<p>$$
+
+x\leq y \iff x=0 \ \text{或}\ x\leq y\ \text{在 } P \text{ 中成立}.
+
+$$</p>
+<p>称 $P_{\perp}$ 为 $P$ 的<strong>提升</strong>。把集合 $S$ 先配成反链 $\overline{S}$ 再提升，所得偏序集称为<strong>平坦</strong>的。</p>
+</div></div>
+
+<p>提升就是给任意偏序集加一个底，集合内部原有的关系一条不动。后面第八、九章几乎所有的结果都要求有底，这个构造因此常用。</p>
+<div class="math-env env-definition" id="def-max"><div class="env-head"><span class="env-name">定义</span><span class="env-num">11</span><span class="env-title">极大与极小</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。称 $a\in Q$ 为 $Q$ 的<strong>极大元</strong>，若 $a\leq x$ 且 $x\in Q$ 蕴含 $a=x$。$Q$ 的极大元全体记为 $\operatorname{Max}Q$。</p>
+<p>若 $Q$ 有顶 $\top_Q$，则 $\operatorname{Max}Q=\{\top_Q\}$，此时称 $\top_Q$ 为 $Q$ 的<strong>最大元</strong>，记 $\max Q$。极小元、最小元 $\min Q$ 对偶定义。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-16"><div class="env-head"><span class="env-name">注记</span><span class="env-num">16</span><span class="env-title">极大不是最大</span></div><div class="env-body"><p>$P_1$ 有三个极大元 $a_1,a_2,a_3$，没有最大元；$P_2$ 有最大元 $a$。区别在于：极大是「没有谁比我大」，最大是「我比谁都大」。前者是局部性质，后者是全局性质。</p>
+<p>几个边界例子值得记住。有限偏序集的任一非空子集必有极大元，且对每个 $x\in P$ 都存在 $y\in\operatorname{Max}P$ 使 $x\leq y$。$\mathbb{N}$ 的子集有极大元当且仅当它有限且非空。$\mathcal{P}(\mathbb{N})$ 中挖掉 $\mathbb{N}$ 本身的子族没有顶，但每个 $\mathbb{N}\setminus\{n\}$ 都是极大元。$\mathbb{N}$ 的全体有限子集构成的子族没有极大元。</p>
+<p>最后那个例子说明：极大元的存在性不是免费的。Zorn 引理在第十章处理它。</p>
+</div></div>
+
+<p>接下来两个构造把两个偏序集拼成一个。</p>
+<div class="math-env env-definition" id="def-sum"><div class="env-head"><span class="env-name">定义</span><span class="env-num">12</span><span class="env-title">和</span></div><div class="env-body"><p>设 $P,Q$ 不交。</p>
+<p><strong>不交并</strong> $P\dot{\cup} Q$：在 $P\cup Q$ 上定义 $x\leq y$ 当且仅当「$x,y\in P$ 且 $x\leq_P y$」或「$x,y\in Q$ 且 $x\leq_Q y$」。图中两个分量并排。</p>
+<p><strong>线性序和</strong> $P\oplus Q$：在 $P\cup Q$ 上定义 $x\leq y$ 当且仅当</p>
+<p>$$
+
+\text{「}x,y\in P,\ x\leq_P y\text{」或「}x,y\in Q,\ x\leq_Q y\text{」或「}x\in P,\ y\in Q\text{」}.
+
+$$</p>
+<p>图中 $P$ 的图放在 $Q$ 的图正下方，再从 $P$ 的每个极大元向 $Q$ 的每个极小元连线段。</p>
+</div></div>
+
+<p>两种运算都满足结合律，因此可以不加括号地写迭代。记 $M_n=\mathbf{1}\oplus\overline{\mathbf{n}}\oplus\mathbf{1}$，即菱形：底、$n$ 个互不可比的中间元、顶。</p>
+<p>提升是线性序和的特例：$P_{\perp}=\mathbf{1}\oplus P$。同理 $P\oplus\mathbf{1}$ 是给 $P$ 加一个新顶。</p>
+<div class="math-env env-definition" id="def-prod"><div class="env-head"><span class="env-name">定义</span><span class="env-num">13</span><span class="env-title">积</span></div><div class="env-body"><p>设 $P_1,\dots,P_n$ 为偏序集。笛卡尔积 $P_1\times\cdots\times P_n$ 上定义<strong>逐坐标序</strong>：</p>
+<p>$$
+
+(x_1,\dots,x_n)\leq(y_1,\dots,y_n)\iff (\forall i)\ x_i\leq y_i.
+
+$$</p>
+<p>$P^n$ 表示 $n$ 重积。另有<strong>字典序</strong>：$(x_1,x_2)\leq(y_1,y_2)$ 当且仅当 $x_1&lt;y_1$，或 $x_1=y_1$ 且 $x_2\leq y_2$。未加说明时，积一律指逐坐标序。</p>
+</div></div>
+
+<div class="math-env env-proposition" id="prop-cube"><div class="env-head"><span class="env-name">命题</span><span class="env-num">4</span><span class="env-title">幂集是立方体</span></div><div class="env-body"><p>设 $X=\{1,\dots,n\}$，定义 $\varphi:\mathcal{P}(X)\to\mathbf{2}^n$ 为 $\varphi(A)=(\varepsilon_1,\dots,\varepsilon_n)$，其中</p>
+<p>$$
+
+\varepsilon_i=\begin{cases}1,&amp; i\in A,\\ 0,&amp; i\notin A.\end{cases}
+
+$$</p>
+<p>则 $\varphi$ 是序同构。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>设 $\varphi(A)=(\varepsilon_i)$，$\varphi(B)=(\delta_i)$。则</p>
+<p>$$
+
+A\subseteq B \iff (\forall i)\ (i\in A\Rightarrow i\in B)
+\iff (\forall i)\ (\varepsilon_i=1\Rightarrow\delta_i=1)
+\iff (\forall i)\ \varepsilon_i\leq\delta_i,
+
+$$</p>
+<p>最后一步用到 $\mathbf{2}$ 中 $0&lt;1$。故 $\varphi$ 保持序且反向也成立。满射：任给 $(\varepsilon_i)\in\mathbf{2}^n$，取 $A=\{i\mid\varepsilon_i=1\}$ 即有 $\varphi(A)=(\varepsilon_i)$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-17"><div class="env-head"><span class="env-name">注记</span><span class="env-num">17</span><span class="env-title">逐坐标还是字典</span></div><div class="env-body"><p>两个偏序集都是链时，逐坐标积一般不再是链：$\mathbf{2}\times\mathbf{2}$ 中 $(0,1)$ 与 $(1,0)$ 不可比。改成字典序，积就是链。</p>
+<p>书上默认逐坐标，字典序只在括号里提一句，练习里才展开。这个取舍有后果：逐坐标积保留了「每个方向各自比较」的信息，是后面分配格、布尔代数的标准构造；字典序把它压成一个方向，只适合当链用。选哪个不是趣味问题，取决于你想让积记住什么。</p>
+</div></div>
+
+<h2 id="十、下集与上集"><a href="#十、下集与上集" class="headerlink" title="十、下集与上集"></a>十、下集与上集</h2><p>这一节引入两个集合族。作者说它们在后面的表示论里居中心地位。读到第五章、第十一章会明白这句话的分量：那里所有对象都要被「下集族」重新表示一遍。</p>
+<div class="math-env env-definition" id="def-down"><div class="env-head"><span class="env-name">定义</span><span class="env-num">14</span><span class="env-title">下集与上集</span></div><div class="env-body"><p>设 $P$ 为偏序集，$Q\subseteq P$。</p>
+<ul>
+<li>若 $x\in Q$、$y\in P$、$y\leq x$ 蕴含 $y\in Q$，称 $Q$ 为<strong>下集</strong>（亦称递减集、序理想）。</li>
+<li>对偶地，若 $x\in Q$、$y\in P$、$y\geq x$ 蕴含 $y\in Q$，称 $Q$ 为<strong>上集</strong>（亦称递增集、序滤子）。</li>
+</ul>
+<p>对任意 $Q\subseteq P$ 与 $x\in P$，定义</p>
+<p>$$
+
+{\downarrow}Q=\{y\in P\mid (\exists x\in Q)\ y\leq x\},\qquad
+{\downarrow}x=\{y\in P\mid y\leq x\},
+
+$$</p>
+<p>以及 ${\uparrow}Q$、${\uparrow}x$ 的对偶定义。形如 ${\downarrow}x$ 的下集称为<strong>主下集</strong>。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-18"><div class="env-head"><span class="env-name">注记</span><span class="env-num">18</span><span class="env-title">术语与最小性</span></div><div class="env-body"><p>下集就是「向下封闭」的集合：进来一个元素，它下面的一律跟着进来。${\downarrow}Q$ 是包含 $Q$ 的最小下集，且 $Q$ 是下集当且仅当 $Q={\downarrow}Q$。</p>
+<p>术语不统一：decreasing set、order ideal、down-set 三种说法都有人用，上集那边同样。读文献时先看定义再对名字，别靠名字猜。</p>
+</div></div>
+
+<div class="math-env env-definition" id="def-OP"><div class="env-head"><span class="env-name">定义</span><span class="env-num">15</span><span class="env-title">下集族 O(P)</span></div><div class="env-body"><p>设 $P$ 为偏序集。全体下集构成的族记为 $O(P)$，按包含关系成为一个偏序集。字母 $O$ 来自 order ideal。</p>
+<p>$P$ 有限时，每个非空下集 $Q$ 都可以写成</p>
+<p>$$
+
+Q=\bigcup_{x\in\operatorname{Max}Q}{\downarrow}x,
+
+$$</p>
+<p>其中 $\operatorname{Max}Q$ 是反链。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-13"><div class="env-head"><span class="env-name">例</span><span class="env-num">13</span><span class="env-title">几组下集</span></div><div class="env-body"><p>取图 1.1(iii) 中的偏序集（元素 $a,b,c,d,e,f,g$，$a$ 在底，$f,g$ 在顶）。</p>
+<ul>
+<li>$\{c\}$、$\{a,b,c,d,e\}$、$\{a,b,d,f\}$ 都是下集。</li>
+<li>$\{b,d,e\}$ 不是下集，因为 $e$ 下面还有 $c$；实际上 ${\downarrow}\{b,d,e\}=\{a,b,c,d,e\}$。</li>
+<li>$\{e,f,g\}$ 是上集，$\{a,b,d,f\}$ 不是上集。</li>
+</ul>
+<p>三类特殊情形：</p>
+<ul>
+<li>$P$ 是反链时，$O(P)=\mathcal{P}(P)$，因为任何子集都向下封闭。</li>
+<li>$P$ 是链 $\mathbf{n}$ 时，$O(P)$ 由 $\varnothing,{\downarrow}0,\dots,{\downarrow}(n-1)$ 组成，是 $n+1$ 元链。</li>
+<li>$P$ 是有理数链 $\mathbb{Q}$ 时，$O(P)$ 除 $\varnothing$、$\mathbb{Q}$、各 ${\downarrow}x$ 外，还含 ${\downarrow}x\setminus\{x\}$（$x\in\mathbb{Q}$）与 $\{y\in\mathbb{Q}\mid y&lt;a\}$（$a\in\mathbb{R}\setminus\mathbb{Q}$）。最后这一族说明：下集可以没有最大元，因此不能都写成主下集。</li>
+</ul>
+</div></div>
+
+<div class="math-env env-lemma" id="lem-down"><div class="env-head"><span class="env-name">引理</span><span class="env-num">2</span><span class="env-title">序编码进下集族</span></div><div class="env-body"><p>设 $P$ 为偏序集，$x,y\in P$。则以下三条等价：</p>
+<ol>
+<li>$x\leq y$；</li>
+<li>${\downarrow}x\subseteq{\downarrow}y$；</li>
+<li>对每个 $Q\in O(P)$，$y\in Q$ 蕴含 $x\in Q$。</li>
+</ol>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）$\Rightarrow$（2）：设 $z\in{\downarrow}x$，则 $z\leq x\leq y$，故 $z\in{\downarrow}y$。</p>
+<p>（2）$\Rightarrow$（3）：设 $Q$ 为下集且 $y\in Q$。由（2）与 $x\in{\downarrow}x$ 得 $x\in{\downarrow}y$，即 $x\leq y$；再由 $Q$ 向下封闭得 $x\in Q$。</p>
+<p>（3）$\Rightarrow$（1）：取 $Q={\downarrow}y$。它显然是下集，且 $y\in{\downarrow}y$，故由（3）得 $x\in{\downarrow}y$，即 $x\leq y$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-19"><div class="env-head"><span class="env-name">注记</span><span class="env-num">19</span><span class="env-title">表示论的第一个动作</span></div><div class="env-body"><p>这条引理把「元素之间的序」翻译成「下集之间的包含」，又把后者翻译成「所有下集对两个元素的判定一致」。三层是同一件事。</p>
+<p>翻译完成之后，$P$ 的每个元素都可以用 ${\downarrow}x$ 代替，而 ${\downarrow}x$ 是 $O(P)$ 的元素。于是 $P$ 被塞进了 $O(P)$，塞法是 $x\mapsto{\downarrow}x$。1.35 会把这个映射正式命名为序嵌入。</p>
+<p>后面第五章说有限分配格同构于某个 $O(P)$，第十一章说一般分配格同构于某个 Priestley 空间的紧开下集族——都是这条引理的后代。</p>
+</div></div>
+
+<div class="math-env env-proposition" id="prop-comp"><div class="env-head"><span class="env-name">命题</span><span class="env-num">5</span><span class="env-title">补集与对偶</span></div><div class="env-body"><p>设 $P$ 为偏序集。</p>
+<ol>
+<li>$Q$ 是 $P$ 的下集，当且仅当 $P\setminus Q$ 是 $P$ 的上集，也当且仅当 $P\setminus Q$ 是 $P^{\partial}$ 的下集。</li>
+<li>$O(P)^{\partial}\cong O(P^{\partial})$，同构由补映射给出。</li>
+</ol>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>第一条直接由定义对偶读出。第二条：对子集 $A,B\subseteq P$，$A\subseteq B$ 当且仅当 $P\setminus A\supseteq P\setminus B$，故补映射把包含序反过来，且把 $O(P)$ 双射到 $O(P^{\partial})$，因而是序同构。</p>
+</div></div>
+
+<div class="math-env env-proposition" id="prop-O-sum"><div class="env-head"><span class="env-name">命题</span><span class="env-num">6</span><span class="env-title">O 与和、积</span></div><div class="env-body"><p>设 $P,P_1,P_2$ 为偏序集。则</p>
+<ol>
+<li>$O(P\oplus\mathbf{1})\cong O(P)\oplus\mathbf{1}$，且 $O(\mathbf{1}\oplus P)\cong\mathbf{1}\oplus O(P)$；</li>
+<li>$O(P_1\dot{\cup} P_2)\cong O(P_1)\times O(P_2)$。</li>
+</ol>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>（1）$P\oplus\mathbf{1}$ 的下集，要么是 $P$ 的下集，要么是 $P\oplus\mathbf{1}$ 全体；在 $O(P)\oplus\mathbf{1}$ 中，前者恰好是下层，后者是新顶。$\mathbf{1}\oplus P$ 的下集，要么是空集，要么是 $P$ 的某个下集并上新加的最小元；这恰好对应 $\mathbf{1}\oplus O(P)$。</p>
+<p>（2）映射 $U\mapsto(U\cap P_1,U\cap P_2)$ 从 $O(P_1\dot{\cup} P_2)$ 到 $O(P_1)\times O(P_2)$。它是双射：逆映射把 $(U_1,U_2)$ 送到 $U_1\cup U_2$，而下集在不交并里的限制仍是下集。两个方向都保持序，故为序同构。</p>
+</div></div>
+
+<div class="math-env env-exercise" id="exo-363"><div class="env-head"><span class="env-name">练习</span><span class="env-num">2</span><span class="env-title">算一个下集族的阶</span></div><div class="env-body"><p>设 $P=\mathbf{1}\oplus(\overline{\mathbf{2}}\dot{\cup}\overline{\mathbf{3}})\oplus\mathbf{1}$。用上面的两条命题求 $O(P)$ 的同构型，并算出 $|O(P)|$。</p>
+</div></div>
+
+<div class="math-env env-answer" id="env-answer-1"><div class="env-head"><span class="env-name">回答</span><span class="env-num">1</span></div><div class="env-body"><p>记 $Q=\overline{\mathbf{2}}\dot{\cup}\overline{\mathbf{3}}$。由命题（2），$O(Q)\cong O(\overline{\mathbf{2}})\times O(\overline{\mathbf{3}})=\mathbf{2}^2\times\mathbf{2}^3=\mathbf{2}^5$，共 $32$ 元。</p>
+<p>由命题（1），$O(\mathbf{1}\oplus Q)\cong\mathbf{1}\oplus O(Q)=\mathbf{1}\oplus\mathbf{2}^5$。再用一次（1），</p>
+<p>$$
+
+O(P)=O\bigl((\mathbf{1}\oplus Q)\oplus\mathbf{1}\bigr)\cong O(\mathbf{1}\oplus Q)\oplus\mathbf{1}\cong\mathbf{1}\oplus\mathbf{2}^5\oplus\mathbf{1},
+
+$$</p>
+<p>故 $|O(P)|=1+32+1=34$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-20"><div class="env-head"><span class="env-name">注记</span><span class="env-num">20</span><span class="env-title">结构对应比枚举值钱</span></div><div class="env-body"><p>两个命题都在说同一件事：$O$ 把「和」翻译成「和与积」，并且挪动底与顶的位置。有了这套翻译，书上 1.33 那个 363 不必画图、不必枚举，几步就能算出来。</p>
+<p>这就是表示论的基本手法——不去数对象，去数对象的构造。第五章会把这条思路推到「有限分配格都是某个 $O(P)$」，那时本节的所有命题都会变成定理的零件。</p>
+</div></div>
+
+<h2 id="十一、保序映射"><a href="#十一、保序映射" class="headerlink" title="十一、保序映射"></a>十一、保序映射</h2><p>前面只用了同构这一种映射。这一节放宽要求，最后落到一句范畴论式的总结。</p>
+<div class="math-env env-definition" id="def-mono"><div class="env-head"><span class="env-name">定义</span><span class="env-num">16</span><span class="env-title">保序映射、嵌入、同构</span></div><div class="env-body"><p>设 $P,Q$ 为偏序集，$\varphi:P\to Q$ 为映射。</p>
+<ol>
+<li>若 $x\leq y$ 在 $P$ 中成立蕴含 $\varphi(x)\leq\varphi(y)$ 在 $Q$ 中成立，称 $\varphi$ <strong>保序</strong>（亦称单调）。</li>
+<li>若 $x\leq y$ 在 $P$ 中成立当且仅当 $\varphi(x)\leq\varphi(y)$ 在 $Q$ 中成立，称 $\varphi$ 为<strong>序嵌入</strong>，记 $\varphi:P\rightarrowtail Q$。</li>
+<li>若 $\varphi$ 是序嵌入且满射，称 $\varphi$ 为<strong>序同构</strong>。</li>
+</ol>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-21"><div class="env-head"><span class="env-name">注记</span><span class="env-num">21</span><span class="env-title">差别只在反向</span></div><div class="env-body"><p>保序只要求单向：$x\leq y$ 推出 $\varphi(x)\leq\varphi(y)$。嵌入要求双向，因此嵌入不会把不可比变成可比，也不会把严格不等压成相等。</p>
+<p>常值映射是最好的反例：它保序，但把所有元素压成一点，$x&lt;y$ 变成 $\varphi(x)=\varphi(y)$，反向不成立。所以保序映射可以丢信息，嵌入不能。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-14"><div class="env-head"><span class="env-name">例</span><span class="env-num">14</span><span class="env-title">六个映射的谱系</span></div><div class="env-body"><p>图 1.11 给了六个映射。$\varphi_1$ 不保序：它把一条上升的边映成了下降的边。$\varphi_2$ 到 $\varphi_5$ 都保序，但都把至少一对不同的点压成同一点，因此不是嵌入。$\varphi_6$ 是嵌入，但不满，因此不是同构。</p>
+<p>这六个映射排成一条谱系：不保序、保序非嵌入、嵌入非满。再加一档同构，就齐了。每一档只比前一档多一个条件，而每一档都有实例。</p>
+</div></div>
+
+<div class="math-env env-proposition" id="prop-emb"><div class="env-head"><span class="env-name">命题</span><span class="env-num">7</span><span class="env-title">嵌入的像</span></div><div class="env-body"><p>设 $\varphi:P\rightarrowtail Q$ 为序嵌入，$\varphi(P)$ 配上从 $Q$ 诱导的序。则 $\varphi(P)\cong P$。</p>
+</div></div>
+
+<div class="math-env env-proof"><span class="env-name">证明</span><div class="env-body"><p>把 $\varphi$ 看成到像上的映射 $\varphi:P\to\varphi(P)$，它满射，且嵌入条件 $x\leq y\iff\varphi(x)\leq\varphi(y)$ 原样成立，故为序同构。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-22"><div class="env-head"><span class="env-name">注记</span><span class="env-num">22</span><span class="env-title">三条容易漏的</span></div><div class="env-body"><p>嵌入自动是单射，论证与 1.4 完全相同：若 $\varphi(x)=\varphi(y)$，由 $Q$ 的自反性得 $\varphi(x)\leq\varphi(y)$ 且反向，用嵌入条件读回 $x\leq y$ 且 $y\leq x$，再用 $P$ 的反对称性。</p>
+<p>保序映射的复合保序。有限多个保序映射的复合，只要定义得起来，就保序。</p>
+<p>$P\cong Q$ 当且仅当存在保序映射 $\varphi:P\to Q$ 与 $\psi:Q\to P$，使 $\varphi\circ\psi=\mathrm{id}_Q$、$\psi\circ\varphi=\mathrm{id}_P$。这一条把「同构」翻译成「有互逆的保序映射」，也就是序范畴里的同构。</p>
+</div></div>
+
+<div class="math-env env-example" id="env-example-15"><div class="env-head"><span class="env-name">例</span><span class="env-num">15</span><span class="env-title">点式序</span></div><div class="env-body"><p>在初等分析里，「$\sin x\leq|x|$ 在 $\mathbb{R}$ 上成立」这句话用到了一个序，只是从来没人写出来：函数之间逐点比较。对 $f,g:\mathbb{R}\to\mathbb{R}$，$f\leq g$ 意为 $f(x)\leq g(x)$ 对一切 $x$ 成立。</p>
+<p>推广：设 $X$ 为任意集合，$Y$ 为偏序集，在全体映射 $Y^X$ 上定义</p>
+<p>$$
+
+f\leq g \iff f(x)\leq g(x)\ (\forall x\in X).
+
+$$</p>
+<p>$X$ 为 $n$ 元集时，$Y^X$ 就是 $Y^n$。$Y^X$ 的任意子集继承点式序；当 $X$ 本身是偏序集时，可以取子集为全体保序映射，所得的偏序集记 $Y^{(X)}$，也写 $(X\to Y)$。</p>
+</div></div>
+
+<div class="math-env env-exercise" id="exo-hom2"><div class="env-head"><span class="env-name">练习</span><span class="env-num">3</span><span class="env-title">从 X 到 2 的保序映射</span></div><div class="env-body"><p>证明 $(X\to\mathbf{2})\cong O(X)^{\partial}$。</p>
+</div></div>
+
+<div class="math-env env-answer" id="env-answer-2"><div class="env-head"><span class="env-name">回答</span><span class="env-num">2</span></div><div class="env-body"><p>设 $f:X\to\mathbf{2}$ 保序。令 $U_f=f^{-1}(1)$。若 $x\in U_f$、$y\geq x$，则 $f(y)\geq f(x)=1$，故 $f(y)=1$，即 $y\in U_f$。所以 $U_f$ 是上集。</p>
+<p>反之，设 $U$ 为上集，令 $f=\chi_U$。若 $x\leq y$ 而 $f(x)=1$，则 $x\in U$，由上集性质 $y\in U$，故 $f(y)=1$；若 $f(x)=0$ 则无须论证。所以 $\chi_U$ 保序。</p>
+<p>两个构造互逆。又 $f\leq g$ 逐点成立当且仅当 $U_f\subseteq U_g$。故 $(X\to\mathbf{2})$ 与上集族按包含同构，再由补映射（补集与对偶）得上集族同构于 $O(X)^{\partial}$。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-23"><div class="env-head"><span class="env-name">注记</span><span class="env-num">23</span><span class="env-title">用最小的序集编码整个下集族</span></div><div class="env-body"><p>$\mathbf{2}$ 是最小的非平凡偏序集，只有两个元素。可它偏偏能把 $X$ 的全部上集编码出来：一个保序映射就是一个上集，逐点序就是包含序。</p>
+<p>这类「把结构保持映射收集起来，得到一个序集，它又同构于某个集合族」的结论，在范畴论里有更一般的表述（函子与自然变换），这里不必展开。等到第五章、第十一章讲 Stone 表示与 Priestley 表示，$\mathbf{2}$ 会再次出现，那时它不只是编码工具，而是整个表示定理的骨架。</p>
+</div></div>
+
+<div class="math-env env-remark" id="env-remark-24"><div class="env-head"><span class="env-name">注记</span><span class="env-num">24</span><span class="env-title">范畴论的一句话</span></div><div class="env-body"><p>现代数学里，一类结构很少单独出现，跟着它的总有一类保持结构的映射：群与同态、向量空间与线性映射、拓扑空间与连续映射，后面还会有格与格同态、CPO 与连续映射。把「对象 + 态射」当作一个整体来研究，就是范畴论。</p>
+<p>作者在这里明确说，本书没有引入范畴论形式系统的需要，只是承认它的影响。这种节制值得学：该用的地方用它，不该用的地方不搬术语。</p>
+</div></div>
+
+<h2 id="十二、章末小结"><a href="#十二、章末小结" class="headerlink" title="十二、章末小结"></a>十二、章末小结</h2><h3 id="全章的框架"><a href="#全章的框架" class="headerlink" title="全章的框架"></a>全章的框架</h3><p>$$
+
+\text{杂例}
+\to\text{公理}
+\to\text{链与反链}
+\to\text{数系与集合族}
+\to\text{信息序}
+\to\text{图}
+\to\text{构造}
+\to\text{下集}
+\to\text{保序映射}
+
+$$</p>
+<p>这条链不是线性的。图用覆盖，覆盖用严格序，严格序用偏序；下集用偏序，映射用下集。每一节都在回用前面的东西，而最后一节把这些回用收成一句话：偏序集与保序映射构成一个范畴。</p>
+<p>若按「引入方式」看，全章走的是一条固定的路：先给一堆杂例，抽公理，立刻回填例子，再给变体与构造，最后用一个保结构的概念收口。1.1 到 1.4 是这个套路的小规模演练，1.7 到 1.13 换到应用语境重演一次，1.14 到 1.18 用图把套路视觉化。整章没有一处是先给定理再给例子。</p>
+<h3 id="值得注意的五处"><a href="#值得注意的五处" class="headerlink" title="值得注意的五处"></a>值得注意的五处</h3><p><strong>定义。</strong> <a class="env-ref" href="#def-poset">定义 1</a> 是全部语言的基础；<a class="env-ref" href="#def-chain">定义 2</a> 把「可比」推到极端；<a class="env-ref" href="#def-cover">定义 7</a> 是画图的依据；<a class="env-ref" href="#def-down">定义 14</a> 与 <a class="env-ref" href="#def-OP">定义 15</a> 是表示论的入口；<a class="env-ref" href="#def-mono">定义 16</a> 把「保持结构」分成三档，此后不再混用。</p>
+<p><strong>命题。</strong> <a class="env-ref" href="#prop-iso">命题 2</a> 与 <a class="env-ref" href="#prop-strict">命题 1</a> 都不难，用到的技术不同：前者靠公理三次收口，后者是双向构造并验证互逆。<a class="env-ref" href="#prop-diagram">命题 3</a> 把「图可以当证明」变成合法动作。<a class="env-ref" href="#prop-cube">命题 4</a> 把幂集写成积，是全书第一次真正的「表示」。<a class="env-ref" href="#prop-O-sum">命题 6</a> 说明 $O$ 如何翻译构造。</p>
+<p><strong>注记。</strong> 对偶原理让一个定理当两个用；$\perp$ 与 $\top$ 在信息序里的解释决定了后面 domain 的走向；极大与最大的区别是本章最容易糊的地方；$O(P)$ 从「例子」变成「工具」，是第五章的伏笔。</p>
+<p><strong>警示。</strong> 图的两个条件缺一不可，画错的图不报错，只误导；无限集不能用覆盖关系判定同构，$\mathbb{R}$ 是反例；$\oplus$ 与 $\dot{\cup}$ 的图画法不同，混了会把序读错。</p>
+<p><strong>方法。</strong> 全章真正的方法只有一个：把结构翻译成集合族，再让集合族之间的包含关系替结构说话。谓词之于幂集、下集之于偏序集、保序映射之于 $\mathbf{2}$，都是这同一个动作。</p>
+<h3 id="读完这一章该能做什么"><a href="#读完这一章该能做什么" class="headerlink" title="读完这一章该能做什么"></a>读完这一章该能做什么</h3><ul>
+<li>判定一个给定关系是不是偏序，缺了哪一条，并给出三条公理各自独立的实例；</li>
+<li>由严格序造偏序，反向也做一遍，说明两个构造互逆；</li>
+<li>给一个有限偏序集画 Hasse 图，并判断两张图是否表示同构的偏序集；</li>
+<li>用对偶原理把一条命题翻成另一条，说明哪些句子没有对偶版本；</li>
+<li>把给定的偏序集拆成 $\mathbf{1}$、$\overline{\mathbf{n}}$、$\mathbf{n}$ 的和与积（拆得动的时候），再用 $O$ 的翻译算 $|O(P)|$；</li>
+<li>说明保序、嵌入、同构的差别，并各举一个例子。</li>
+</ul>
+<p>下一章讲格，会把这一章缺的那件事补上：任意两元的上确界与下确界。到那时 $O(P)$ 会重新出现，不再是例子，而是主要工具。</p>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>格论</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
 </search>

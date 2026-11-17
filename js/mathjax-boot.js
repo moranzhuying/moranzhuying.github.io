@@ -11,7 +11,7 @@
  *
  * 约定：
  *   - 配置必须在注入 tex-mml-chtml.js 之前赋给 window.MathJax，故合并在本文件内。
- *   - 只在页面里确实出现 $ 时才下载 1 MB 的组件；下载完成后由 MathJax startup 自行排版。
+ *   - 只在页面里确实出现 $ 时才下载 1 MB 的组件；排版由本文件分片驱动（startup.typeset 已关）。
  *   - 站内跳转后只对新的 .post-body 排版，避免整页重排。
  */
 
@@ -23,7 +23,10 @@ window.MathJax = {
   loader: {
     paths: {
       mathjax: '/js/mathjax',
-      fonts: 'https://fastly.jsdelivr.net/npm/@mathjax'
+      // 字体本地托管（source/js/mathjax/fonts/mathjax-newcm-font/chtml/）。
+      // 走 CDN 时 calligraphic / double-struck / math 三个动态分块是串行跨域请求，
+      // 每个约 400 ms，合计 0.8 s，是冷启动里最大的一块。
+      fonts: '/js/mathjax/fonts'
     }
   },
   tex: {
@@ -178,7 +181,11 @@ window.MathJax = {
       }, '', false]
     }
   },
-  output: { displayOverflow: 'scroll' }
+  output: { displayOverflow: 'scroll' },
+
+  // 关掉 MathJax 的自动排版，改由 mathjax-boot.js 显式调用一次。
+  // 否则组件就绪后会自己排一遍，我们再排一遍，公式就重了。
+  startup: { typeset: false }
 };
 
   // ---------------- 装载与重排 ----------------
@@ -194,13 +201,37 @@ window.MathJax = {
     return false;
   }
 
+  // ---------------- 排版调度 ----------------
+  // startup.typeset 关掉，由这里调一次 typesetPromise 全量排版。
+  //
+  // 为什么不按首屏分片 —— MathJax 4.1.3 这份单包有三个实测硬限制：
+  //   1. typesetPromise() 只能有效调用一次。第二次传入新元素，排版不再发生
+  //      （首屏 16 个容器之后，再传 208 个块，容器数一动不动）；
+  //      它返回的 promise 也永远 pending，没法用来判断做完没有。
+  //   2. 同步的 typeset() 在需要异步加载字体时抛 "MathJax retry" 并中断，
+  //      格论篇排到第 16 个就停。早先的版本在 catch 里补一次 typesetPromise，
+  //      结果两个容器并排出现，页面上能看到 ≤≤、(P,≤)(P,≤)。
+  //   3. 把首屏块排到数组最前面也没用 —— MathJax 先把传入元素整体扫一遍
+  //      收集公式，再统一渲染，数组顺序不改变出结果的先后。
+  // 所以就是一次全量，把力气花在别处：组件 preload、字体本地托管。
+
+  var lastBody = null;     // 上一次处理的 .post-body 节点，用于同页去重
+
   function typeset() {
     if (!window.MathJax || typeof window.MathJax.typesetPromise !== 'function') return;
-    var scopes = document.querySelectorAll('.post-body');
-    var target = scopes.length ? Array.prototype.slice.call(scopes) : undefined;
-    window.MathJax.typesetPromise(target).catch(function (err) {
+
+    // 同页去重：一次加载里 boot() 会被触发两次（DOMContentLoaded 之后，
+    // NexT 的 pjax 还会补一次 pjax:success）。不去重就会把每个公式排两遍。
+    // 认节点身份：同一篇跳过；PJAX 换页后 .post-body 是新节点，照常重排。
+    var body = document.querySelector('.post-body');
+    if (!body || body === lastBody) return;
+    lastBody = body;
+
+    try {
+      window.MathJax.typesetPromise([body]);
+    } catch (err) {
       console.warn('[mathjax] 排版失败', err);
-    });
+    }
   }
 
   // 首页自己不排版，但预取组件：访客点开的第一篇多半是公式文章，
@@ -216,16 +247,32 @@ window.MathJax = {
     document.head.appendChild(l);
   }
 
+  // 等 startup 就绪再排，避免和组件的初始化抢时序
+  function run() {
+    var sp = window.MathJax && window.MathJax.startup && window.MathJax.startup.promise;
+    if (sp) {
+      sp.then(typeset).catch(function (err) {
+        console.warn('[mathjax] startup 异常，仍尝试排版', err);
+        typeset();
+      });
+    } else {
+      typeset();
+    }
+  }
+
   function boot() {
-    if (state === 'loading') return;        // 组件就绪后 startup 会排当前 DOM
-    if (state === 'ready') { typeset(); return; }
+    if (state === 'loading') return;        // 组件的 onload 里会接管排版
+    if (state === 'ready') { run(); return; }
     if (!hasMath()) { prefetch(); return; }
 
     state = 'loading';
     var s = document.createElement('script');
     s.src = BUNDLE;
     s.async = true;
-    s.onload = function () { state = 'ready'; };
+    s.onload = function () {
+      state = 'ready';
+      run();                                // startup.typeset 已关，排版由这里接管
+    };
     s.onerror = function () {
       state = 'idle';
       console.error('[mathjax] 组件载入失败：' + BUNDLE);
